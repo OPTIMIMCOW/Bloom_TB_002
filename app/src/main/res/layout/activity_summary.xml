@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kennethallan.Bloom_TB_002.Summary">
+
+    <Button
+        android:text="Test"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/TestButton_Summary"
+        android:gravity="center"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/lv_Summary"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/TestButton_Summary"
+        android:layout_margin="10dp" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lv_SessionActivities"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/lv_Summary"
+        android:layout_margin="10dp" />
+
+</RelativeLayout>

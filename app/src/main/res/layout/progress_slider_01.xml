@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_theme" />
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/pb_Goal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
+        android:padding="5dp"
+        android:layout_below="@+id/tv_theme"
+        />
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/pb_Attain"
+        android:progressDrawable="@drawable/theme_progress_test"
+        android:padding="5dp"
+        android:layout_below="@+id/tv_theme"
+        />
+
+    <TextView
+        android:text="85/105"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_score"
+        android:layout_below="@+id/pb_Attain"/>
+
+    <CheckBox
+        android:id="@+id/cb_carryover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/pb_Attain"
+        android:text="Carry Over?"
+        android:textSize="16sp"/>
+
+
+</RelativeLayout>

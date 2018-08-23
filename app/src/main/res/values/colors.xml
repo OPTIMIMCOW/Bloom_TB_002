@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="progress_start">#7af442</color>
+    <color name="progress_end">#cd41f4</color>
+
+    <color name="Theme_base_01">#ff0000</color>
+    <color name="Theme_base_02">#ff4c00</color>
+    <color name="Theme_base_03">#ffa900</color>
+    <color name="Theme_base_04">#d0ff00</color>
+    <color name="Theme_base_05">#49d100</color>
+    <color name="Theme_base_06">#00d334</color>
+    <color name="Theme_base_07">#00d29a</color>
+    <color name="Theme_base_08">#009eff</color>
+    <color name="Theme_base_09">#3049a5</color>
+    <color name="Theme_base_10">#7c41e2</color>
+    <color name="Theme_base_11">#bc41e2</color>
+    <color name="Theme_base_12">#dd2ea3</color>
+
+
+
+
+</resources>

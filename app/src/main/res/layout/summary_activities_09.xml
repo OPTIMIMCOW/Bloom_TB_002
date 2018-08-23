@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:gravity="center_vertical"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/tv_activity_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/summary_activitylist_textsize"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:hint="Test title: Date With Joanne"
+        android:padding="@dimen/summary_activitylist_padding" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_activity_01"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="XX:XX"
+            android:padding="@dimen/summary_activitylist_padding"
+            android:textSize="@dimen/summary_activitylist_textsize"
+            android:background="@drawable/theme_symbol_01"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_activity_02"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="XX:XX"
+            android:padding="@dimen/summary_activitylist_padding"
+            android:textSize="@dimen/summary_activitylist_textsize"
+            android:background="@drawable/theme_symbol_02"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_activity_03"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="XX:XX"
+            android:padding="@dimen/summary_activitylist_padding"
+            android:textSize="@dimen/summary_activitylist_textsize"
+            android:background="@drawable/theme_symbol_03"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_activity_04"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="XX:XX"
+            android:padding="@dimen/summary_activitylist_padding"
+            android:textSize="@dimen/summary_activitylist_textsize"
+            android:background="@drawable/theme_symbol_04"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_activity_05"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="XX:XX"
+            android:padding="@dimen/summary_activitylist_padding"
+            android:textSize="@dimen/summary_activitylist_textsize"
+            android:background="@drawable/theme_symbol_05"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_activity_06"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="XX:XX"
+            android:padding="@dimen/summary_activitylist_padding"
+            android:textSize="@dimen/summary_activitylist_textsize"
+            android:background="@drawable/theme_symbol_06"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0"
+            android:gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="10"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_activity_07"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="XX:XX"
+            android:padding="@dimen/summary_activitylist_padding"
+            android:textSize="@dimen/summary_activitylist_textsize"
+            android:background="@drawable/theme_symbol_07"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_activity_08"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="XX:XX"
+            android:padding="@dimen/summary_activitylist_padding"
+            android:textSize="@dimen/summary_activitylist_textsize"
+            android:background="@drawable/theme_symbol_08"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/tv_activity_09"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="XX:XX"
+            android:padding="@dimen/summary_activitylist_padding"
+            android:textSize="@dimen/summary_activitylist_textsize"
+            android:background="@drawable/theme_symbol_09"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="10"
+            android:gravity="center_vertical" />
+
+    </LinearLayout>
+
+</LinearLayout>
