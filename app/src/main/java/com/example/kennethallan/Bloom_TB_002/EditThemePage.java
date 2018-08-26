@@ -1,5 +1,6 @@
 package com.example.kennethallan.Bloom_TB_002;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,12 +19,12 @@ public class EditThemePage extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     DBHelper Mydb;
+    Context contextWord = this;
     Button commitButton;
     EditText themeName;
     EditText themeDescription;
     ListView themeListView;
 
-    Button TestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,6 @@ public class EditThemePage extends AppCompatActivity {
         themeName = (EditText) findViewById(R.id.editText);
         themeDescription = (EditText)findViewById(R.id.editText2);
         themeListView = (ListView)findViewById(R.id.ListViewSetGoals);
-        TestButton = (Button) findViewById(R.id.TestButton);
 
 
 
@@ -42,14 +42,10 @@ public class EditThemePage extends AppCompatActivity {
 
 
         addTheme ();
-        TEST();
 
 
         // Populate arrayAdaptor
-
-        ListAdapter themeListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,Mydb.getCURRENTThemeNames());
-        themeListView.setAdapter(themeListAdapter);
-
+        populateListView(); // this method is called to repopulate the list when a theme is added thus it is made into a method.
 
         themeListView.setOnItemClickListener(
 
@@ -59,18 +55,24 @@ public class EditThemePage extends AppCompatActivity {
                         String ThemeName = String.valueOf(parent.getItemAtPosition(position));
                         //Toast.makeText(EditThemePage.this,ThemeName,Toast.LENGTH_SHORT).show();
 
-                        String IDtoDelete = Mydb.getThemeID(ThemeName);
+                        String IDtoDelete = Mydb.getSpecificThemeID(ThemeName);
                         int isDeleted = Mydb.deleteTheme(IDtoDelete);
 
                         if (isDeleted > 0)
+                            populateListView();
                             Toast.makeText(EditThemePage.this, "Theme Deleted", Toast.LENGTH_SHORT).show();
-                        else
+                        if (isDeleted < 0)
                             Toast.makeText(EditThemePage.this, "No Themes were Deleted", Toast.LENGTH_SHORT).show();
 
                     }
                 }
         );
 
+    }
+
+    public void populateListView(){
+        ListAdapter themeListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,Mydb.getCURRENTThemeNames());
+        themeListView.setAdapter(themeListAdapter);
     }
 
     public void addTheme (){
@@ -81,8 +83,10 @@ public class EditThemePage extends AppCompatActivity {
                     public void onClick(View v) {
                         boolean isInserted = Mydb.insertTheme(themeName.getText().toString(),themeDescription.getText().toString());
                         if (isInserted == true)
+                            populateListView();
                             Toast.makeText(EditThemePage.this, "Data is inserted", Toast.LENGTH_SHORT).show();
-                        else
+
+                        if (isInserted == false)
                             Toast.makeText(EditThemePage.this, "Data is NOT inserted", Toast.LENGTH_SHORT).show();
 
                     }
@@ -91,22 +95,7 @@ public class EditThemePage extends AppCompatActivity {
     }
 
 
-    public void TEST(){
 
-        TestButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ArrayList<String> a = Mydb.getCURRENTThemeIDs();
-                        if (a.size()>0)
-                            Toast.makeText(EditThemePage.this, a.get(0).toString(), Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(EditThemePage.this, "ArrayList Empty", Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-        );
-    }
 
 
 }

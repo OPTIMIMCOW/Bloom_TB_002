@@ -66,16 +66,16 @@ public class Summary extends AppCompatActivity {
         context = Summary.this;
         Mydb = new DBHelper(this);
 
+        // find and bind variables to views
         TestButton = (Button) findViewById(R.id.TestButton_Summary);
         progressListView = (ListView)findViewById(R.id.lv_Summary);
         sessionActivitiesListView = (ListView)findViewById(R.id.lv_SessionActivities);
 
-
+        // erase arrays in case they hold variables from last time activity used.(not sure if reqquired) TODO test this
         al_values_ThemeNames.clear();
         al_values_ProGoals.clear();
         al_values_ProAttain.clear();
         i_ScaleFactor = 0.00;
-        // TODO check if i need to do this
 
         al_values_ProGoals = getCURRENTGoals();
         al_values_ThemeNames = getCurrentThemeNames();
@@ -281,10 +281,7 @@ public class Summary extends AppCompatActivity {
 
 //1
 
-    public void incrementCarryover(Context context){
 
-        //TODO increment carryover here. not sure what that means but when I figure it out do it here.
-    }
 
     public ArrayList<Integer> getCURRENTSessionProgress (){
 
@@ -353,18 +350,20 @@ public class Summary extends AppCompatActivity {
                 switch (numCurrentThemes){
 
                     case 3:
-                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex("ID00"+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex("ID00"+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex("ID00"+ arrayList_arrayCURRENTthemeIDS.get(2))));
 
-                        al_activitiesList_Name.add(res.getString(res.getColumnIndex("NAME")));  //TODO change this from hardcode text here
-                        al_activitiesList_Description.add(res.getString(res.getColumnIndex("MARKS"))); //TODO change this to "DESCRIPTION" in DBhelper
-                        al_activitiesList_Date.add(res.getString(res.getColumnIndex("Date"))); //TODO change this from hardcode text here
-                        al_activitiesList_ID.add(res.getString(res.getColumnIndex("ID2"))); //TODO change this from hardcode text here
+                        buildArrays(res);
 
-                        al_activitiesList_01.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        al_activitiesList_02.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        al_activitiesList_03.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
+//                        al_activitiesList_Name.add(res.getString(res.getColumnIndex(Mydb.COL2_ACTIVITIES)));  //TODO change this from hardcode text here
+//                        al_activitiesList_Description.add(res.getString(res.getColumnIndex(Mydb.COL3_ACTIVITIES))); //TODO change this to "DESCRIPTION" in DBhelper
+//                        al_activitiesList_Date.add(res.getString(res.getColumnIndex(Mydb.COL4_ACTIVITIES))); //TODO change this from hardcode text here
+//                        al_activitiesList_ID.add(res.getString(res.getColumnIndex(Mydb.COL1_ACTIVITIES))); //TODO change this from hardcode text here
+
+                        al_activitiesList_01.add(res.getString(res.getColumnIndex("ID00"+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        al_activitiesList_02.add(res.getString(res.getColumnIndex("ID00"+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        al_activitiesList_03.add(res.getString(res.getColumnIndex("ID00"+ arrayList_arrayCURRENTthemeIDS.get(2))));
                         break;
 
                     case 4:
@@ -746,6 +745,15 @@ public class Summary extends AppCompatActivity {
         // return scale factor for use elsewhere.
 
         return temp3;
+
+    }
+
+    public void buildArrays(Cursor res){
+
+        al_activitiesList_Name.add(res.getString(res.getColumnIndex(Mydb.COL2_ACTIVITIES)));  //TODO change this from hardcode text here
+        al_activitiesList_Description.add(res.getString(res.getColumnIndex(Mydb.COL3_ACTIVITIES))); //TODO change this to "DESCRIPTION" in DBhelper
+        al_activitiesList_Date.add(res.getString(res.getColumnIndex(Mydb.COL4_ACTIVITIES))); //TODO change this from hardcode text here
+        al_activitiesList_ID.add(res.getString(res.getColumnIndex(Mydb.COL1_ACTIVITIES))); //TODO change this from hardcode text here
 
     }
 

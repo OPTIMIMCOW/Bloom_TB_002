@@ -17,7 +17,12 @@ import java.util.Calendar;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "CantThinkOfNewName.db";
+    //Note: to alter the database and essentially recreate the database from scratch OnCreate needs to be envoked to recreate the table.
+    // this wont be created until the original database is closed - this is achieved using the Mydb.close() method.
+    //I place this method in the MainActivity activity in the editTheme button press so that it closes the database before
+    // it is required to be recreatred because Mydb is initialised at the top of the page.
+
+    public static final String DATABASE_NAME = "MadeAMistake06.db";
 
     public static final int DATABASE_VERSION = 1;
 
@@ -29,12 +34,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_ACTIVITIES = "Activities";
     public static final String COL1_ACTIVITIES = "ID2";
     public static final String COL2_ACTIVITIES = "NAME";
-    public static final String COL3_ACTIVITIES = "MARKS";
-    public static final String COL4_ACTIVITIES = "Date";
-    // TODO rename COL3_ACTIVITIES from "MARKS" to "DESCRIPTION"
-    // TODO rename COL4_ACTIVITIES from "Date" to "DATE"
-
-
+    public static final String COL3_ACTIVITIES = "DESCRIPTION";
+    public static final String COL4_ACTIVITIES = "DATE";
+    //  rename COL3_ACTIVITIES from "MARKS" to "DESCRIPTION"
+    //  rename COL4_ACTIVITIES from "Date" to "DATE"
 
     // avoid the sqlite keywords of "Table", "Values" etc in the database name
 
@@ -49,12 +52,15 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL1_CURRENTTHEMES = "ID_ALL";
     public static final String COL2_CURRENTTHEMES = "NAME";
     public static final String COL3_CURRENTTHEMES = "DESCRIPTION";
+    public static final String COL4_CURRENTTHEMES = "ID3";
 
+    // TODO for final build change "ID3" to "AllID"
+    //TODO for final build reorder columns so that ID3 is closer to ID_ALL because looks neater.
     //The Goals Table
     public static final String TABLE_GOALS = "Goals";
     public static final String COL1_GOALS = "ID2";
     public static final String COL2_GOALS = "DATE";
-    public static final String COL3_GOALS = "IsManualSet";
+    public static final String COL3_GOALS = "ISMANUALSET";
 
     //The History Table
     public static final String TABLE_HISTORY = "History";
@@ -75,30 +81,28 @@ public class DBHelper extends SQLiteOpenHelper {
         // not possible hence you need to close the database to then start a new databse.
         // not sure close is doing anything now. seems to only work when you change the name of the
         //database to something different which makes no sense at all.
-        // TODO Auto-generated method stub
-        Mydb.execSQL("create table " + TABLE_ACTIVITIES +" ("+COL1_ACTIVITIES+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_ACTIVITIES+" TEXT,"+COL3_ACTIVITIES+" INTEGER)");
+        Mydb.execSQL("create table " + TABLE_ACTIVITIES +" ("+COL1_ACTIVITIES+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_ACTIVITIES+" TEXT,"+COL3_ACTIVITIES+" TEXT,"+COL4_ACTIVITIES+ " TEXT)");
         Mydb.execSQL("create table " + TABLE_ALLTHEMES +" ("+COL1_ALLTHEMES+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_ALLTHEMES+" TEXT,"+COL3_ALLTHEMES+" TEXT)");
-        Mydb.execSQL("create table " + TABLE_CURRENTTHEMES +" ("+COL1_CURRENTTHEMES+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_CURRENTTHEMES+" TEXT,"+COL3_CURRENTTHEMES+" TEXT)");
-        Mydb.execSQL("create table " + TABLE_GOALS +" ("+COL1_GOALS+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_GOALS+" TEXT)");
+        Mydb.execSQL("create table " + TABLE_CURRENTTHEMES +" ("+COL1_CURRENTTHEMES+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_CURRENTTHEMES+" TEXT,"+COL3_CURRENTTHEMES+" TEXT,"+COL4_CURRENTTHEMES+" TEXT)");
+        Mydb.execSQL("create table " + TABLE_GOALS +" ("+COL1_GOALS+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_GOALS+" TEXT,"+COL3_GOALS+" TEXT)");
         Mydb.execSQL("create table " + TABLE_HISTORY +" ("+COL1_HISTORY+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_HISTORY+" TEXT,"+COL3_HISTORY+" TEXT)");
+
+        // TODO removed the history table since its not useful.
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase Mydb, int oldVersion, int newVersion) {
-        // TODO Auto-generated method stub
         Mydb.execSQL("DROP TABLE IF EXISTS "+TABLE_ACTIVITIES);
         Mydb.execSQL("DROP TABLE IF EXISTS "+TABLE_ALLTHEMES);
+        Mydb.execSQL("DROP TABLE IF EXISTS "+TABLE_CURRENTTHEMES);
+        Mydb.execSQL("DROP TABLE IF EXISTS "+TABLE_GOALS);
+        Mydb.execSQL("DROP TABLE IF EXISTS "+TABLE_HISTORY);
+
+
 
         onCreate(Mydb);
     }
-
-    public void deleteTable(){
-        SQLiteDatabase Mydb =this.getWritableDatabase();
-        Mydb.execSQL("delete from "+ TABLE_ALLTHEMES);
-        Mydb.execSQL("delete from "+ TABLE_CURRENTTHEMES);
-        //Mydb.execSQL("DROP TABLE IF EXISTS "+TABLE_ACTIVITIES);
-    }
-
 
 
     public boolean insertActivity(String eventTitle,String eventDescription,ArrayList<String> eventValues){
@@ -118,7 +122,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         for (int i=0;i < arrayList_CURRENTTheme_IDs.size();i++){
-            String colName = "ID"+ arrayList_CURRENTTheme_IDs.get(i);
+            String colName = "ID00"+ arrayList_CURRENTTheme_IDs.get(i);
             newThingAdd.put(colName,eventValues.get(i));
         }
 
@@ -146,19 +150,19 @@ public class DBHelper extends SQLiteOpenHelper {
         // actually add to ALL themes database
         long result = Mydb.insertOrThrow(TABLE_ALLTHEMES,null,newThingAdd);
 
-       // fetch id of last added thing ALLtheme to add to CURRENTtheme.
+       // fetch id of last added thing in ALLtheme to add to CURRENTtheme.
         Cursor res = Mydb.rawQuery("select * from "+TABLE_ALLTHEMES ,null);
         res.moveToLast();
         if (res != null) { // to catch if error and not crash
         }
         String allID = res.getString(0); // this is getting the "All ID" for this specific value.
-        String allIDColumnName = "ID"+allID;
+        String allIDColumnName = "ID00"+allID;
 
         //set up theme to be added to CURRENT themes
         ContentValues newThingAdd123 = new ContentValues();
         newThingAdd123.put(COL2_CURRENTTHEMES,name2);
         newThingAdd123.put(COL3_CURRENTTHEMES,Description);
-        newThingAdd123.put("ID3",allID); //TODO update this to a string resource and the name "ALLid"
+        newThingAdd123.put(COL4_CURRENTTHEMES,allID); //TODO update this to a string resource and the name "ALLid"
 
         //Actually add to CURRENT database
         long result2 = Mydb.insertOrThrow(TABLE_CURRENTTHEMES,null,newThingAdd123);
@@ -187,50 +191,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //not sure what this does.
 
-    public boolean updateData(String id,String ActName, String ActValue){
-        SQLiteDatabase Mydb =this.getWritableDatabase();
-        ContentValues thingUpdate = new ContentValues();
-        thingUpdate.put(COL1_ACTIVITIES,id);
-        thingUpdate.put(COL2_ACTIVITIES,ActName);
-        thingUpdate.put(COL3_ACTIVITIES,ActValue);
-        Mydb.update(TABLE_ACTIVITIES,thingUpdate,"ID = ?",new String[]{id});
-        return true;
 
-        //"ID = ?" is the where clause ie its the question that is asked to decide if that row will be updated. the answer
-        //to the question in the where clause is the "new String[]{id}" array.
-
-    }
 
     public int deleteActivity(String id){
         SQLiteDatabase Mydb =this.getWritableDatabase();
         return Mydb.delete(TABLE_ACTIVITIES,"ID = ?",new String[]{id});
     }
 
-
-// adds a column to a table. Currently not in active use. Only used here when I need to extend a table becasuse I didnt create it properly in the first place.
-    public void AddColumn(){
-        SQLiteDatabase Mydb =this.getWritableDatabase();
-        Mydb.execSQL("ALTER TABLE Activities ADD COLUMN Date char(1)");
-        //Mydb.execSQL("ALTER TABLE CurrentThemes ADD COLUMN ID3 char(1)");
-        //Mydb.execSQL("ALTER TABLE Goals ADD COLUMN IsManualSet char(1)");
-        //Mydb.execSQL("ALTER TABLE History ADD COLUMN ID3 char(1)");
-    }
-
-    // gets ID numbers of all activities and returns a cursor object.
-    //currently not used.
-    public Cursor getSpecificID(){
-
-        SQLiteDatabase Mydb =this.getWritableDatabase();
-
-        Cursor res = Mydb.rawQuery("select * from "+TABLE_ACTIVITIES + " where directory = 'ID2'" ,null);
-        res.moveToLast();
-
-        //Cursor cursor = database.rawQuery("SELECT * FROM episode WHERE directory = '"
-        ///        + directory + "'", null);
-
-        return res;
-
-    }
 
     ArrayList<String> arrayList_CURRENTTheme_IDs = new ArrayList<String>();
     int numberCURRENTThemes;
@@ -279,9 +246,23 @@ public class DBHelper extends SQLiteOpenHelper {
         return arrayList_CURRENTTheme_IDs;
     }// this is only used for the test button to check the concept worked.
 
-    public String getThemeID(String value){
+    public String getSpecificThemeID(String value){
 
-        return arrayList_CURRENTTheme_IDs.get(Integer.parseInt(value));
+        SQLiteDatabase Mydb = this.getReadableDatabase();
+        Cursor res =  Mydb.rawQuery( "select * from " +TABLE_CURRENTTHEMES + " WHERE " +COL2_CURRENTTHEMES + " = '" + value + "'" , null );
+
+        int itemID = -1;
+        res.moveToLast();
+        // while loop used to make sure we are getting the last row
+        while(res.isAfterLast() == true){
+            int pos_CURRENT = res.getPosition();
+            int pos_NEW = pos_CURRENT - 1;
+            res.moveToPosition(pos_NEW);
+        }
+        itemID = res.getInt(0);
+
+       // return arrayList_CURRENTTheme_IDs.get(Integer.parseInt(value));
+        return Integer.toString(itemID);
     }
 
     public int getNumberOfCURRENTThemeIDs() {
@@ -324,7 +305,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<String> themeIDs = getCURRENTThemeIDs();
 
         for (int i = 0; i < goalValues.size(); i++) {
-            newThingAdd.put("ID" + themeIDs.get(i), goalValues.get(i));
+            newThingAdd.put("ID00" + themeIDs.get(i), goalValues.get(i));
         }
 
         if (manualSet =="Y"){
@@ -374,15 +355,15 @@ public class DBHelper extends SQLiteOpenHelper {
         // sets the manual indicator value of the current goal sequence we are looking at.
         goal_ManualIndicator = res.getString(res.getColumnIndex(COL3_GOALS));
 
-        // i am doing this because i need the CURRENTthem IDs for looking up columns
-        // in the next bit.
+        // i am doing this because i need the CURRENTtheme IDs for looking up columns
+        // in the next bit thus if i have not built this array yet I prompt it to be build using the method.
         if (arrayList_CURRENTTheme_IDs.size()==0){
             getCURRENTThemeIDs();
         }
 
         for (int i=0; i<arrayList_CURRENTTheme_IDs.size();i++){
 
-            String columName = "ID" + arrayList_CURRENTTheme_IDs.get(i);
+            String columName = "ID00" + arrayList_CURRENTTheme_IDs.get(i);
             arrayList_CURRENTGoal_Values.add(res.getString(res.getColumnIndex(columName)));
         }
 
@@ -427,7 +408,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         for (int i=0; i<arrayList_CURRENTTheme_IDs.size();i++){
 
-            String columName = "ID" + arrayList_CURRENTTheme_IDs.get(i);
+            String columName = "ID00" + arrayList_CURRENTTheme_IDs.get(i);
             arrayList_MANUALGoal_Values.add(res.getString(res.getColumnIndex(columName)));
 
         }

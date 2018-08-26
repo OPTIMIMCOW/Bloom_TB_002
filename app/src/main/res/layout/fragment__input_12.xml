@@ -416,7 +416,7 @@
 
 
     <SeekBar
-        android:id="@+id/seekBar09"
+        android:id="@+id/seekBar9"
         android:layout_width="180dp"
         android:layout_height="19dp"
         android:layout_marginBottom="8dp"
