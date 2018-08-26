@@ -29,6 +29,7 @@ public class Summary extends AppCompatActivity {
 
     Context context;
 
+
     Integer numCurrentThemes;
 
     // use these to store the activity values for each theme as a list to send to an adapter later.
@@ -350,248 +351,216 @@ public class Summary extends AppCompatActivity {
                 switch (numCurrentThemes){
 
                     case 3:
-                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex("ID00"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex("ID00"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex("ID00"+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
 
                         buildArrays(res);
 
-//                        al_activitiesList_Name.add(res.getString(res.getColumnIndex(Mydb.COL2_ACTIVITIES)));  //TODO change this from hardcode text here
-//                        al_activitiesList_Description.add(res.getString(res.getColumnIndex(Mydb.COL3_ACTIVITIES))); //TODO change this to "DESCRIPTION" in DBhelper
-//                        al_activitiesList_Date.add(res.getString(res.getColumnIndex(Mydb.COL4_ACTIVITIES))); //TODO change this from hardcode text here
-//                        al_activitiesList_ID.add(res.getString(res.getColumnIndex(Mydb.COL1_ACTIVITIES))); //TODO change this from hardcode text here
-
-                        al_activitiesList_01.add(res.getString(res.getColumnIndex("ID00"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        al_activitiesList_02.add(res.getString(res.getColumnIndex("ID00"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        al_activitiesList_03.add(res.getString(res.getColumnIndex("ID00"+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        al_activitiesList_01.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        al_activitiesList_02.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        al_activitiesList_03.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
                         break;
 
                     case 4:
-                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
 
-                        al_activitiesList_Name.add(res.getString(res.getColumnIndex("NAME")));  //TODO change this from hardcode text here
-                        al_activitiesList_Description.add(res.getString(res.getColumnIndex("MARKS"))); //TODO change this to "DESCRIPTION" in DBhelper
-                        al_activitiesList_Date.add(res.getString(res.getColumnIndex("Date"))); //TODO change this from hardcode text here
-                        al_activitiesList_ID.add(res.getString(res.getColumnIndex("ID2"))); //TODO change this from hardcode text here
+                        buildArrays(res);
 
-                        al_activitiesList_01.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        al_activitiesList_02.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        al_activitiesList_03.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        al_activitiesList_04.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        al_activitiesList_01.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        al_activitiesList_02.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        al_activitiesList_03.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        al_activitiesList_04.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
                         break;
 
                     case 5:
-                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
 
-                        al_activitiesList_Name.add(res.getString(res.getColumnIndex("NAME")));  //TODO change this from hardcode text here
-                        al_activitiesList_Description.add(res.getString(res.getColumnIndex("MARKS"))); //TODO change this to "DESCRIPTION" in DBhelper
-                        al_activitiesList_Date.add(res.getString(res.getColumnIndex("Date"))); //TODO change this from hardcode text here
-                        al_activitiesList_ID.add(res.getString(res.getColumnIndex("ID2"))); //TODO change this from hardcode text here
+                        buildArrays(res);
 
-                        al_activitiesList_01.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        al_activitiesList_02.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        al_activitiesList_03.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        al_activitiesList_04.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        al_activitiesList_05.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        al_activitiesList_01.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        al_activitiesList_02.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        al_activitiesList_03.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        al_activitiesList_04.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        al_activitiesList_05.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
                         break;
 
                     case 6:
-                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
 
-                        al_activitiesList_Name.add(res.getString(res.getColumnIndex("NAME")));  //TODO change this from hardcode text here
-                        al_activitiesList_Description.add(res.getString(res.getColumnIndex("MARKS"))); //TODO change this to "DESCRIPTION" in DBhelper
-                        al_activitiesList_Date.add(res.getString(res.getColumnIndex("Date"))); //TODO change this from hardcode text here
-                        al_activitiesList_ID.add(res.getString(res.getColumnIndex("ID2"))); //TODO change this from hardcode text here
+                        buildArrays(res);
 
-                        al_activitiesList_01.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        al_activitiesList_02.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        al_activitiesList_03.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        al_activitiesList_04.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        al_activitiesList_05.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        al_activitiesList_06.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        al_activitiesList_01.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        al_activitiesList_02.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        al_activitiesList_03.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        al_activitiesList_04.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        al_activitiesList_05.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        al_activitiesList_06.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
                         break;
 
                     case 7:
-                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        sum07 = sum07 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(6))));
+                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        sum07 = sum07 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(6))));
 
-                        al_activitiesList_Name.add(res.getString(res.getColumnIndex("NAME")));  //TODO change this from hardcode text here
-                        al_activitiesList_Description.add(res.getString(res.getColumnIndex("MARKS"))); //TODO change this to "DESCRIPTION" in DBhelper
-                        al_activitiesList_Date.add(res.getString(res.getColumnIndex("Date"))); //TODO change this from hardcode text here
-                        al_activitiesList_ID.add(res.getString(res.getColumnIndex("ID2"))); //TODO change this from hardcode text here
+                        buildArrays(res);
 
-                        al_activitiesList_01.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        al_activitiesList_02.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        al_activitiesList_03.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        al_activitiesList_04.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        al_activitiesList_05.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        al_activitiesList_06.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        al_activitiesList_07.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(6))));
+                        al_activitiesList_01.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        al_activitiesList_02.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        al_activitiesList_03.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        al_activitiesList_04.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        al_activitiesList_05.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        al_activitiesList_06.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        al_activitiesList_07.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(6))));
                         break;
 
                     case 8:
-                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        sum07 = sum07 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(6))));
-                        sum08 = sum08 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(7))));
+                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        sum07 = sum07 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(6))));
+                        sum08 = sum08 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(7))));
 
-                        al_activitiesList_Name.add(res.getString(res.getColumnIndex("NAME")));  //TODO change this from hardcode text here
-                        al_activitiesList_Description.add(res.getString(res.getColumnIndex("MARKS"))); //TODO change this to "DESCRIPTION" in DBhelper
-                        al_activitiesList_Date.add(res.getString(res.getColumnIndex("Date"))); //TODO change this from hardcode text here
-                        al_activitiesList_ID.add(res.getString(res.getColumnIndex("ID2"))); //TODO change this from hardcode text here
+                        buildArrays(res);
 
-                        al_activitiesList_01.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        al_activitiesList_02.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        al_activitiesList_03.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        al_activitiesList_04.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        al_activitiesList_05.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        al_activitiesList_06.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        al_activitiesList_07.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(6))));
-                        al_activitiesList_08.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(7))));
+                        al_activitiesList_01.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        al_activitiesList_02.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        al_activitiesList_03.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        al_activitiesList_04.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        al_activitiesList_05.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        al_activitiesList_06.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        al_activitiesList_07.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(6))));
+                        al_activitiesList_08.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(7))));
                         break;
 
                     case 9:
-                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        sum07 = sum07 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(6))));
-                        sum08 = sum08 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(7))));
-                        sum09 = sum09 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(8))));
+                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        sum07 = sum07 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(6))));
+                        sum08 = sum08 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(7))));
+                        sum09 = sum09 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(8))));
 
-                        al_activitiesList_Name.add(res.getString(res.getColumnIndex("NAME")));  //TODO change this from hardcode text here
-                        al_activitiesList_Description.add(res.getString(res.getColumnIndex("MARKS"))); //TODO change this to "DESCRIPTION" in DBhelper
-                        al_activitiesList_Date.add(res.getString(res.getColumnIndex("Date"))); //TODO change this from hardcode text here
-                        al_activitiesList_ID.add(res.getString(res.getColumnIndex("ID2"))); //TODO change this from hardcode text here
+                        buildArrays(res);
 
-                        al_activitiesList_01.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        al_activitiesList_02.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        al_activitiesList_03.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        al_activitiesList_04.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        al_activitiesList_05.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        al_activitiesList_06.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        al_activitiesList_07.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(6))));
-                        al_activitiesList_08.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(7))));
-                        al_activitiesList_09.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(8))));
+                        al_activitiesList_01.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        al_activitiesList_02.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        al_activitiesList_03.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        al_activitiesList_04.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        al_activitiesList_05.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        al_activitiesList_06.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        al_activitiesList_07.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(6))));
+                        al_activitiesList_08.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(7))));
+                        al_activitiesList_09.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(8))));
                         break;
 
                     case 10:
                         // looking up each summing the values of the SQLite database
-                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        sum07 = sum07 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(6))));
-                        sum08 = sum08 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(7))));
-                        sum09 = sum09 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(8))));
-                        sum10 = sum10 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(9))));
+                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        sum07 = sum07 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(6))));
+                        sum08 = sum08 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(7))));
+                        sum09 = sum09 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(8))));
+                        sum10 = sum10 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(9))));
 
-                        al_activitiesList_Name.add(res.getString(res.getColumnIndex("NAME")));  //TODO change this from hardcode text here
-                        al_activitiesList_Description.add(res.getString(res.getColumnIndex("MARKS"))); //TODO change this to "DESCRIPTION" in DBhelper
-                        al_activitiesList_Date.add(res.getString(res.getColumnIndex("Date"))); //TODO change this from hardcode text here
-                        al_activitiesList_ID.add(res.getString(res.getColumnIndex("ID2"))); //TODO change this from hardcode text here
+                        buildArrays(res);
 
-                        al_activitiesList_01.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        al_activitiesList_02.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        al_activitiesList_03.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        al_activitiesList_04.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        al_activitiesList_05.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        al_activitiesList_06.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        al_activitiesList_07.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(6))));
-                        al_activitiesList_08.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(7))));
-                        al_activitiesList_09.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(8))));
-                        al_activitiesList_10.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(9))));
+                        al_activitiesList_01.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        al_activitiesList_02.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        al_activitiesList_03.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        al_activitiesList_04.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        al_activitiesList_05.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        al_activitiesList_06.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        al_activitiesList_07.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(6))));
+                        al_activitiesList_08.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(7))));
+                        al_activitiesList_09.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(8))));
+                        al_activitiesList_10.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(9))));
                         break;
 
                     case 11:
                         // looking up each summing the values of the SQLite database
-                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        sum07 = sum07 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(6))));
-                        sum08 = sum08 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(7))));
-                        sum09 = sum09 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(8))));
-                        sum10 = sum10 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(9))));
-                        sum11 = sum11 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(10))));
+                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        sum07 = sum07 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(6))));
+                        sum08 = sum08 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(7))));
+                        sum09 = sum09 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(8))));
+                        sum10 = sum10 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(9))));
+                        sum11 = sum11 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(10))));
 
-                        al_activitiesList_Name.add(res.getString(res.getColumnIndex("NAME")));  //TODO change this from hardcode text here
-                        al_activitiesList_Description.add(res.getString(res.getColumnIndex("MARKS"))); //TODO change this to "DESCRIPTION" in DBhelper
-                        al_activitiesList_Date.add(res.getString(res.getColumnIndex("Date"))); //TODO change this from hardcode text here
-                        al_activitiesList_ID.add(res.getString(res.getColumnIndex("ID2"))); //TODO change this from hardcode text here
+                        buildArrays(res);
 
-                        al_activitiesList_01.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        al_activitiesList_02.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        al_activitiesList_03.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        al_activitiesList_04.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        al_activitiesList_05.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        al_activitiesList_06.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        al_activitiesList_07.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(6))));
-                        al_activitiesList_08.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(7))));
-                        al_activitiesList_09.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(8))));
-                        al_activitiesList_10.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(9))));
-                        al_activitiesList_11.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(10))));
+                        al_activitiesList_01.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        al_activitiesList_02.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        al_activitiesList_03.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        al_activitiesList_04.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        al_activitiesList_05.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        al_activitiesList_06.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        al_activitiesList_07.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(6))));
+                        al_activitiesList_08.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(7))));
+                        al_activitiesList_09.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(8))));
+                        al_activitiesList_10.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(9))));
+                        al_activitiesList_11.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(10))));
                         break;
 
                     case 12:
                         // looking up each summing the values of the SQLite database
-                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        sum07 = sum07 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(6))));
-                        sum08 = sum08 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(7))));
-                        sum09 = sum09 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(8))));
-                        sum10 = sum10 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(9))));
-                        sum11 = sum11 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(10))));
-                        sum12 = sum12 + Integer.parseInt(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(11))));
+                        sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        sum02 = sum02 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        sum03 = sum03 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        sum07 = sum07 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(6))));
+                        sum08 = sum08 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(7))));
+                        sum09 = sum09 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(8))));
+                        sum10 = sum10 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(9))));
+                        sum11 = sum11 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(10))));
+                        sum12 = sum12 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(11))));
 
-                        al_activitiesList_Name.add(res.getString(res.getColumnIndex("NAME")));  //TODO change this from hardcode text here
-                        al_activitiesList_Description.add(res.getString(res.getColumnIndex("MARKS"))); //TODO change this to "DESCRIPTION" in DBhelper
-                        al_activitiesList_Date.add(res.getString(res.getColumnIndex("Date"))); //TODO change this from hardcode text here
-                        al_activitiesList_ID.add(res.getString(res.getColumnIndex("ID2"))); //TODO change this from hardcode text here
+                        buildArrays(res);
 
-                        al_activitiesList_01.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(0))));
-                        al_activitiesList_02.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(1))));
-                        al_activitiesList_03.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(2))));
-                        al_activitiesList_04.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(3))));
-                        al_activitiesList_05.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(4))));
-                        al_activitiesList_06.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        al_activitiesList_07.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(6))));
-                        al_activitiesList_08.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(7))));
-                        al_activitiesList_09.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(8))));
-                        al_activitiesList_10.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(9))));
-                        al_activitiesList_11.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(10))));
-                        al_activitiesList_12.add(res.getString(res.getColumnIndex("ID"+ arrayList_arrayCURRENTthemeIDS.get(11))));
+                        al_activitiesList_01.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
+                        al_activitiesList_02.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(1))));
+                        al_activitiesList_03.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(2))));
+                        al_activitiesList_04.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
+                        al_activitiesList_05.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
+                        al_activitiesList_06.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        al_activitiesList_07.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(6))));
+                        al_activitiesList_08.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(7))));
+                        al_activitiesList_09.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(8))));
+                        al_activitiesList_10.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(9))));
+                        al_activitiesList_11.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(10))));
+                        al_activitiesList_12.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(11))));
                         break;
                 }
 

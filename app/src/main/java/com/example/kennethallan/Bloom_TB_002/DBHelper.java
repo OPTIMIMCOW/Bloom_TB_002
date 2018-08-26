@@ -26,9 +26,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
 
-    Integer goals_CarryOver;
-
-
     // The Activity Table
 
     public static final String TABLE_ACTIVITIES = "Activities";
@@ -67,6 +64,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL1_HISTORY = "ID2";
     public static final String COL2_HISTORY = "START_DATE";
     public static final String COL3_HISTORY = "END_DATE";
+
+    //OtherThings
+    public static final String COLUMNPREFIX = "ID00";
+
 
 
     public DBHelper(Context context) {
@@ -122,7 +123,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         for (int i=0;i < arrayList_CURRENTTheme_IDs.size();i++){
-            String colName = "ID00"+ arrayList_CURRENTTheme_IDs.get(i);
+            String colName = COLUMNPREFIX+ arrayList_CURRENTTheme_IDs.get(i);
             newThingAdd.put(colName,eventValues.get(i));
         }
 
@@ -156,7 +157,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (res != null) { // to catch if error and not crash
         }
         String allID = res.getString(0); // this is getting the "All ID" for this specific value.
-        String allIDColumnName = "ID00"+allID;
+        String allIDColumnName = COLUMNPREFIX+allID;
 
         //set up theme to be added to CURRENT themes
         ContentValues newThingAdd123 = new ContentValues();
@@ -305,7 +306,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<String> themeIDs = getCURRENTThemeIDs();
 
         for (int i = 0; i < goalValues.size(); i++) {
-            newThingAdd.put("ID00" + themeIDs.get(i), goalValues.get(i));
+            newThingAdd.put(COLUMNPREFIX + themeIDs.get(i), goalValues.get(i));
         }
 
         if (manualSet =="Y"){
@@ -363,7 +364,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         for (int i=0; i<arrayList_CURRENTTheme_IDs.size();i++){
 
-            String columName = "ID00" + arrayList_CURRENTTheme_IDs.get(i);
+            String columName = COLUMNPREFIX + arrayList_CURRENTTheme_IDs.get(i);
             arrayList_CURRENTGoal_Values.add(res.getString(res.getColumnIndex(columName)));
         }
 
@@ -408,7 +409,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         for (int i=0; i<arrayList_CURRENTTheme_IDs.size();i++){
 
-            String columName = "ID00" + arrayList_CURRENTTheme_IDs.get(i);
+            String columName = COLUMNPREFIX + arrayList_CURRENTTheme_IDs.get(i);
             arrayList_MANUALGoal_Values.add(res.getString(res.getColumnIndex(columName)));
 
         }
