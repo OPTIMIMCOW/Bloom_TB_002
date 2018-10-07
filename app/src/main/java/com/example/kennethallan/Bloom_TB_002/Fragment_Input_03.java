@@ -3,16 +3,21 @@ package com.example.kennethallan.Bloom_TB_002;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 /**
@@ -20,6 +25,7 @@ import java.util.List;
  */
 public class Fragment_Input_03 extends Fragment {
 
+    DBHelper Mydb;
 
     private SeekBar seekbar01;
     private SeekBar seekbar02;
@@ -28,8 +34,15 @@ public class Fragment_Input_03 extends Fragment {
     private TextView tv_Pro_01;
     private TextView tv_Pro_02;
     private TextView tv_Pro_03;
+    private TextView tv_ThemeName;
+
+    private EditText et_Hours;
+    private EditText et_Minutes;
 
     SeekBar.OnSeekBarChangeListener mlistener;
+    EditText.OnClickListener mlistener2;
+
+    List<String> al_themeNames;
     //int testValue;
     List<Integer> testList = new ArrayList<>();
 
@@ -41,7 +54,6 @@ public class Fragment_Input_03 extends Fragment {
     }
 
     public interface interface_Frag03 {
-
         public void onMessageRead(List<Integer> message);
     }
 
@@ -55,40 +67,62 @@ public class Fragment_Input_03 extends Fragment {
         seekbar01 = (SeekBar) view.findViewById(R.id.seekBar1);
         seekbar02 = (SeekBar) view.findViewById(R.id.seekBar2);
         seekbar03 = (SeekBar) view.findViewById(R.id.seekBar3);
+        seekbar01.setTag(0);
+        seekbar02.setTag(1);
+        seekbar03.setTag(2);
+
 
         tv_Pro_01 = (TextView) view.findViewById(R.id.tv_num_01);
         tv_Pro_02 = (TextView) view.findViewById(R.id.tv_num_02);
         tv_Pro_03 = (TextView) view.findViewById(R.id.tv_num_03);
+        tv_ThemeName = (TextView) view.findViewById(R.id.tv_ThemeName);
+
         // linking variables to view objects
 
+        et_Hours = (EditText) view.findViewById(R.id.et_Input_Time_Hours);
+        et_Minutes = (EditText) view.findViewById(R.id.et_Input_Time_Minutes);
 
+        // pass current theme names to fragment for later use
+        al_themeNames = new ArrayList<String>();
+        Mydb = new DBHelper(getActivity()); //needed to do this so i could use the DH helper in a fragment. Probably needs the activity not the fragement for the constructer.....dunno
+        al_themeNames = Mydb.getCURRENTThemeNames();
 
-
+        // create listener for seekbars
         mlistener = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
                 bounceback();
 
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                String temp = seekBar.getTag().toString();
+                showName(temp);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
                 compileProgress();
+                hideName();
 
             }
 
         };
-
         seekbar01.setOnSeekBarChangeListener(mlistener);
         seekbar02.setOnSeekBarChangeListener(mlistener);
         seekbar03.setOnSeekBarChangeListener(mlistener);
+
+        mlistener2 = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               compileProgress();
+            }
+        };
+
+        et_Hours.setOnClickListener(mlistener2);
+        et_Minutes.setOnClickListener(mlistener2);
 
         return view;
     }
@@ -116,15 +150,30 @@ public class Fragment_Input_03 extends Fragment {
     // this method is used to gather the seekbar progress and send it onto the activity for display.
     private void compileProgress(){
         testList.clear();
+        Integer temp_hours;
+        Integer temp_minutes;
+
+        try {
+            temp_hours = Integer.parseInt(et_Hours.getText().toString());
+            temp_minutes = Integer.parseInt(et_Minutes.getText().toString());
+
+        }catch (Exception e){
+            Log.d("Fragment_Input_03","Reading the fragment time input");
+            temp_hours = 0;
+            temp_minutes = 0;
+        }
+
+
+
+        // put all values in an object to send from the fragement to the activity.
+        testList.add(Integer.parseInt(temp_hours.toString()));
+        testList.add(Integer.parseInt(temp_minutes.toString()));
         testList.add(seekbar01.getProgress());
         testList.add(seekbar02.getProgress());
         testList.add(seekbar03.getProgress());
 
-        if (testList.size()==3){
+        sendValuesInterface_Frag03.onMessageRead(testList);
 
-            sendValuesInterface_Frag03.onMessageRead(testList);
-
-        }
     }
 
 
@@ -157,6 +206,15 @@ public class Fragment_Input_03 extends Fragment {
         }
 
 
+    }
+
+    private void showName(String value){
+        tv_ThemeName.setText(al_themeNames.get(Integer.parseInt(value)));
+        tv_ThemeName.setVisibility(View.VISIBLE);
+    }
+
+    private void hideName(){
+        tv_ThemeName.setVisibility(View.INVISIBLE);
     }
 
 }

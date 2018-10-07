@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="370dp"
-    tools:context="com.example.kennethallan.Bloom_TB_002.Fragment_Input_11">
+    tools:context="com.example.kennethallan.Bloom_TB_002.Fragment_Output_11">
 
 
     <TextView
@@ -27,10 +27,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.26999998" />
 
-    <SeekBar
-        android:id="@+id/seekBar10"
+    <ProgressBar
+        android:id="@+id/pb_Goal_10"
         android:layout_width="180dp"
         android:layout_height="18dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
@@ -43,10 +45,49 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.33999997" />
 
-    <SeekBar
-        android:id="@+id/seekBar11"
+    <ProgressBar
+        android:id="@+id/pb_Attain_10"
+        android:layout_width="180dp"
+        android:layout_height="18dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:rotation="207"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.33999997" />
+
+    <ProgressBar
+        android:id="@+id/pb_Goal_11"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:rotation="237"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.20999998" />
+
+    <ProgressBar
+        android:id="@+id/pb_Attain_11"
+        android:layout_width="180dp"
+        android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -82,10 +123,30 @@
         app:layout_constraintVertical_bias="0.13999999" />
 
 
-    <SeekBar
-        android:id="@+id/seekBar1"
+    <ProgressBar
+        android:id="@+id/pb_Goal_01"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:rotation="270"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.18" />
+
+    <ProgressBar
+        android:id="@+id/pb_Attain_01"
+        android:layout_width="180dp"
+        android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -119,10 +180,31 @@
         app:layout_constraintVertical_bias="0.13" />
 
 
-    <SeekBar
-        android:id="@+id/seekBar2"
+    <ProgressBar
+        android:id="@+id/pb_Goal_02"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:rotation="303"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22000003" />
+
+    <ProgressBar
+        android:id="@+id/pb_Attain_02"
+        android:layout_width="180dp"
+        android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -157,10 +239,30 @@
         app:layout_constraintVertical_bias="0.19" />
 
 
-    <SeekBar
-        android:id="@+id/seekBar3"
+    <ProgressBar
+        android:id="@+id/pb_Goal_03"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:rotation="336"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.36" />
+
+    <ProgressBar
+        android:id="@+id/pb_Attain_03"
+        android:layout_width="180dp"
+        android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -193,10 +295,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.39" />
 
-    <SeekBar
-        android:id="@+id/seekBar4"
+    <ProgressBar
+        android:id="@+id/pb_Goal_04"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:rotation="9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.53" />
+
+    <ProgressBar
+        android:id="@+id/pb_Attain_04"
+        android:layout_width="180dp"
+        android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -230,10 +353,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.6" />
 
-    <SeekBar
-        android:id="@+id/seekBar5"
+    <ProgressBar
+        android:id="@+id/pb_Goal_05"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:rotation="42"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.73" />
+
+    <ProgressBar
+        android:id="@+id/pb_Attain_05"
+        android:layout_width="180dp"
+        android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -268,10 +412,31 @@
         app:layout_constraintVertical_bias="0.79" />
 
 
-    <SeekBar
-        android:id="@+id/seekBar6"
+    <ProgressBar
+        android:id="@+id/pb_Goal_06"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:rotation="75"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.68"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.81" />
+
+    <ProgressBar
+        android:id="@+id/pb_Attain_06"
+        android:layout_width="180dp"
+        android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -305,10 +470,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.84000003" />
 
-    <SeekBar
-        android:id="@+id/seekBar7"
+    <ProgressBar
+        android:id="@+id/pb_Goal_07"
         android:layout_width="180dp"
         android:layout_height="21dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:rotation="108"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.34"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.81" />
+
+    <ProgressBar
+        android:id="@+id/pb_Attain_07"
+        android:layout_width="180dp"
+        android:layout_height="21dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -342,10 +528,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.81" />
 
-    <SeekBar
-        android:id="@+id/seekBar8"
+    <ProgressBar
+        android:id="@+id/pb_Goal_08"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:rotation="141"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <ProgressBar
+        android:id="@+id/pb_Attain_08"
+        android:layout_width="180dp"
+        android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -379,10 +586,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.65" />
 
-    <SeekBar
-        android:id="@+id/seekBar9"
+    <ProgressBar
+        android:id="@+id/pb_Goal_09"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:rotation="174"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.52" />
+
+    <ProgressBar
+        android:id="@+id/pb_Attain_09"
+        android:layout_width="180dp"
+        android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -458,14 +686,7 @@
             android:layout_weight="1"/>
 
 
-
-
     </LinearLayout>
-
-
-
-
-
 
 
 </android.support.constraint.ConstraintLayout>

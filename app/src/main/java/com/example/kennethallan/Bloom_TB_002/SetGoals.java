@@ -1,42 +1,74 @@
 package com.example.kennethallan.Bloom_TB_002;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.CountDownTimer;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
-public class SetGoals extends AppCompatActivity {
+public class SetGoals extends AppCompatActivity implements Fragment_Input_12.interface_Frag12,Fragment_Input_11.interface_Frag11,Fragment_Input_10.interface_Frag10,Fragment_Input_09.interface_Frag09,Fragment_Input_08.interface_Frag08,Fragment_Input_07.interface_Frag07,Fragment_Input_06.interface_Frag06,
+        Fragment_Input_05.interface_Frag05,Fragment_Input_04.interface_Frag04, Fragment_Input_03.interface_Frag03, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+
+
 
     DBHelper Mydb;
-    ListView setGoalsListView;
     Button TestButton;
-    CustomAdaptor_InputSliders CA;
-    Beans testBean = new Beans(1);
-    EditText et_goalsInput_Minutes;
-    EditText et_goalsInput_Hours;
+    int numCurrentThemes;
+    int  goal_InputTime_Hours;
+    int  goal_InputTime_Minutes;
+
+    View fragmentHolder;
+    List<Integer> compiledValues = new ArrayList<>();
+    //TODO add Textview to set date and a countdown to show how much time was left.
+    //TODO add variable to log the date of the next session.
+    // TODO introduce scrollview.
+    // TODO introduce customarray for the themes which results in a new fragment being loaded.
+    TextView tv_sessionDate;
+    TextView tv_sessionCountdown;
+    TextView bn_setDate;
+    Calendar c_sessionEndDate;
 
 
     ArrayList<String> arrayList_GlobalValues = new ArrayList<String>(); // arraylist for the values extracted from the sliders
-    int numAdapterValues;
     int goal_InputTime = 0; // to initalise the values
     ArrayList<String> arrayList_GoalsValues = new ArrayList<String>(); // arraylist for the factored values  for goal after being combined with the time input. to be saved in the DB database.
 
     //TODO figure out if the database is based on current themes or all themes and alter the golasValues arraylist as required to input into SqliteDB.
 
-
+    // variable to do with the countdown
+    private long START_TIME_IN_MILLIS;
+    private TextView tv_Countdown_Days;
+    private TextView tv_Countdown_Hours;
+    private TextView tv_Countdown_Minutes;
+    private TextView tv_Countdown_Seconds;
+    private CountDownTimer mCountDownTimer;
+    private boolean mTimerRunning;
+    private long mTimeLeftInMillis;
+    private long mEndTime;
 
 
     @Override
@@ -45,42 +77,212 @@ public class SetGoals extends AppCompatActivity {
         setContentView(R.layout.activity_set_goals);
 
         Mydb = new DBHelper(this);
-        setGoalsListView = (ListView)findViewById(R.id.ListViewSetGoals);
         TestButton = (Button) findViewById(R.id.TestButton_SetGoals);
-        et_goalsInput_Hours = (EditText) findViewById(R.id.et_inputFreeTime_Hours);
-        et_goalsInput_Minutes = (EditText) findViewById(R.id.et_inputFreeTime_Minutes);
+        fragmentHolder = findViewById(R.id.Fragment_Holder);
+
+
 
         TEST();
 
+        // look though SQLite to fetch number of themes
+        Mydb.getCURRENTThemeNames();
+        numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs();
 
-        // Populate arrayAdaptor
+        // load fragment
+        if (fragmentHolder != null) {
 
-        //String[] testString = {"Test1", "Test2", "Test3"}; Currently not using.
-        ArrayList<String> themeValues = Mydb.getCURRENTThemeNames();
+            if (savedInstanceState != null) {
+                return;
+            }// this is like an exit if something has gone wrong for this to load????
+            if (numCurrentThemes == 12) {
+                Fragment_Input_12 myFragment = new Fragment_Input_12();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 11) {
+                Fragment_Input_11 myFragment = new Fragment_Input_11();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 10) {
+                Fragment_Input_10 myFragment = new Fragment_Input_10();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 9) {
+                Fragment_Input_09 myFragment = new Fragment_Input_09();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 8) {
+                Fragment_Input_08 myFragment = new Fragment_Input_08();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 7) {
+                Fragment_Input_07 myFragment = new Fragment_Input_07();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 6) {
+                Fragment_Input_06 myFragment = new Fragment_Input_06();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 5) {
+                Fragment_Input_05 myFragment = new Fragment_Input_05();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 4) {
+                Fragment_Input_04 myFragment = new Fragment_Input_04();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 3) {
+                Fragment_Input_03 myFragment = new Fragment_Input_03();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
+                fragmentTransaction.commit();
+            }
+        }
 
-        ListAdapter themeListAdapter = new CustomAdaptor_InputSliders(this,themeValues);
-        setGoalsListView.setAdapter(themeListAdapter);
+        //implement date set functionality
+        bn_setDate = (Button) findViewById(R.id.bn_dateSet);
+        tv_sessionDate = (TextView) findViewById(R.id.tv_date);
+        tv_sessionCountdown = (TextView) findViewById(R.id.tv_countdown);
+        bn_setDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // date picker fragment
+                pickSessionDate();
+            }
+        });
+
+        // implement countdown functionality
+
+        tv_Countdown_Days = (TextView) findViewById(R.id.tv_countdown_days);
+        tv_Countdown_Hours = (TextView) findViewById(R.id.tv_countdown_hours);
+        tv_Countdown_Minutes = (TextView) findViewById(R.id.tv_countdown_minutes);
+        tv_Countdown_Seconds = (TextView) findViewById(R.id.tv_countdown_seconds);
+
+        tv_Countdown_Days.setText("1");
+        tv_Countdown_Hours.setText("2");
+        tv_Countdown_Minutes.setText("3");
+        tv_Countdown_Seconds.setText("4");
 
     }
 
 
+
+
+
+    @Override
+    public void onMessageRead(List<Integer> message) {
+        // clear old values
+//        compiledValues.clear();   // todo how to clear the arraylist since its definiteyl causing problems
+        // attach new values to array
+        compiledValues = message;
+        // create goal_InputTime using minutes and hourse values from List from Fragment.
+        goal_InputTime_Hours = compiledValues.get(0);
+        goal_InputTime_Minutes = compiledValues.get(1);
+
+        // Remove hours and minutes values from array so only left with seekbar values.
+        compiledValues.remove(0);
+        compiledValues.remove(0); // twice because arraylist shrinks each time so this way we only erase those first two rows
+
+        // convert from integer array to string array from calulateGoals() TODO see if we can get around changing to a string array since we change it back to int in this method.
+        ArrayList<String> al_temp = new ArrayList<String>();
+        for (int i =0; i<compiledValues.size();i++){
+
+            al_temp.add(Integer.toString(compiledValues.get(i)));
+        }
+
+        arrayList_GlobalValues = al_temp; //make global variable for use elsewhere.
+    }
+
+
+// ///////////////// TO DO WITH SESSION DATE AND TIME SETTING ////////////////////////
+
+    public void pickSessionDate(){
+        DialogFragment datePicker = new DatePickerFragment();
+        datePicker.show(getSupportFragmentManager(),"Open Date Picker");
+    }
+
+    // This method recieves the date we picked in the datePicker Fragment
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+
+        // create a calander object to hold the date we picked in the date picker.
+        c_sessionEndDate = Calendar.getInstance();
+        c_sessionEndDate.set(Calendar.YEAR,year);
+        c_sessionEndDate.set(Calendar.MONTH,month);
+        c_sessionEndDate.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+
+        pickSessionTime();
+    }
+
+    public void pickSessionTime(){
+        DialogFragment timePicker = new TimePickerFragment();
+        timePicker.show(getSupportFragmentManager(),"Open Time Picker");
+    }
+
+    @Override
+    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minutes) {
+        c_sessionEndDate.set(Calendar.HOUR_OF_DAY,hourOfDay);
+        c_sessionEndDate.set(Calendar.MINUTE,minutes);
+
+        // format calander into a string.
+
+        android.text.format.DateFormat df = new android.text.format.DateFormat();
+        String currentDateString = DateFormat.getDateInstance().format(c_sessionEndDate.getTime()) + " - " + c_sessionEndDate.get(Calendar.HOUR_OF_DAY) + ":" + c_sessionEndDate.get(Calendar.MINUTE);
+
+        tv_sessionDate.setText(currentDateString);
+
+    }
+
+    /////////////////////////////// TO DO WITH TESTING FUNCTIONALITY /////////////////////////////////////
+
+    // TODO rename these variables
     public void TEST(){
 
         TestButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        goal_InputTime = getFreeTime(); // passing to the global variable.
-                        //Toast.makeText(SetGoals.this, Integer.toString(goal_InputTime), Toast.LENGTH_SHORT).show();
-                        calculateGoals(arrayList_GlobalValues,goal_InputTime);
-                        String manualSet = "Y"; // Strring to distinguish this input as manual input
-                        boolean tempresult = Mydb.insertGoal(arrayList_GoalsValues,manualSet);
-                        if (tempresult){
-                            Toast.makeText(SetGoals.this, "Succeeded To Input Goals", Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(SetGoals.this, "Failed To Input Goals", Toast.LENGTH_SHORT).show();
+                       /////////////////////// SETTING THE GOALS TO THE DATABASE //////////////////
+                        goal_InputTime = getFreeTime(); // passing to the global variable. // TODO fix issue that means that you get a goal_nput time = 0 unless slider moved.
+                        if (goal_InputTime == 0){
+                            Toast.makeText(SetGoals.this, "CANNOT SET GOAL. Free time must be input" , Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
+                            calculateGoals(arrayList_GlobalValues, goal_InputTime);
+                            String manualSet = "Y"; // String to distinguish this input as manual input
+                            boolean tempresult = Mydb.insertGoal(arrayList_GoalsValues, manualSet);
+                            if (tempresult) {
+                                Toast.makeText(SetGoals.this, "Succeeded To Input Goals", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(SetGoals.this, "Failed To Input Goals", Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            // setting or resetting the timer
+                            if (mTimerRunning==true){
+                                cancelTimer();
+                                loadCountdown();
+                                startTimer();
+                            }else{
+                                loadCountdown();
+                                startTimer();
+                            }
+                            updateCountDownText();
+
 
                         }
+
+                        /////////////////////// STARTING THE COUNTDOWN /////////////////////////////
+
+
+
 
                    }
                 }
@@ -89,8 +291,6 @@ public class SetGoals extends AppCompatActivity {
 // get the free time from the edit texts and convert them to one figure in minutes
 
     public int getFreeTime(){
-        int  goal_InputTime_Hours = Integer.parseInt(et_goalsInput_Hours.getText().toString());
-        int  goal_InputTime_Minutes = Integer.parseInt(et_goalsInput_Minutes.getText().toString());
         double a = 60.0;
         int temp = goal_InputTime_Hours*60 + goal_InputTime_Minutes;
         return temp;
@@ -118,130 +318,109 @@ public class SetGoals extends AppCompatActivity {
 
     }
 
+    // /////////////////////ALL TO DO WITH THE COUNTDOWN TEXT //////////////////////////////
+    private void loadCountdown(){
+        START_TIME_IN_MILLIS = c_sessionEndDate.getTimeInMillis() - System.currentTimeMillis();
+        mTimeLeftInMillis = START_TIME_IN_MILLIS;
+    }
 
-
-
-    class CustomAdaptor_InputSliders extends ArrayAdapter<String> {
-
-
-        SetGoals SG;
-        ArrayList<String> arrayList_Values = new ArrayList<>();
-
-
-
-        int progressValue;
-        int recordFirstCounter = 0;
-
-        public CustomAdaptor_InputSliders(Context context, ArrayList<String>  resource) {
-            super(context, R.layout.input_slider_01, resource);
-        }
-
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-
-            LayoutInflater Inflater = LayoutInflater.from(getContext());
-            View customView = Inflater.inflate(R.layout.input_slider_01, parent, false);
-            // 1) refence to data
-            // 2) reference to text view
-            // 3) Reference to seekbar.
-
-            String singleViewItem = getItem(position);
-            TextView title = (TextView) customView.findViewById(R.id.textView5);
-            final SeekBar seekbar = (SeekBar) customView.findViewById(R.id.seekBar2);
-
-            //set values to view
-            title.setText(singleViewItem);
-            seekbar.setProgress(0);
-
-            numAdapterValues = setGoalsListView.getAdapter().getCount(); // returns total number of childen// seems to need to be in the adapter to work properly????
-
-
-            seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-                int progressValue;
-
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                    if (recordFirstCounter == 0){
-                        startBuild();
-                        compileValues();
-                        recordFirstCounter=1;
-                    }else{
-                        compileValues();
-                    }
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar bar) {
-
-
-                }
-            });
-
-
-            return customView;
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return getCount();
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return position;
-        }
-
-        public void startBuild(){
-
-            for (int i=0;i<numAdapterValues;i++){
-
-                arrayList_Values.add("0");
-
+    private void startTimer() {
+        mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
             }
 
-        }
-
-        public void compileValues(){
-
-            //int numValues = setGoalsListView.getAdapter().getCount(); // returns total number of childen
-            //int numValues2 = setGoalsListView.getChildCount(); // returns number of children made (visible) right now.
-
-            for (int i=0; i < numAdapterValues;i++ ){
-                try{
-                    SeekBar seekbar = (SeekBar) setGoalsListView.getChildAt(i).findViewById(R.id.seekBar2);
-                    String value = Integer.toString(seekbar.getProgress());
-                    arrayList_Values.set(i,value);
-                }catch (Exception e) {
-
-                }
+            @Override
+            public void onFinish() {
+                mTimeLeftInMillis = 0;
+                updateCountDownText();
+                Toast.makeText(SetGoals.this, "Finished", Toast.LENGTH_SHORT).show();
+                mTimerRunning = false;
 
             }
+        }.start();
 
-            arrayList_GlobalValues = arrayList_Values;
+        mTimerRunning = true;
+    }
 
-            //makeGlobal(arrayList_Values);
+    private void cancelTimer() {
+        mCountDownTimer.cancel();
+        mTimerRunning = false;
+    }
 
-            //SeekBar tempView2 = (SeekBar) setGoalsListView.getChildAt(0).findViewById(R.id.seekBar2); // this one gets children ie the altered values not the original views when loaded ie progress = 0
-            // limitation is that can only get visible values so must use in way to catch exception.
-            //SeekBar seekbar = (SeekBar) setGoalsListView.getAdapter().getView(i,null,setGoalsListView).findViewById(R.id.seekBar2); // gets the original values put in when making the view - ok  but progress = 0 unless we save it or something somehow.
+    private void updateCountDownText() {
+        int totSeconds;
+        int days;
+        int hours;
+        int minutes;
+        int seconds;
+        totSeconds = (int)(mTimeLeftInMillis / 1000);
+
+        days = totSeconds/(60*60*24);
+        hours = (totSeconds %(60*60*24))/(60*60);
+        minutes = (totSeconds %(60*60))/(60);
+        seconds = (totSeconds %(60));
 
 
-        }
+//        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d:%02d:%02d", days, hours, minutes,seconds);
 
-//        public void makeGlobal(ArrayList<String> values){
-//            arrayList_GlobalValues = values;
-//        }
-
+        tv_Countdown_Days.setText(Integer.toString(days) + "d");
+        tv_Countdown_Hours.setText(Integer.toString(hours) + "hr");
+        tv_Countdown_Minutes.setText(Integer.toString(minutes) + "m");
+        tv_Countdown_Seconds.setText(Integer.toString(seconds)+ "s") ;
 
     }
+
+    // use shared preferences to get timer saved to shared preferences for use when we open and close the app.
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // TODO make shared prefferences name a constant to be used requested in different activities
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putLong("millisLeft", mTimeLeftInMillis);
+        editor.putBoolean("timerRunning", mTimerRunning);
+        editor.putLong("endTime", mEndTime);
+
+        editor.apply();
+
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // TODO make shared prefferences name a constant to be used requested in different activities
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
+        mTimerRunning = prefs.getBoolean("timerRunning", false); // note this is a default value.it is expected to be overwritten when looking in shared preferences.
+
+        updateCountDownText();
+
+        if (mTimerRunning) {
+            mEndTime = prefs.getLong("endTime", 0); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
+            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
+
+            // used to make sure textview doesnt display negative values
+            if (mTimeLeftInMillis < 0) {
+                mTimeLeftInMillis = 0;
+                mTimerRunning = false;
+                updateCountDownText();
+            } else {
+                startTimer();
+            }
+        }
+
+    }
+
 
 
 }

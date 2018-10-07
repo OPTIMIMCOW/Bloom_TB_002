@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="370dp"
-    tools:context="com.example.kennethallan.Bloom_TB_002.Fragment_Input_08">
+    tools:context="com.example.kennethallan.Bloom_TB_002.Fragment_Output_04">
 
 
     <TextView
-        android:id="@+id/tv_num_07"
+        android:id="@+id/tv_num_04"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_marginBottom="8dp"
@@ -27,10 +27,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.55" />
 
-    <SeekBar
-        android:id="@+id/seekBar7"
+    <ProgressBar
+        android:id="@+id/pb_Goal_04"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
@@ -42,49 +44,49 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <SeekBar
-        android:id="@+id/seekBar8"
+    <ProgressBar
+        android:id="@+id/pb_Attain_04"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:rotation="180"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <ProgressBar
+        android:id="@+id/pb_Goal_01"
+        android:layout_width="180dp"
+        android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="225"
+        android:rotation="270"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.26" />
+        app:layout_constraintVertical_bias="0.18" />
 
-
-    <TextView
-        android:id="@+id/tv_num_08"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorAccent"
-        android:gravity="center"
-        android:rotation="45"
-        android:text="@string/Default_Time"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.22"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32" />
-
-
-    <SeekBar
-        android:id="@+id/seekBar1"
+    <ProgressBar
+        android:id="@+id/pb_Attain_01"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -117,48 +119,30 @@
         app:layout_constraintVertical_bias="0.19999999" />
 
 
-    <SeekBar
-        android:id="@+id/seekBar2"
+    <ProgressBar
+        android:id="@+id/pb_Goal_02"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="315"
+        android:rotation="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.26" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_num_02"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorAccent"
-        android:gravity="center"
-        android:rotation="-45"
-        android:text="@string/Default_Time"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.78"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32" />
-
-
-    <SeekBar
-        android:id="@+id/seekBar3"
+    <ProgressBar
+        android:id="@+id/pb_Attain_02"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="0dp"
         android:layout_marginStart="8dp"
@@ -172,7 +156,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_num_03"
+        android:id="@+id/tv_num_02"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_marginBottom="8dp"
@@ -191,47 +175,32 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.55" />
 
-    <SeekBar
-        android:id="@+id/seekBar4"
+
+
+    <ProgressBar
+        android:id="@+id/pb_Goal_03"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="45"
+        android:rotation="90"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.74" />
+        app:layout_constraintVertical_bias="0.82" />
 
-    <TextView
-        android:id="@+id/tv_num_04"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorAccent"
-        android:gravity="center"
-        android:rotation="45"
-        android:text="@string/Default_Time"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.79"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.69" />
-
-    <SeekBar
-        android:id="@+id/seekBar5"
+    <ProgressBar
+        android:id="@+id/pb_Attain_03"
         android:layout_width="180dp"
         android:layout_height="19dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -245,7 +214,7 @@
         app:layout_constraintVertical_bias="0.82" />
 
     <TextView
-        android:id="@+id/tv_num_05"
+        android:id="@+id/tv_num_03"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_marginBottom="8dp"
@@ -261,46 +230,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
+        app:layout_constraintVertical_bias="0.83" />
 
 
 
-    <SeekBar
-        android:id="@+id/seekBar6"
-        android:layout_width="180dp"
-        android:layout_height="19dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:progress="0"
-        android:rotation="135"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.74" />
-
-    <TextView
-        android:id="@+id/tv_num_06"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorAccent"
-        android:gravity="center"
-        android:rotation="-45"
-        android:text="@string/Default_Time"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.21"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.69" />
 
     <LinearLayout
         android:id="@+id/timeHolder"
@@ -347,8 +280,6 @@
 
 
     </LinearLayout>
-
-
 
 
 

@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -41,10 +43,14 @@ public class Fragment_Input_09 extends Fragment {
     private TextView tv_Pro_08;
     private TextView tv_Pro_09;
 
+    private EditText et_Hours;
+    private EditText et_Minutes;
+
+
 
     SeekBar.OnSeekBarChangeListener mlistener;
     //int testValue;
-    List<Integer> testList = new ArrayList<>();
+    List<Integer> testList = new ArrayList<Integer>();
 
     Fragment_Input_09.interface_Frag09 sendValuesInterface_Frag09;
 
@@ -91,25 +97,13 @@ public class Fragment_Input_09 extends Fragment {
         tv_Pro_08 = (TextView) view.findViewById(R.id.tv_num_08);
         tv_Pro_09 = (TextView) view.findViewById(R.id.tv_num_09);
 
+        et_Hours = (EditText) view.findViewById(R.id.et_Input_Time_Hours);
+        et_Minutes = (EditText) view.findViewById(R.id.et_Input_Time_Minutes);
+
         // Create seekbar listener to apply to all seekbars
         mlistener = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                switch (seekBar.getId()) {
-//                    case R.id.seekBar1:
-//                        compileProgress();
-//                        break;
-//                    case R.id.seekBar2:
-//                        compileProgress();
-//                        break;
-//                    case R.id.seekBar3:
-//                        compileProgress();
-//                        break;
-//                    case R.id.seekBar4:
-//                        compileProgress();
-//
-//                        break;
-//                }
 
                 bounceback();
 
@@ -140,7 +134,6 @@ public class Fragment_Input_09 extends Fragment {
         seekbar08.setOnSeekBarChangeListener(mlistener);
         seekbar09.setOnSeekBarChangeListener(mlistener);
 
-
         return view;
     }
 
@@ -149,7 +142,6 @@ public class Fragment_Input_09 extends Fragment {
         super.onAttach(context);
 
         Activity activity = (Activity) context;
-
 
         // making a try catch to check if this is initialised or not.
         try {
@@ -166,7 +158,23 @@ public class Fragment_Input_09 extends Fragment {
 
     // this method is used to gather the seekbar progress and send it onto the activity for display.
     private void compileProgress(){
+        Integer temp_hours;
+        Integer temp_minutes;
+
+        try {
+            temp_hours = Integer.parseInt(et_Hours.getText().toString());
+            temp_minutes = Integer.parseInt(et_Minutes.getText().toString());
+
+        }catch (Exception e){
+            Log.d("Fragment_Input_09","Reading the fragment time input");
+            temp_hours = 0;
+            temp_minutes = 0;
+        }
+
         testList.clear();
+        // put all values in an object to send from the fragement to the activity.
+        testList.add(Integer.parseInt(temp_hours.toString()));
+        testList.add(Integer.parseInt(temp_minutes.toString()));
         testList.add(seekbar01.getProgress());
         testList.add(seekbar02.getProgress());
         testList.add(seekbar03.getProgress());
@@ -177,13 +185,8 @@ public class Fragment_Input_09 extends Fragment {
         testList.add(seekbar08.getProgress());
         testList.add(seekbar09.getProgress());
 
+        sendValuesInterface_Frag09.onMessageRead(testList);
 
-
-        if (testList.size()==9){
-
-            sendValuesInterface_Frag09.onMessageRead(testList);
-
-        }
     }
 
 

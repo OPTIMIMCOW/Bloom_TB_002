@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -30,6 +32,9 @@ public class Fragment_Input_05 extends Fragment {
     private TextView tv_Pro_03;
     private TextView tv_Pro_04;
     private TextView tv_Pro_05;
+
+    private EditText et_Hours;
+    private EditText et_Minutes;
 
     SeekBar.OnSeekBarChangeListener mlistener;
     //int testValue;
@@ -67,6 +72,9 @@ public class Fragment_Input_05 extends Fragment {
         tv_Pro_04 = (TextView) view.findViewById(R.id.tv_num_04);
         tv_Pro_05 = (TextView) view.findViewById(R.id.tv_num_05);
         // linking variables to view objects
+
+        et_Hours = (EditText) view.findViewById(R.id.et_Input_Time_Hours);
+        et_Minutes = (EditText) view.findViewById(R.id.et_Input_Time_Minutes);
 
 
 
@@ -140,6 +148,24 @@ public class Fragment_Input_05 extends Fragment {
     // this method is used to gather the seekbar progress and send it onto the activity for display.
     private void compileProgress(){
         testList.clear();
+        Integer temp_hours;
+        Integer temp_minutes;
+
+        try {
+            temp_hours = Integer.parseInt(et_Hours.getText().toString());
+            temp_minutes = Integer.parseInt(et_Minutes.getText().toString());
+
+        }catch (Exception e){
+            Log.d("Fragment_Input_05","Reading the fragment time input");
+            temp_hours = 0;
+            temp_minutes = 0;
+        }
+
+
+
+        // put all values in an object to send from the fragement to the activity.
+        testList.add(Integer.parseInt(temp_hours.toString()));
+        testList.add(Integer.parseInt(temp_minutes.toString()));
         testList.add(seekbar01.getProgress());
         testList.add(seekbar02.getProgress());
         testList.add(seekbar03.getProgress());
@@ -147,11 +173,8 @@ public class Fragment_Input_05 extends Fragment {
         testList.add(seekbar05.getProgress());
 
 
-        if (testList.size()==5){
+        sendValuesInterface_Frag05.onMessageRead(testList);
 
-            sendValuesInterface_Frag05.onMessageRead(testList);
-
-        }
     }
 
 
