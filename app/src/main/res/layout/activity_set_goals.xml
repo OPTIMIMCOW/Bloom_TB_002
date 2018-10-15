@@ -1,126 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_set_goals"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kennethallan.Bloom_TB_002.SetGoals">
+    tools:context="com.example.kennethallan.Bloom_TB_002.SetGoals"
+    android:focusableInTouchMode="true">
 
-    <FrameLayout
-        android:id="@+id/Fragment_Holder"
-        android:layout_width="383dp"
-        android:layout_height="370dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    </FrameLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/bn_dateSet"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/Fragment_Holder"
-        android:layout_margin="5dp"
-        android:gravity="center"
-        android:text="Set Date" />
+            <FrameLayout
+                android:id="@+id/Fragment_Holder"
+                android:layout_width="383dp"
+                android:layout_height="370dp">
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/bn_dateSet"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/Fragment_Holder"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:text="Set Date" />
 
 
-    <Button
-        android:id="@+id/TestButton_SetGoals"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/bn_dateSet"
-        android:layout_margin="5dp"
-        android:gravity="center"
-        android:text="Save" />
+            <Button
+                android:id="@+id/TestButton_SetGoals"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/bn_dateSet"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:text="Save" />
 
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="400dp"
-        android:layout_height="50dp"
-        android:layout_alignBottom="@+id/bn_dateSet"
-        android:layout_below="@+id/Fragment_Holder"
-        android:gravity="center"
-        android:layout_margin="5dp"
-        android:layout_toStartOf="@+id/bn_dateSet"
-        android:text="DateView" />
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="400dp"
+                android:layout_height="50dp"
+                android:layout_alignBottom="@+id/bn_dateSet"
+                android:layout_below="@+id/Fragment_Holder"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:layout_toStartOf="@+id/bn_dateSet"
+                android:text="DateView" />
 
-    <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/tv_date"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tv_date"
+                android:orientation="horizontal"
+                android:id="@+id/countdown">
 
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_gravity="center"/>
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/tv_countdown_days"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:layout_margin="5dp"
-            android:text="D"
-            android:layout_weight="2"
-            android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/tv_countdown_days"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="D"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"/>
 
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_gravity="center"/>
+                <Space
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/tv_countdown_hours"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:layout_margin="5dp"
-            android:text="H"
-            android:layout_weight="2"
-            android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/tv_countdown_hours"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="H"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"/>
 
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_gravity="center"/>
+                <Space
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/tv_countdown_minutes"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:layout_margin="5dp"
-            android:text="M"
-            android:layout_weight="2"
-            android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/tv_countdown_minutes"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="M"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"/>
 
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_gravity="center"/>
+                <Space
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/tv_countdown_seconds"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:layout_margin="5dp"
-            android:text="S"
-            android:layout_weight="2"
-            android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/tv_countdown_seconds"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:text="S"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"/>
 
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_gravity="center"/>
+                <Space
+                    android:layout_width="1dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"/>
 
-    </LinearLayout>
+            </LinearLayout>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_height="500dp"
+                android:id="@+id/ListViewSetGoals"
+                android:layout_margin="10dp"
+                android:layout_below="@+id/countdown" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@android:drawable/ic_input_add"
+                android:layout_margin="16dp" />
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
 
 </RelativeLayout>

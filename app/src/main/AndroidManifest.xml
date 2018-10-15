@@ -8,17 +8,21 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.kennethallan.Bloom_TB_002.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.kennethallan.Bloom_TB_002.EditThemePage" />
-        <activity android:name="com.example.kennethallan.Bloom_TB_002.SetGoals" />
-        <activity android:name="com.example.kennethallan.Bloom_TB_002.AddEvent" />
-        <activity android:name="com.example.kennethallan.Bloom_TB_002.Summary"></activity>
+        <activity android:name=".EditThemePage" />
+        <activity android:name=".SetGoals" />
+        <activity android:name=".AddEvent" />
+        <activity android:name=".Summary" />
+        <activity
+            android:name=".TemporaryTestButton"
+            android:label="@string/title_activity_temporary_test_button"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

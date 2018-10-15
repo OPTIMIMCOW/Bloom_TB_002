@@ -26,15 +26,12 @@ import com.example.kennethallan.Bloom_TB_002.R;
 import java.util.Locale;
 
 // insert activity has a lot of stuff from the tutorial but also is where activities are set into the database.
-// TODO Add a timer to reset all activities in the summation.
 // TODO Transfer adding activities to another activity just for clarity and have a summary of the activities there. Essentially copy the add themes activity.
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     public static final String EXTRA_MESSAGE = "com.example.kennethallan.testbuildofsqllightdatabase_01.MESSAGE";
-
-
 
     DBHelper Mydb;
     Context contextWord = this;
@@ -52,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     Button bt_StartSession;
 
 
+// TODO add timer
+// TODO add progress fragment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,15 +68,12 @@ public class MainActivity extends AppCompatActivity {
 
         Mydb = new DBHelper(this); // can call because it is a public class in the package
 
-        addThemeButton = (Button) findViewById(R.id.AddThemeButton);
         setGoalButton = (Button) findViewById(R.id.SetGoalButton);
         addActivityButton = (Button) findViewById(R.id.SetActivity);
         makeSummaryButton = (Button) findViewById(R.id.Summary);
         mTextViewCountDown = (TextView) findViewById(R.id.tv_countdown);
         bt_StartSession = (Button) findViewById(R.id.bt_countdownStart);
 
-
-        editTheme();
         setGoal();
         addActivity();
         makeSummary();
@@ -96,26 +92,6 @@ public class MainActivity extends AppCompatActivity {
         });
         updateCountDownText();
 
-    }
-
-
-    // opens a new activity to where themes are set and viewed.
-    public void editTheme (){
-        addThemeButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Mydb.close(); // this is used to recreate the database.
-                        Intent intent = new Intent(MainActivity.this,EditThemePage.class);
-                        //String message = "Successful Intent";
-                        //intent.putExtra(EXTRA_MESSAGE, message);
-                        startActivity(intent);
-
-
-
-                    }
-                }
-        );
     }
 
     // opens an activity to where goals are set.

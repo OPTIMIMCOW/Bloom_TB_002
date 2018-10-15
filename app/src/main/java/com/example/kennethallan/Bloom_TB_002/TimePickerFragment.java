@@ -21,7 +21,7 @@ public class TimePickerFragment extends DialogFragment {
         //getting the current time so that when we open the time picker that is shown.
         Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.SECOND);
 
         //This returns the oject we can select the time on.
         return new TimePickerDialog(getActivity(),(TimePickerDialog.OnTimeSetListener)getActivity(),hour,minute, DateFormat.is24HourFormat(getActivity()));

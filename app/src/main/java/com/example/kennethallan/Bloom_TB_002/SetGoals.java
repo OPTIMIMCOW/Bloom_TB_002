@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -30,8 +33,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+
 public class SetGoals extends AppCompatActivity implements Fragment_Input_12.interface_Frag12,Fragment_Input_11.interface_Frag11,Fragment_Input_10.interface_Frag10,Fragment_Input_09.interface_Frag09,Fragment_Input_08.interface_Frag08,Fragment_Input_07.interface_Frag07,Fragment_Input_06.interface_Frag06,
-        Fragment_Input_05.interface_Frag05,Fragment_Input_04.interface_Frag04, Fragment_Input_03.interface_Frag03, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+        Fragment_Input_05.interface_Frag05,Fragment_Input_04.interface_Frag04, Fragment_Input_03.interface_Frag03,
+        DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, Dialogue_AddTheme.interface_Dia_AddTheme {
 
 
 
@@ -43,10 +50,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 
     View fragmentHolder;
     List<Integer> compiledValues = new ArrayList<>();
-    //TODO add Textview to set date and a countdown to show how much time was left.
-    //TODO add variable to log the date of the next session.
-    // TODO introduce scrollview.
-    // TODO introduce customarray for the themes which results in a new fragment being loaded.
+// TODO implement the ability to swap out input fragements as the number of themes is deleted
     TextView tv_sessionDate;
     TextView tv_sessionCountdown;
     TextView bn_setDate;
@@ -56,6 +60,8 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
     ArrayList<String> arrayList_GlobalValues = new ArrayList<String>(); // arraylist for the values extracted from the sliders
     int goal_InputTime = 0; // to initalise the values
     ArrayList<String> arrayList_GoalsValues = new ArrayList<String>(); // arraylist for the factored values  for goal after being combined with the time input. to be saved in the DB database.
+    // TODO ****** make this less clomplex with goalsValues and globalValues
+
 
     //TODO figure out if the database is based on current themes or all themes and alter the golasValues arraylist as required to input into SqliteDB.
 
@@ -69,18 +75,26 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
     private boolean mTimerRunning;
     private long mTimeLeftInMillis;
     private long mEndTime;
+    String currentDateString;
+
+    // For list adapter
+    ListView themeListView;
+
+    FloatingActionButton fab_AddTheme;
+
+    Bundle sis;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_goals);
+
+        sis = savedInstanceState;
 
         Mydb = new DBHelper(this);
         TestButton = (Button) findViewById(R.id.TestButton_SetGoals);
         fragmentHolder = findViewById(R.id.Fragment_Holder);
-
-
 
         TEST();
 
@@ -89,62 +103,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs();
 
         // load fragment
-        if (fragmentHolder != null) {
-
-            if (savedInstanceState != null) {
-                return;
-            }// this is like an exit if something has gone wrong for this to load????
-            if (numCurrentThemes == 12) {
-                Fragment_Input_12 myFragment = new Fragment_Input_12();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 11) {
-                Fragment_Input_11 myFragment = new Fragment_Input_11();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 10) {
-                Fragment_Input_10 myFragment = new Fragment_Input_10();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 9) {
-                Fragment_Input_09 myFragment = new Fragment_Input_09();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 8) {
-                Fragment_Input_08 myFragment = new Fragment_Input_08();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 7) {
-                Fragment_Input_07 myFragment = new Fragment_Input_07();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 6) {
-                Fragment_Input_06 myFragment = new Fragment_Input_06();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 5) {
-                Fragment_Input_05 myFragment = new Fragment_Input_05();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 4) {
-                Fragment_Input_04 myFragment = new Fragment_Input_04();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 3) {
-                Fragment_Input_03 myFragment = new Fragment_Input_03();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-        }
+        loadInputFragment(savedInstanceState, false);
 
         //implement date set functionality
         bn_setDate = (Button) findViewById(R.id.bn_dateSet);
@@ -159,23 +118,193 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         });
 
         // implement countdown functionality
-
         tv_Countdown_Days = (TextView) findViewById(R.id.tv_countdown_days);
         tv_Countdown_Hours = (TextView) findViewById(R.id.tv_countdown_hours);
         tv_Countdown_Minutes = (TextView) findViewById(R.id.tv_countdown_minutes);
         tv_Countdown_Seconds = (TextView) findViewById(R.id.tv_countdown_seconds);
 
-        tv_Countdown_Days.setText("1");
-        tv_Countdown_Hours.setText("2");
-        tv_Countdown_Minutes.setText("3");
-        tv_Countdown_Seconds.setText("4");
 
+
+ // //////////////////////////////////INPUT INTO CUSTOM ADAPTER FOR LIST VIEW //////////////////////////
+        // Build arraylists for custom adapter
+        ArrayList<String> al_ThemeNames = new ArrayList<String>();
+        al_ThemeNames = Mydb.getCURRENTThemeNames();
+
+        // inital build of array with placeholder names
+        for (int i = 0; i<al_ThemeNames.size(); i++){
+            arrayList_GoalsValues.add("No Value");
+        }
+
+        themeListView = (ListView)findViewById(R.id.ListViewSetGoals);
+        populateListView(); // this method is called to repopulate the list when a theme is added thus it is made into a method.
+
+
+        // ////////////////////////// ADD THEMES ////////////////////////////////////////
+        fab_AddTheme = (FloatingActionButton) findViewById(R.id.fab);
+        fab_AddTheme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+                openDialogue();
+            }
+        });
+
+        // TODO finish off adding a theme via this button.
+
+
+
+    }
+
+    // used for creating the dialogue that adds the
+    public void openDialogue(){
+
+        Dialogue_AddTheme dialogue_addTheme = new Dialogue_AddTheme();
+        dialogue_addTheme.show(getSupportFragmentManager(),"Dialogue: Add Theme Attempt Open");
+    }
+
+    // this method is from the dialogue fragment for adding a new theme
+    @Override
+    public void applyTexts(String themeName, String themeDescription){
+
+        boolean isInserted  = Mydb.insertTheme(themeName,themeDescription);
+
+        if (isInserted == true) {
+            cancelTimer(); // update counter now that we need to set themes again.
+            mTimeLeftInMillis = 0;
+            updateCountDownText();
+            currentDateString = "No Deadline Set"; // update the datestring such that it can be saved
+            tv_sessionDate.setText(currentDateString);
+            reinitialiseGoalsValues(); // recreate GoalValues arraylist with correct number of elements so that we can refresh the listview.
+            populateListView(); // refresh listview given the number of lists
+            numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs();
+            loadInputFragment(sis, true);
+            Toast.makeText(SetGoals.this, "Theme Added", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(SetGoals.this, "Theme Add Failed", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void reinitialiseGoalsValues(){
+        // reset arrayList_GlobalValues so we can use repopulate the ListView
+        int curSize = Mydb.getCURRENTThemeNames().size();
+        arrayList_GoalsValues.clear();
+        for (int i = 0;i<curSize;i++ ){
+            arrayList_GoalsValues.add("No Value");
+        }
+    }
+
+    public void loadInputFragment(Bundle s, boolean replace) {
+
+        if (fragmentHolder != null) {
+            if (s != null) {
+                return;
+                // this is like an exit if something has gone wrong for this to load????
+            }
+
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+            if (numCurrentThemes == 12) {
+                Fragment_Input_12 myFragment = new Fragment_Input_12();
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+
+            }
+            if (numCurrentThemes == 11) {
+                Fragment_Input_11 myFragment = new Fragment_Input_11();
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 10) {
+                Fragment_Input_10 myFragment = new Fragment_Input_10();
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 9) {
+                Fragment_Input_09 myFragment = new Fragment_Input_09();
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 8) {
+                Fragment_Input_08 myFragment = new Fragment_Input_08();
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 7) {
+                Fragment_Input_07 myFragment = new Fragment_Input_07();
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 6) {
+                Fragment_Input_06 myFragment = new Fragment_Input_06();
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 5) {
+                Fragment_Input_05 myFragment = new Fragment_Input_05();
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 4) {
+                Fragment_Input_04 myFragment = new Fragment_Input_04();
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 3) {
+                Fragment_Input_03 myFragment = new Fragment_Input_03();
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+        }
     }
 
 
 
 
-
+// will run whenever something is sent through interface from the inputfragement to activity
     @Override
     public void onMessageRead(List<Integer> message) {
         // clear old values
@@ -196,8 +325,16 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 
             al_temp.add(Integer.toString(compiledValues.get(i)));
         }
-
         arrayList_GlobalValues = al_temp; //make global variable for use elsewhere.
+
+        // calculate goals every time the fragement is altered now
+        goal_InputTime = getFreeTime();
+        if (goal_InputTime == 0){
+            return;
+        } else {
+            calculateGoals(arrayList_GlobalValues, goal_InputTime); // will error if goal_Input time is == 0
+            populateListView();
+        }
     }
 
 
@@ -234,7 +371,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         // format calander into a string.
 
         android.text.format.DateFormat df = new android.text.format.DateFormat();
-        String currentDateString = DateFormat.getDateInstance().format(c_sessionEndDate.getTime()) + " - " + c_sessionEndDate.get(Calendar.HOUR_OF_DAY) + ":" + c_sessionEndDate.get(Calendar.MINUTE);
+        currentDateString = DateFormat.getDateInstance().format(c_sessionEndDate.getTime()) + " - " + c_sessionEndDate.get(Calendar.HOUR_OF_DAY) + ":" + c_sessionEndDate.get(Calendar.MINUTE);
 
         tv_sessionDate.setText(currentDateString);
 
@@ -250,19 +387,16 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
                     @Override
                     public void onClick(View v) {
                        /////////////////////// SETTING THE GOALS TO THE DATABASE //////////////////
-                        goal_InputTime = getFreeTime(); // passing to the global variable. // TODO fix issue that means that you get a goal_nput time = 0 unless slider moved.
                         if (goal_InputTime == 0){
                             Toast.makeText(SetGoals.this, "CANNOT SET GOAL. Free time must be input" , Toast.LENGTH_SHORT).show();
                             return;
                         } else {
-                            calculateGoals(arrayList_GlobalValues, goal_InputTime);
                             String manualSet = "Y"; // String to distinguish this input as manual input
                             boolean tempresult = Mydb.insertGoal(arrayList_GoalsValues, manualSet);
                             if (tempresult) {
                                 Toast.makeText(SetGoals.this, "Succeeded To Input Goals", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(SetGoals.this, "Failed To Input Goals", Toast.LENGTH_SHORT).show();
-
                             }
 
                             // setting or resetting the timer
@@ -275,7 +409,6 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
                                 startTimer();
                             }
                             updateCountDownText();
-
 
                         }
 
@@ -347,8 +480,10 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
     }
 
     private void cancelTimer() {
-        mCountDownTimer.cancel();
-        mTimerRunning = false;
+        if (mTimerRunning==true) {
+            mCountDownTimer.cancel();
+            mTimerRunning = false;
+        }
     }
 
     private void updateCountDownText() {
@@ -374,18 +509,31 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 
     }
 
+    // used for populating the arrayadapter to show themes
+    public void populateListView(){
+
+        ArrayList<String> al_ThemeNames = Mydb.getCURRENTThemeNames();
+        ListAdapter themeListAdapter = new CustomAdaptor_ThemeReview(this,al_ThemeNames,arrayList_GoalsValues);
+        themeListView.setAdapter(themeListAdapter);
+    }
+
+
+
+
     // use shared preferences to get timer saved to shared preferences for use when we open and close the app.
 
     @Override
     protected void onStop() {
         super.onStop();
         // TODO make shared prefferences name a constant to be used requested in different activities
+
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
         editor.putLong("millisLeft", mTimeLeftInMillis);
         editor.putBoolean("timerRunning", mTimerRunning);
         editor.putLong("endTime", mEndTime);
+        editor.putString("dateString", currentDateString);
 
         editor.apply();
 
@@ -402,7 +550,8 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 
         mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
         mTimerRunning = prefs.getBoolean("timerRunning", false); // note this is a default value.it is expected to be overwritten when looking in shared preferences.
-
+        currentDateString = prefs.getString("dateString", "");
+        tv_sessionDate.setText(currentDateString);
         updateCountDownText();
 
         if (mTimerRunning) {
@@ -418,6 +567,87 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
                 startTimer();
             }
         }
+
+    }
+
+
+    class CustomAdaptor_ThemeReview extends ArrayAdapter<String> {
+
+        // need to make new arraylist objects inside this class to not have problems recieving from the other class
+        ArrayList<String> al_ThemeName = new ArrayList<>();
+        ArrayList<String> al_GoalValue = new ArrayList<>();
+        ArrayList<Boolean> al_checkbox_CutomAdapter = new ArrayList<Boolean>(); // TODO find out if we need this
+        int recordFirstCounter = 0; // TODO find out if i need this
+
+        public CustomAdaptor_ThemeReview( Context context, ArrayList<String>  themeName, ArrayList<String>  goalValue) {
+            super(context, R.layout.ca_themelist, themeName);
+
+            this.al_ThemeName = themeName;
+            this.al_GoalValue = goalValue;
+
+            // inital build of arraylist.
+            al_checkbox_CutomAdapter.clear();
+            for (int i = 0; i<numCurrentThemes;i++){
+                al_checkbox_CutomAdapter.add(i,false);
+            }
+
+        }
+
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            LayoutInflater Inflater = LayoutInflater.from(getContext());
+            View customView = Inflater.inflate(R.layout.ca_themelist, parent, false);
+
+
+            String singleViewItem = getItem(position); //Confirm DOES work. Probably works through the one resource that goes through the super.
+            // find relevant views
+            TextView tv_title = (TextView) customView.findViewById(R.id.tv_ThemeName);
+            TextView tv_goal = (TextView) customView.findViewById(R.id.tv_ThemeGoal);
+            Button bn_ThemeDelete = (Button) customView.findViewById(R.id.bn_ThemeDelete);
+
+            //set values to view
+            tv_title.setText(al_ThemeName.get(position));
+            tv_goal.setText(al_GoalValue.get(position));
+            bn_ThemeDelete.setTag(position);
+            bn_ThemeDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String tag = view.getTag().toString();
+                    String deleteName = al_ThemeName.get(Integer.parseInt(tag));
+                    String IDtoDelete = Mydb.getSpecificThemeID(deleteName);
+                    int isDeleted = Mydb.deleteTheme(IDtoDelete);
+                    //notifyDataSetChanged();
+
+                    if (isDeleted > 0) {
+
+                        cancelTimer(); // update counter now that we need to set themes again.
+                        mTimeLeftInMillis = 0;
+                        updateCountDownText();
+                        currentDateString = "No Deadline Set"; // update the datestring such that it can be saved
+                        tv_sessionDate.setText(currentDateString);
+                        numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs();
+                        loadInputFragment(sis, true); // TODO why not working?
+                        reinitialiseGoalsValues(); // recreate a GoalsArray of the correct size given the change in theme size
+                        populateListView(); // repopulate the listview now themes have changed
+                        Toast.makeText(SetGoals.this, "Theme Deleted", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(SetGoals.this, "No Themes were Deleted", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+
+            //transferValues();
+
+            return customView;
+        }
+
+//        public void transferValues(){
+//            al_checkbox_Activity = al_checkbox_CutomAdapter;
+//        }
+
 
     }
 
