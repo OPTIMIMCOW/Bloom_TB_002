@@ -40,7 +40,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_09"/>
 
     <SeekBar
         android:id="@+id/seekBar10"
@@ -57,7 +58,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.29000002" />
+        app:layout_constraintVertical_bias="0.29000002"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_10"/>
 
 
     <TextView
@@ -96,7 +98,8 @@
         app:layout_constraintHorizontal_bias="0.31"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintVertical_bias="0.19"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_01"/>
 
     <TextView
         android:id="@+id/tv_num_01"
@@ -134,7 +137,8 @@
         app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintVertical_bias="0.19"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_02"/>
 
     <TextView
         android:id="@+id/tv_num_02"
@@ -171,7 +175,8 @@
         app:layout_constraintHorizontal_bias="0.96"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.3"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_03"/>
 
     <TextView
         android:id="@+id/tv_num_03"
@@ -207,7 +212,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_04"/>
 
     <TextView
         android:id="@+id/tv_num_04"
@@ -244,7 +250,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintVertical_bias="0.7"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_05"/>
 
     <TextView
         android:id="@+id/tv_num_05"
@@ -282,7 +289,8 @@
         app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+        app:layout_constraintVertical_bias="0.81"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_06"/>
 
     <TextView
         android:id="@+id/tv_num_06"
@@ -319,7 +327,8 @@
         app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+        app:layout_constraintVertical_bias="0.81"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_07"/>
 
     <TextView
         android:id="@+id/tv_num_07"
@@ -356,7 +365,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintVertical_bias="0.7"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_08"/>
 
     <TextView
         android:id="@+id/tv_num_08"

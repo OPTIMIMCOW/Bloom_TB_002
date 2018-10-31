@@ -41,7 +41,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.33999997" />
+        app:layout_constraintVertical_bias="0.33999997"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_10"/>
 
     <SeekBar
         android:id="@+id/seekBar11"
@@ -58,7 +59,8 @@
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.20999998" />
+        app:layout_constraintVertical_bias="0.20999998"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_11"/>
 
 
     <TextView
@@ -96,7 +98,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.18" />
+        app:layout_constraintVertical_bias="0.18"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_01"/>
 
     <TextView
         android:id="@+id/tv_num_01"
@@ -134,7 +137,8 @@
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.22000003" />
+        app:layout_constraintVertical_bias="0.22000003"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_02"/>
 
     <TextView
         android:id="@+id/tv_num_02"
@@ -171,7 +175,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.36" />
+        app:layout_constraintVertical_bias="0.36"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_03"/>
 
     <TextView
         android:id="@+id/tv_num_03"
@@ -208,7 +213,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
+        app:layout_constraintVertical_bias="0.53"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_04"/>
 
     <TextView
         android:id="@+id/tv_num_04"
@@ -245,7 +251,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.73" />
+        app:layout_constraintVertical_bias="0.73"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_05"/>
 
     <TextView
         android:id="@+id/tv_num_05"
@@ -283,7 +290,8 @@
         app:layout_constraintHorizontal_bias="0.68"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+        app:layout_constraintVertical_bias="0.81"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_06"/>
 
     <TextView
         android:id="@+id/tv_num_06"
@@ -320,7 +328,8 @@
         app:layout_constraintHorizontal_bias="0.34"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+        app:layout_constraintVertical_bias="0.81"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_07"/>
 
     <TextView
         android:id="@+id/tv_num_07"
@@ -357,7 +366,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintVertical_bias="0.7"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_08"/>
 
     <TextView
         android:id="@+id/tv_num_08"
@@ -394,7 +404,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintVertical_bias="0.52"
+        android:progressDrawable="@drawable/theme_seekbar_path_colour_09"/>
 
     <TextView
         android:id="@+id/tv_num_09"

@@ -65,7 +65,7 @@
     <ProgressBar
         android:id="@+id/pb_Goal_12"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
@@ -84,7 +84,7 @@
     <ProgressBar
         android:id="@+id/pb_Attain_12"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
@@ -125,7 +125,7 @@
     <ProgressBar
         android:id="@+id/pb_Goal_01"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
@@ -143,7 +143,7 @@
     <ProgressBar
         android:id="@+id/pb_Attain_01"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
@@ -182,7 +182,7 @@
     <ProgressBar
         android:id="@+id/pb_Goal_02"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
@@ -201,7 +201,7 @@
     <ProgressBar
         android:id="@+id/pb_Attain_02"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
@@ -241,7 +241,7 @@
     <ProgressBar
         android:id="@+id/pb_Goal_03"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
@@ -259,7 +259,7 @@
     <ProgressBar
         android:id="@+id/pb_Attain_03"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
@@ -297,7 +297,7 @@
     <ProgressBar
         android:id="@+id/pb_Goal_04"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
@@ -315,7 +315,7 @@
     <ProgressBar
         android:id="@+id/pb_Attain_04"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
@@ -353,7 +353,7 @@
     <ProgressBar
         android:id="@+id/pb_Goal_05"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
@@ -372,7 +372,7 @@
     <ProgressBar
         android:id="@+id/pb_Attain_05"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
@@ -412,7 +412,7 @@
     <ProgressBar
         android:id="@+id/pb_Goal_06"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
@@ -431,7 +431,7 @@
     <ProgressBar
         android:id="@+id/pb_Attain_06"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
@@ -545,7 +545,7 @@
     <ProgressBar
         android:id="@+id/pb_Attain_08"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
@@ -585,7 +585,7 @@
     <ProgressBar
         android:id="@+id/pb_Goal_10"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
@@ -603,7 +603,7 @@
     <ProgressBar
         android:id="@+id/pb_Attain_10"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"
@@ -642,7 +642,7 @@
     <ProgressBar
         android:id="@+id/pb_Goal_09"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_testbackground"
         android:layout_marginBottom="8dp"
@@ -661,7 +661,7 @@
     <ProgressBar
         android:id="@+id/pb_Attain_09"
         android:layout_width="180dp"
-        android:layout_height="19dp"
+        android:layout_height="12dp"
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_progress_test"
         android:layout_marginBottom="8dp"

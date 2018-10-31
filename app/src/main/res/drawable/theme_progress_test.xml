@@ -30,6 +30,8 @@
                     android:bottomRightRadius="10dp"
                     android:topRightRadius="10dp"
                     />
+                <size android:height="10sp"
+                    android:width="10sp" />
             </shape>
         </clip>
     </item>

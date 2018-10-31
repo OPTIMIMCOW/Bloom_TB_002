@@ -3,6 +3,7 @@ package com.example.kennethallan.Bloom_TB_002;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.support.v4.app.DialogFragment;
@@ -52,7 +53,6 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
     List<Integer> compiledValues = new ArrayList<>();
 // TODO implement the ability to swap out input fragements as the number of themes is deleted
     TextView tv_sessionDate;
-    TextView tv_sessionCountdown;
     TextView bn_setDate;
     Calendar c_sessionEndDate;
 
@@ -108,7 +108,6 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         //implement date set functionality
         bn_setDate = (Button) findViewById(R.id.bn_dateSet);
         tv_sessionDate = (TextView) findViewById(R.id.tv_date);
-        tv_sessionCountdown = (TextView) findViewById(R.id.tv_countdown);
         bn_setDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,21 +138,16 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         populateListView(); // this method is called to repopulate the list when a theme is added thus it is made into a method.
 
 
-        // ////////////////////////// ADD THEMES ////////////////////////////////////////
+        // ////////////////////////// FAB FUNCTIONALITY ////////////////////////////////////////
         fab_AddTheme = (FloatingActionButton) findViewById(R.id.fab);
         fab_AddTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
                 openDialogue();
             }
         });
 
         // TODO finish off adding a theme via this button.
-
-
 
     }
 
@@ -414,7 +408,9 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 
                         /////////////////////// STARTING THE COUNTDOWN /////////////////////////////
 
-
+                        // ////////////////// RETURN TO MAIN ACTIVITY //////////////////////////
+                        Intent intent = new Intent(SetGoals.this, MainActivity.class);
+                        startActivity(intent);
 
 
                    }
@@ -495,6 +491,8 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         totSeconds = (int)(mTimeLeftInMillis / 1000);
 
         days = totSeconds/(60*60*24);
+
+//        String daysString = Integer.toString(days) + "d";
         hours = (totSeconds %(60*60*24))/(60*60);
         minutes = (totSeconds %(60*60))/(60);
         seconds = (totSeconds %(60));
@@ -525,7 +523,12 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
     @Override
     protected void onStop() {
         super.onStop();
-        // TODO make shared prefferences name a constant to be used requested in different activities
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -542,10 +545,20 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         }
     }
 
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         // TODO make shared prefferences name a constant to be used requested in different activities
+
+        ///////////////////////////////// LOAD TIMER /////////////////////////////////////////////////////////////////
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
         mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
@@ -569,6 +582,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         }
 
     }
+
 
 
     class CustomAdaptor_ThemeReview extends ArrayAdapter<String> {

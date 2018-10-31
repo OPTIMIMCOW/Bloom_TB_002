@@ -5,6 +5,7 @@
     <dimen name="summary_activitylist_textsize">14sp</dimen>
     <dimen name="summary_activitylist_padding">2dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_size_mini">300dp</dimen>
 
 
 </resources>

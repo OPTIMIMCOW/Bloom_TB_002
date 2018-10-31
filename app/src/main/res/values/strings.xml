@@ -7,8 +7,8 @@
     <string name="Default_Time">0</string>
     <string name="ColumnPrefix">ID00</string>
     <string name="bundle_name">name_</string>
-    <string name="bundle_attain">goal_</string>
-    <string name="bundle_goal">attain_</string>
+    <string name="bundle_attain">attain_</string>
+    <string name="bundle_goal">goal_</string>
     <string name="bundle_scalefactor">scalefactor</string>
     <string name="Default_GoalAchievement">100m\n/\n120m</string>
     <string name="PreferencesName">CountdownSPref</string>

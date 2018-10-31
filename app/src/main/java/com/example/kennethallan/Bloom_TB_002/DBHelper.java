@@ -12,6 +12,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -22,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //I place this method in the MainActivity activity in the editTheme button press so that it closes the database before
     // it is required to be recreatred because Mydb is initialised at the top of the page.
 
-    public static final String DATABASE_NAME = "MadeAMistake06.db";
+    public static final String DATABASE_NAME = "MadeAMistake07.db";
 
     public static final int DATABASE_VERSION = 1;
 
@@ -43,6 +44,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL1_ALLTHEMES = "ID2";
     public static final String COL2_ALLTHEMES = "NAME";
     public static final String COL3_ALLTHEMES = "DESCRIPTION";
+    public static final String COL4_ALLTHEMES = "DATE";
+
 
     //The Current Themes Table
     public static final String TABLE_CURRENTTHEMES = "CurrentThemes";
@@ -50,6 +53,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL2_CURRENTTHEMES = "NAME";
     public static final String COL3_CURRENTTHEMES = "DESCRIPTION";
     public static final String COL4_CURRENTTHEMES = "ID3";
+    public static final String COL5_CURRENTTHEMES = "DATE";
+
+
 
     // TODO for final build change "ID3" to "AllID"
     //TODO for final build reorder columns so that ID3 is closer to ID_ALL because looks neater.
@@ -83,8 +89,8 @@ public class DBHelper extends SQLiteOpenHelper {
         // not sure close is doing anything now. seems to only work when you change the name of the
         //database to something different which makes no sense at all.
         Mydb.execSQL("create table " + TABLE_ACTIVITIES +" ("+COL1_ACTIVITIES+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_ACTIVITIES+" TEXT,"+COL3_ACTIVITIES+" TEXT,"+COL4_ACTIVITIES+ " TEXT)");
-        Mydb.execSQL("create table " + TABLE_ALLTHEMES +" ("+COL1_ALLTHEMES+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_ALLTHEMES+" TEXT,"+COL3_ALLTHEMES+" TEXT)");
-        Mydb.execSQL("create table " + TABLE_CURRENTTHEMES +" ("+COL1_CURRENTTHEMES+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_CURRENTTHEMES+" TEXT,"+COL3_CURRENTTHEMES+" TEXT,"+COL4_CURRENTTHEMES+" TEXT)");
+        Mydb.execSQL("create table " + TABLE_ALLTHEMES +" ("+COL1_ALLTHEMES+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_ALLTHEMES+" TEXT,"+COL3_ALLTHEMES+" TEXT, "+COL4_ALLTHEMES+" TEXT)");
+        Mydb.execSQL("create table " + TABLE_CURRENTTHEMES +" ("+COL1_CURRENTTHEMES+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_CURRENTTHEMES+" TEXT,"+COL3_CURRENTTHEMES+" TEXT,"+COL4_CURRENTTHEMES+" TEXT,"+COL5_CURRENTTHEMES+" TEXT)");
         Mydb.execSQL("create table " + TABLE_GOALS +" ("+COL1_GOALS+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_GOALS+" TEXT,"+COL3_GOALS+" TEXT)");
         Mydb.execSQL("create table " + TABLE_HISTORY +" ("+COL1_HISTORY+" INTEGER PRIMARY KEY AUTOINCREMENT,"+COL2_HISTORY+" TEXT,"+COL3_HISTORY+" TEXT)");
 
@@ -143,10 +149,16 @@ public class DBHelper extends SQLiteOpenHelper {
         //allow to write to databases
         SQLiteDatabase Mydb =this.getWritableDatabase();
 
+        // get exact time for record of time insertion
+        Date currentDate = Calendar.getInstance().getTime(); //TODO maybe in next build try to make a column which can be a date format???? so its easier to compare and read?
+        long currentDate_asLong = currentDate.getTime(); // get current date as a long so that we can save that as a string then we can get date object later.
+
+
         //set up theme to be added to ALL themes
         ContentValues newThingAdd = new ContentValues();
         newThingAdd.put(COL2_ALLTHEMES,name2);
         newThingAdd.put(COL3_ALLTHEMES,Description);
+        newThingAdd.put(COL4_ALLTHEMES, Long.toString(currentDate_asLong));
 
         // actually add to ALL themes database
         long result = Mydb.insertOrThrow(TABLE_ALLTHEMES,null,newThingAdd);
@@ -164,6 +176,7 @@ public class DBHelper extends SQLiteOpenHelper {
         newThingAdd123.put(COL2_CURRENTTHEMES,name2);
         newThingAdd123.put(COL3_CURRENTTHEMES,Description);
         newThingAdd123.put(COL4_CURRENTTHEMES,allID); //TODO update this to a string resource and the name "ALLid"
+        newThingAdd123.put(COL5_CURRENTTHEMES, Long.toString(currentDate_asLong));
 
         //Actually add to CURRENT database
         long result2 = Mydb.insertOrThrow(TABLE_CURRENTTHEMES,null,newThingAdd123);
@@ -327,6 +340,7 @@ public class DBHelper extends SQLiteOpenHelper {
     ArrayList<String> arrayList_CURRENTGoal_Values = new ArrayList<String>();
     ArrayList<String> arrayList_MANUALGoal_Values = new ArrayList<String>();
     String goal_StartDate = null;
+    String currentTheme_date = null;
     String goal_ManualIndicator = null;
 
 
@@ -339,28 +353,72 @@ public class DBHelper extends SQLiteOpenHelper {
         //hp = new HashMap();
         SQLiteDatabase Mydb = this.getReadableDatabase();
         Cursor res =  Mydb.rawQuery( "select * from " +TABLE_GOALS, null );
+        Cursor res_CurrentThemes =  Mydb.rawQuery( "select * from " +TABLE_CURRENTTHEMES, null );
 
         // trying to move to last row
         res.moveToLast();
+        res_CurrentThemes.moveToLast();
 
-        // used to make sure we are getting the last row
-        while(res.isAfterLast() == true){
-            int pos_CURRENT = res.getPosition();
-            int pos_NEW = pos_CURRENT - 1;
-            res.moveToPosition(pos_NEW);
+        // TODO: this has been greyed out because when you have no goals/ no themes yet ie on the initial start of the app
+        ///TODO: you get stuck in the while loop. For now it is ok to get rid of this but if it turns out we need this we can
+        // TODO: add some dummy themes and a goal in oncreate of DBHelper so that we are not in this position. The other option we
+        // TODO: could do is have a counter in shared preferences of the number of times we have opened the app and on the first opening
+        // TODO: of the app we have a dialogue before all of this stuff that makes you add 3 themes and a goal etc.
+
+//        // used to make sure we are getting the last row
+//        while(res.isAfterLast() == true){
+//            int pos_CURRENT = res.getPosition();
+//            int pos_NEW = pos_CURRENT - 1;
+//            res.moveToPosition(pos_NEW);
+//        }
+//
+//        while(res_CurrentThemes.isAfterLast() == true){
+//            int pos_CURRENT = res_CurrentThemes.getPosition();
+//            int pos_NEW = pos_CURRENT - 1;
+//            res_CurrentThemes.moveToPosition(pos_NEW);
+//        }
+
+        // checks to ensure that the dates firstly exist and that the goal is set for this set of themes. returns an error value if
+        // this is not satisfied and is handles back in the MainActivity.
+        Long goal_date = 0L;
+        Long curTheme_date = 0L;
+
+        try{
+            // gets the date value of the last theme to be added
+            currentTheme_date = res_CurrentThemes.getString(res_CurrentThemes.getColumnIndex(COL5_CURRENTTHEMES));
+            curTheme_date = Long.parseLong(currentTheme_date); //convert to long value
+        }catch(Exception e){
+            Log.d("DBHelper,curTheme_date","Likely no date found maybe no goals set");
+            arrayList_CURRENTGoal_Values.add("Order 66");
+            arrayList_CURRENTGoal_Values.add("You havent gotten any themes yet");
+            return arrayList_CURRENTGoal_Values; // there are no themes
         }
 
-        // sets the date value of the current goal sequence we are looking at.
-        goal_StartDate = res.getString(res.getColumnIndex(COL2_GOALS));
+        try{
+            // gets the date value of the current goal sequence we are looking at.
+            goal_StartDate = res.getString(res.getColumnIndex(COL2_GOALS));
+            goal_date = Long.parseLong(goal_StartDate);
+        }catch(Exception e){
+            Log.d("DBHelper,goal_StartDate","Likely no date found maybe no goals set");
+            arrayList_CURRENTGoal_Values.add("Order 66");
+            arrayList_CURRENTGoal_Values.add("You havent set a goal yet");
+            return arrayList_CURRENTGoal_Values; // there is no goal set at all
+        }
+
+        if (goal_date < curTheme_date){
+            arrayList_CURRENTGoal_Values.add("Order 66");
+            arrayList_CURRENTGoal_Values.add("You have not set a goal for these themes yet");
+            return arrayList_CURRENTGoal_Values; // there is no goal set for these themes
+        }
 
         // sets the manual indicator value of the current goal sequence we are looking at.
         goal_ManualIndicator = res.getString(res.getColumnIndex(COL3_GOALS));
 
         // i am doing this because i need the CURRENTtheme IDs for looking up columns
         // in the next bit thus if i have not built this array yet I prompt it to be build using the method.
-        if (arrayList_CURRENTTheme_IDs.size()==0){
-            getCURRENTThemeIDs();
-        }
+
+        // always run this even if a waste of resources so that it updates when we have changed the number of themes but pressed back ie not from OnCreate but from OnStart or OnResume
+        getCURRENTThemeIDs();
 
         for (int i=0; i<arrayList_CURRENTTheme_IDs.size();i++){
 

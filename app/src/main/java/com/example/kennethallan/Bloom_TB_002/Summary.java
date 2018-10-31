@@ -78,6 +78,7 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
+
         context = Summary.this;
         Mydb = new DBHelper(this);
 
@@ -126,7 +127,6 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
 
         // load fragment
         if (fragmentHolder != null) {
-
 
             if (savedInstanceState != null) {
                 return;

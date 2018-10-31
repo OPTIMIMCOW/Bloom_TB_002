@@ -4,7 +4,7 @@
     <!-- this part is the background so is set to an invisible colour -->
     <item android:id="@android:id/background">
         <shape android:shape="rectangle">
-            <solid android:color="#00ffffff"/>
+            <solid android:color="@color/NoValue_base"/>
             <size android:height="10sp"
                 android:width="10sp" />
             <corners
@@ -17,13 +17,8 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <gradient
-                    android:startColor="#a1a0a0"
-                    android:centerColor="#a1a0a0"
-                    android:centerY="0.5"
-                    android:endColor="#a1a0a0"
-                    android:angle="0"
-                    />
+                <solid
+                    android:color="@color/Theme_base_12"/>
                 <stroke
                     android:width="1dp"/>
                 <corners
