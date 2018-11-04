@@ -22,6 +22,7 @@ import java.util.List;
  */
 public class Fragment_Input_09 extends Fragment {
 
+    DBHelper Mydb;
 
     private SeekBar seekbar01;
     private SeekBar seekbar02;
@@ -42,6 +43,7 @@ public class Fragment_Input_09 extends Fragment {
     private TextView tv_Pro_07;
     private TextView tv_Pro_08;
     private TextView tv_Pro_09;
+    private TextView tv_ThemeName;
 
     private EditText et_Hours;
     private EditText et_Minutes;
@@ -49,6 +51,8 @@ public class Fragment_Input_09 extends Fragment {
 
 
     SeekBar.OnSeekBarChangeListener mlistener;
+
+    List<String> al_themeNames;
     //int testValue;
     List<Integer> testList = new ArrayList<Integer>();
 
@@ -85,6 +89,15 @@ public class Fragment_Input_09 extends Fragment {
         seekbar07 = (SeekBar) view.findViewById(R.id.seekBar7);
         seekbar08 = (SeekBar) view.findViewById(R.id.seekBar8);
         seekbar09 = (SeekBar) view.findViewById(R.id.seekBar9);
+        seekbar01.setTag(0);
+        seekbar02.setTag(1);
+        seekbar03.setTag(2);
+        seekbar04.setTag(3);
+        seekbar05.setTag(4);
+        seekbar06.setTag(5);
+        seekbar07.setTag(6);
+        seekbar08.setTag(7);
+        seekbar09.setTag(8);
 
 
         tv_Pro_01 = (TextView) view.findViewById(R.id.tv_num_01);
@@ -96,28 +109,37 @@ public class Fragment_Input_09 extends Fragment {
         tv_Pro_07 = (TextView) view.findViewById(R.id.tv_num_07);
         tv_Pro_08 = (TextView) view.findViewById(R.id.tv_num_08);
         tv_Pro_09 = (TextView) view.findViewById(R.id.tv_num_09);
+        tv_ThemeName = (TextView) view.findViewById(R.id.tv_ThemeName);
+
+        // linking variables to view objects
 
         et_Hours = (EditText) view.findViewById(R.id.et_Input_Time_Hours);
         et_Minutes = (EditText) view.findViewById(R.id.et_Input_Time_Minutes);
 
-        // Create seekbar listener to apply to all seekbars
+        // pass current theme names to fragment for later use
+        al_themeNames = new ArrayList<String>();
+        Mydb = new DBHelper(getActivity()); //needed to do this so i could use the DH helper in a fragment. Probably needs the activity not the fragement for the constructer.....dunno
+        al_themeNames = Mydb.getCURRENTThemeNames();
+
+        // create listener for seekbars
         mlistener = new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
                 bounceback();
 
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                String temp = seekBar.getTag().toString();
+                showName(temp);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
                 compileProgress();
+                hideName();
 
             }
 
@@ -243,5 +265,15 @@ public class Fragment_Input_09 extends Fragment {
 
 
     }
+
+    private void showName(String value){
+        tv_ThemeName.setText(al_themeNames.get(Integer.parseInt(value)));
+        tv_ThemeName.setVisibility(View.VISIBLE);
+    }
+
+    private void hideName(){
+        tv_ThemeName.setVisibility(View.INVISIBLE);
+    }
+
 
 }

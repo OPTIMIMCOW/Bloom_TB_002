@@ -1,6 +1,7 @@
 package com.example.kennethallan.Bloom_TB_002;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,12 +40,13 @@ public class AddEvent extends AppCompatActivity implements Fragment_Input_12.int
     List<Integer> compiledValues = new ArrayList<>();
     ArrayList<String> al_EventsValues = new ArrayList<String>();
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setTitle("Add Event");
+        getSupportActionBar().setTitle("Add Event");
+
         setContentView(R.layout.activity_add_event);
 
         saveButton = (Button)findViewById(R.id.saveButton);
@@ -158,6 +160,7 @@ public class AddEvent extends AppCompatActivity implements Fragment_Input_12.int
                     @Override
                     public void onClick(View v) {
 
+                        // used to calculate values to put in the database
                         event_InputTime = getEventTime(goal_InputTime_Hours,goal_InputTime_Minutes);
                         calculateGoals(al_GlobalSliderValues,event_InputTime);
                         String temp_eventName = eventName.getText().toString();
@@ -173,10 +176,12 @@ public class AddEvent extends AppCompatActivity implements Fragment_Input_12.int
                             return;
                         }
 
-
                         boolean result = Mydb.insertActivity(temp_eventName,temp_eventDescription,al_EventsValues);
                         if (result){
                             Toast.makeText(AddEvent.this, "Succeeded To Input Activity", Toast.LENGTH_SHORT).show();
+                            // return to main activity activity to reload fragement
+                            Intent intent = new Intent(AddEvent.this, MainActivity.class);
+                            startActivity(intent);
                         }else{
                             Toast.makeText(AddEvent.this, "Failed To Input Activity", Toast.LENGTH_SHORT).show();
                         }

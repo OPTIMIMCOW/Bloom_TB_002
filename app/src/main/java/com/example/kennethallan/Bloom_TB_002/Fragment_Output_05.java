@@ -38,9 +38,6 @@ public class Fragment_Output_05 extends Fragment {
     private TextView tv_Pro_04;
     private TextView tv_Pro_05;
 
-    private EditText et_Hours;
-    private EditText et_Minutes;
-
     Fragment_Output_05.interface_Frag05 sendValuesInterface_Frag05;
 
     public String BUNDLE_NAME = "";
@@ -82,11 +79,6 @@ public class Fragment_Output_05 extends Fragment {
         tv_Pro_04 = (TextView) view.findViewById(R.id.tv_num_04);
         tv_Pro_05 = (TextView) view.findViewById(R.id.tv_num_05);
 
-
-        // linking variables to view objects
-
-        et_Hours = (EditText) view.findViewById(R.id.et_Output_Time_Hours);
-        et_Minutes = (EditText) view.findViewById(R.id.et_Output_Time_Minutes);
 
         // working with bundles
         //getting names of bundles

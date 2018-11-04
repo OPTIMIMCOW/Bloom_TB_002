@@ -41,9 +41,6 @@ public class Fragment_Output_03 extends Fragment {
     private CheckBox cb_02;
     private CheckBox cb_03;
 
-    private EditText et_Hours;
-    private EditText et_Minutes;
-
     private ArrayList<String> al_themeNames;
     private ArrayList<Integer> al_goalValues;
     private ArrayList<Integer> al_attainValues;
@@ -92,9 +89,6 @@ public class Fragment_Output_03 extends Fragment {
         cb_02 = (CheckBox) view.findViewById(R.id.cb_02);
         cb_03 = (CheckBox) view.findViewById(R.id.cb_03);
 
-        // linking variables to view objects
-        et_Hours = (EditText) view.findViewById(R.id.et_Output_Time_Hours);
-        et_Minutes = (EditText) view.findViewById(R.id.et_Output_Time_Minutes);
 
         // working with bundles
         //getting names of bundles
