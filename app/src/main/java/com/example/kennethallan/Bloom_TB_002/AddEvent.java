@@ -44,8 +44,8 @@ public class AddEvent extends AppCompatActivity implements Fragment_Input_12.int
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportActionBar().setTitle("Add Event");
-        getSupportActionBar().setTitle("Add Event");
+//        getSupportActionBar().setTitle("Add Event");
+//        getSupportActionBar().setTitle("Add Event");
 
         setContentView(R.layout.activity_add_event);
 

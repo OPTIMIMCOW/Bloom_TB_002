@@ -14,5 +14,8 @@
     <string name="PreferencesName">CountdownSPref</string>
     <string name="title_activity_temporary_test_button">TemporaryTestButton</string>
 
+    <string name="ActivityTitle_CurrentPogress">Current Progress</string>
+    <string name="ActivityTitle_SetGoals">Set Weekly Targets</string>
+    <string name="ActivityTitle_AddActivity">Add New Activity</string>
 
 </resources>

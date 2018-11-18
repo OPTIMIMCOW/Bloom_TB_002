@@ -44,16 +44,13 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 
 
     DBHelper Mydb;
-    Button TestButton;
     int numCurrentThemes;
     int  goal_InputTime_Hours;
     int  goal_InputTime_Minutes;
 
     View fragmentHolder;
     List<Integer> compiledValues = new ArrayList<>();
-// TODO implement the ability to swap out input fragements as the number of themes is deleted
-    TextView tv_sessionDate;
-    TextView bn_setDate;
+    Button bn_sessionDate;
     Calendar c_sessionEndDate;
 
 
@@ -81,8 +78,10 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
     ListView themeListView;
 
     FloatingActionButton fab_AddTheme;
+    FloatingActionButton fab_Save;
 
     Bundle sis;
+    Bundle currentWeekBundle;
 
 
     @Override
@@ -90,29 +89,28 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_goals);
 
+        currentWeekBundle = getIntent().getExtras(); // get bundle that was attached to the intent that started this activity.
+        // pass this to the load input fragment method.
         sis = savedInstanceState;
 
         Mydb = new DBHelper(this);
-        TestButton = (Button) findViewById(R.id.TestButton_SetGoals);
         fragmentHolder = findViewById(R.id.Fragment_Holder);
-
-        TEST();
 
         // look though SQLite to fetch number of themes
         Mydb.getCURRENTThemeNames();
         numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs();
 
         // load fragment
-        loadInputFragment(savedInstanceState, false);
+        loadInputFragment(savedInstanceState,currentWeekBundle, false); // bundle with week values passed into it.
 
         //implement date set functionality
-        bn_setDate = (Button) findViewById(R.id.bn_dateSet);
-        tv_sessionDate = (TextView) findViewById(R.id.tv_date);
-        bn_setDate.setOnClickListener(new View.OnClickListener() {
+        bn_sessionDate = (Button) findViewById(R.id.bn_date);
+        bn_sessionDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // date picker fragment
                 pickSessionDate();
+                // TODO should we cancel the timer here?
             }
         });
 
@@ -147,9 +145,17 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             }
         });
 
-        // TODO finish off adding a theme via this button.
+        fab_Save = (FloatingActionButton) findViewById(R.id.fab2);
+        fab_Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SaveGoals();
+            }
+        });
 
     }
+
+    /////////////////////// THESE METHODS ARE FOR ADDING A NEW THEME ////////////////////////////
 
     // used for creating the dialogue that adds the
     public void openDialogue(){
@@ -158,7 +164,8 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         dialogue_addTheme.show(getSupportFragmentManager(),"Dialogue: Add Theme Attempt Open");
     }
 
-    // this method is from the dialogue fragment for adding a new theme
+    // this method is from the dialogue fragment for adding a new theme.
+    // this method is what recieves the information from the dialogue.
     @Override
     public void applyTexts(String themeName, String themeDescription){
 
@@ -168,12 +175,12 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             cancelTimer(); // update counter now that we need to set themes again.
             mTimeLeftInMillis = 0;
             updateCountDownText();
-            currentDateString = "No Deadline Set"; // update the datestring such that it can be saved
-            tv_sessionDate.setText(currentDateString);
+            currentDateString = "Set Deadline"; // update the datestring such that it can be saved
+            bn_sessionDate.setText(currentDateString);
             reinitialiseGoalsValues(); // recreate GoalValues arraylist with correct number of elements so that we can refresh the listview.
             populateListView(); // refresh listview given the number of lists
             numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs();
-            loadInputFragment(sis, true);
+            loadInputFragment(sis,currentWeekBundle, true); // passed null as my currentweekvalue bundle so that it defaults to zero when created since no goal has been previously set.
             Toast.makeText(SetGoals.this, "Theme Added", Toast.LENGTH_SHORT).show();
 
         } else {
@@ -181,6 +188,8 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         }
 
     }
+
+    //////////////////////OTHER THINGS ////////////////////////////////
 
     public void reinitialiseGoalsValues(){
         // reset arrayList_GlobalValues so we can use repopulate the ListView
@@ -191,10 +200,12 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         }
     }
 
-    public void loadInputFragment(Bundle s, boolean replace) {
+    //loadOutputFragment(sis,currentWeekBundle,false);
+
+    public void loadInputFragment(Bundle savedInstanceState, Bundle currentWeekBundle, boolean replace) {
 
         if (fragmentHolder != null) {
-            if (s != null) {
+            if (savedInstanceState != null) {
                 return;
                 // this is like an exit if something has gone wrong for this to load????
             }
@@ -203,6 +214,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 
             if (numCurrentThemes == 12) {
                 Fragment_Input_12 myFragment = new Fragment_Input_12();
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -213,6 +225,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             }
             if (numCurrentThemes == 11) {
                 Fragment_Input_11 myFragment = new Fragment_Input_11();
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -222,6 +235,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             }
             if (numCurrentThemes == 10) {
                 Fragment_Input_10 myFragment = new Fragment_Input_10();
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -231,6 +245,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             }
             if (numCurrentThemes == 9) {
                 Fragment_Input_09 myFragment = new Fragment_Input_09();
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -240,6 +255,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             }
             if (numCurrentThemes == 8) {
                 Fragment_Input_08 myFragment = new Fragment_Input_08();
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -249,6 +265,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             }
             if (numCurrentThemes == 7) {
                 Fragment_Input_07 myFragment = new Fragment_Input_07();
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -258,6 +275,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             }
             if (numCurrentThemes == 6) {
                 Fragment_Input_06 myFragment = new Fragment_Input_06();
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -267,6 +285,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             }
             if (numCurrentThemes == 5) {
                 Fragment_Input_05 myFragment = new Fragment_Input_05();
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -276,6 +295,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             }
             if (numCurrentThemes == 4) {
                 Fragment_Input_04 myFragment = new Fragment_Input_04();
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -285,6 +305,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             }
             if (numCurrentThemes == 3) {
                 Fragment_Input_03 myFragment = new Fragment_Input_03();
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -329,6 +350,8 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             calculateGoals(arrayList_GlobalValues, goal_InputTime); // will error if goal_Input time is == 0
             populateListView();
         }
+
+        fab_Save.setVisibility(View.VISIBLE); // allow save option through button
     }
 
 
@@ -367,57 +390,52 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         android.text.format.DateFormat df = new android.text.format.DateFormat();
         currentDateString = DateFormat.getDateInstance().format(c_sessionEndDate.getTime()) + " - " + c_sessionEndDate.get(Calendar.HOUR_OF_DAY) + ":" + c_sessionEndDate.get(Calendar.MINUTE);
 
-        tv_sessionDate.setText(currentDateString);
+        bn_sessionDate.setText(currentDateString);
 
     }
 
     /////////////////////////////// TO DO WITH TESTING FUNCTIONALITY /////////////////////////////////////
 
-    // TODO rename these variables
-    public void TEST(){
-
-        TestButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                       /////////////////////// SETTING THE GOALS TO THE DATABASE //////////////////
-                        if (goal_InputTime == 0){
-                            Toast.makeText(SetGoals.this, "CANNOT SET GOAL. Free time must be input" , Toast.LENGTH_SHORT).show();
-                            return;
-                        } else {
-                            String manualSet = "Y"; // String to distinguish this input as manual input
-                            boolean tempresult = Mydb.insertGoal(arrayList_GoalsValues, manualSet);
-                            if (tempresult) {
-                                Toast.makeText(SetGoals.this, "Succeeded To Input Goals", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(SetGoals.this, "Failed To Input Goals", Toast.LENGTH_SHORT).show();
-                            }
-
-                            // setting or resetting the timer
-                            if (mTimerRunning==true){
-                                cancelTimer();
-                                loadCountdown();
-                                startTimer();
-                            }else{
-                                loadCountdown();
-                                startTimer();
-                            }
-                            updateCountDownText();
-
-                        }
-
-                        /////////////////////// STARTING THE COUNTDOWN /////////////////////////////
-
-                        // ////////////////// RETURN TO MAIN ACTIVITY //////////////////////////
-                        Intent intent = new Intent(SetGoals.this, MainActivity.class);
-                        startActivity(intent);
 
 
-                   }
-                }
-        );
+    public void SaveGoals(){
+
+        if (goal_InputTime == 0){
+            Toast.makeText(SetGoals.this, "CANNOT SET GOAL. Free time must be input" , Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            String manualSet = "Y"; // String to distinguish this input as manual input
+            boolean tempresult = Mydb.insertGoal(arrayList_GoalsValues, manualSet);
+            if (tempresult) {
+                Toast.makeText(SetGoals.this, "Succeeded To Input Goals", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(SetGoals.this, "Failed To Input Goals", Toast.LENGTH_SHORT).show();
+            }
+
+            // setting or resetting the timer
+            if (mTimerRunning==true){
+                cancelTimer();
+                loadCountdown();
+                startTimer();
+            }else{
+                loadCountdown();
+                startTimer();
+            }
+            updateCountDownText();
+
+        }
+
+        /////////////////////// STARTING THE COUNTDOWN /////////////////////////////
+
+        // ////////////////// RETURN TO MAIN ACTIVITY //////////////////////////
+        Intent intent = new Intent(SetGoals.this, MainActivity.class);
+        startActivity(intent);
+
+
     }
-// get the free time from the edit texts and convert them to one figure in minutes
+
+
+    // get the free time from the edit texts and convert them to one figure in minutes
 
     public int getFreeTime(){
         double a = 60.0;
@@ -473,12 +491,16 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         }.start();
 
         mTimerRunning = true;
+
+        fab_Save.setVisibility(View.INVISIBLE); // check works
     }
 
     private void cancelTimer() {
         if (mTimerRunning==true) {
             mCountDownTimer.cancel();
             mTimerRunning = false;
+            fab_Save.setVisibility(View.VISIBLE);
+            // TODO add visibility of fab2 button change
         }
     }
 
@@ -564,7 +586,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
         mTimerRunning = prefs.getBoolean("timerRunning", false); // note this is a default value.it is expected to be overwritten when looking in shared preferences.
         currentDateString = prefs.getString("dateString", "");
-        tv_sessionDate.setText(currentDateString);
+        bn_sessionDate.setText(currentDateString);
         updateCountDownText();
 
         if (mTimerRunning) {
@@ -640,12 +662,13 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
                         mTimeLeftInMillis = 0;
                         updateCountDownText();
                         currentDateString = "No Deadline Set"; // update the datestring such that it can be saved
-                        tv_sessionDate.setText(currentDateString);
+                        bn_sessionDate.setText(currentDateString);
                         numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs();
-                        loadInputFragment(sis, true); // TODO why not working?
+                        loadInputFragment(sis, currentWeekBundle, true); // TODO why not working?
                         reinitialiseGoalsValues(); // recreate a GoalsArray of the correct size given the change in theme size
                         populateListView(); // repopulate the listview now themes have changed
                         Toast.makeText(SetGoals.this, "Theme Deleted", Toast.LENGTH_SHORT).show();
+                        fab_Save.setVisibility(View.VISIBLE); // TODO make into a toggle method?
                     } else {
                         Toast.makeText(SetGoals.this, "No Themes were Deleted", Toast.LENGTH_SHORT).show();
                     }

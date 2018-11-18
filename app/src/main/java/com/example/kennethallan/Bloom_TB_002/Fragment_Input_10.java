@@ -62,6 +62,12 @@ public class Fragment_Input_10 extends Fragment {
 
     Fragment_Input_10.interface_Frag10 sendValuesInterface_Frag10;
 
+    public String BUNDLE_NAME = "";
+    public String BUNDLE_GOAL = "";
+    public String BUNDLE_ATTAIN = "";
+    public String BUNDLE_SCALEFACTOR = "";
+
+    public Integer numThemes = 10;
 
     public Fragment_Input_10() {
         // Required empty public constructor
@@ -129,6 +135,48 @@ public class Fragment_Input_10 extends Fragment {
         al_themeNames = new ArrayList<String>();
         Mydb = new DBHelper(getActivity()); //needed to do this so i could use the DH helper in a fragment. Probably needs the activity not the fragement for the constructer.....dunno
         al_themeNames = Mydb.getCURRENTThemeNames();
+
+        /////////////////// SET SEEKBARS TO PREVIOUS GOAL VALUES /////////////////////////////
+        // working with bundles
+        //getting names of bundles
+        BUNDLE_NAME = getResources().getString(R.string.bundle_name);
+        BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
+        BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
+        BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
+
+        Bundle currentWeekBundle = this.getArguments();
+        if (currentWeekBundle != null){
+
+            //goals
+            Integer goals_01 = currentWeekBundle.getInt(BUNDLE_GOAL + "0");
+            Integer goals_02 = currentWeekBundle.getInt(BUNDLE_GOAL + "1");
+            Integer goals_03 = currentWeekBundle.getInt(BUNDLE_GOAL + "2");
+            Integer goals_04 = currentWeekBundle.getInt(BUNDLE_GOAL + "3");
+            Integer goals_05 = currentWeekBundle.getInt(BUNDLE_GOAL + "4");
+            Integer goals_06 = currentWeekBundle.getInt(BUNDLE_GOAL + "5");
+            Integer goals_07 = currentWeekBundle.getInt(BUNDLE_GOAL + "6");
+            Integer goals_08 = currentWeekBundle.getInt(BUNDLE_GOAL + "7");
+            Integer goals_09 = currentWeekBundle.getInt(BUNDLE_GOAL + "8");
+            Integer goals_10 = currentWeekBundle.getInt(BUNDLE_GOAL + "9");
+
+            Double scaleFactor = currentWeekBundle.getDouble(BUNDLE_SCALEFACTOR);
+            Double alterfor100Factor = scaleFactor*(100.00/90.00); // used to alter the scale factor so as to not limit it for overachieve goal purposes in output fragements.
+            // IMPORTANT - KEEP the two decimal places or the doubles dont round to two decimal places.
+
+            // //////////////////SET PROGRESS OF seekbars //////////////////////////////
+            seekbar01.setProgress((int) Math.round(goals_01*alterfor100Factor));
+            seekbar02.setProgress((int) Math.round(goals_02*alterfor100Factor));
+            seekbar03.setProgress((int) Math.round(goals_03*alterfor100Factor));
+            seekbar04.setProgress((int) Math.round(goals_04*alterfor100Factor));
+            seekbar05.setProgress((int) Math.round(goals_05*alterfor100Factor));
+            seekbar06.setProgress((int) Math.round(goals_06*alterfor100Factor));
+            seekbar07.setProgress((int) Math.round(goals_07*alterfor100Factor));
+            seekbar08.setProgress((int) Math.round(goals_08*alterfor100Factor));
+            seekbar09.setProgress((int) Math.round(goals_09*alterfor100Factor));
+            seekbar10.setProgress((int) Math.round(goals_10*alterfor100Factor));
+
+        }
+
 
         // create listener for seekbars
         mlistener = new SeekBar.OnSeekBarChangeListener() {

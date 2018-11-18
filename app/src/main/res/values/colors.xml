@@ -22,6 +22,21 @@
     <color name="NoValue_base">#969696</color>
     <color name="NoValue_basedark">#2d2d2d</color>
 
+    <color name="Activity_CurrentSession_Header">#44ff76</color>
+    <color name="Activity_CurrentSession_Body">#c9ffd8</color>
+    <color name="Activity_CurrentSession_Highlight">#44ff76</color>
+    <color name="Activity_CurrentSession_Other">#44ff76</color>
+
+    <color name="Activity_SetGoals_Header">#ff7c3f</color>
+    <color name="Activity_SetGoals_Body">#fdbea0</color>
+    <color name="Activity_SetGoals_Highlight">#ff7c3f</color>
+    <color name="Activity_SetGoals_Other">#ff7c3f</color>
+
+    <color name="Activity_AddActivity_Header">#ffea2f</color>
+    <color name="Activity_AddActivity_Body">#fff496</color>
+    <color name="Activity_AddActivity_Highlight">#ffea2f</color>
+    <color name="Activity_AddActivity_Other">#ffea2f</color>
+
 
 
 

@@ -48,6 +48,13 @@ public class Fragment_Input_03 extends Fragment {
 
     Fragment_Input_03.interface_Frag03 sendValuesInterface_Frag03;
 
+    public String BUNDLE_NAME = "";
+    public String BUNDLE_GOAL = "";
+    public String BUNDLE_ATTAIN = "";
+    public String BUNDLE_SCALEFACTOR = "";
+
+    public Integer numThemes = 3;
+
 
     public Fragment_Input_03() {
         // Required empty public constructor
@@ -86,6 +93,35 @@ public class Fragment_Input_03 extends Fragment {
         al_themeNames = new ArrayList<String>();
         Mydb = new DBHelper(getActivity()); //needed to do this so i could use the DH helper in a fragment. Probably needs the activity not the fragement for the constructer.....dunno
         al_themeNames = Mydb.getCURRENTThemeNames();
+
+
+        /////////////////// SET SEEKBARS TO PREVIOUS GOAL VALUES /////////////////////////////
+        // working with bundles
+        //getting names of bundles
+        BUNDLE_NAME = getResources().getString(R.string.bundle_name);
+        BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
+        BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
+        BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
+
+        Bundle currentWeekBundle = this.getArguments();
+        if (currentWeekBundle != null){
+
+            //goals
+            Integer goals_01 = currentWeekBundle.getInt(BUNDLE_GOAL + "0");
+            Integer goals_02 = currentWeekBundle.getInt(BUNDLE_GOAL + "1");
+            Integer goals_03 = currentWeekBundle.getInt(BUNDLE_GOAL + "2");
+
+            //TODO investigate whether we can do all our database stuff in main activity and load this up by passing bundles.
+
+            Double scaleFactor = currentWeekBundle.getDouble(BUNDLE_SCALEFACTOR);
+            Double alterfor100Factor = scaleFactor*(100.00/90.00); // used to alter the scale factor so as to not limit it for overachieve goal purposes in output fragements.
+            // IMPORTANT - KEEP the two decimal places or the doubles dont round to two decimal places.
+            // //////////////////SET PROGRESS OF seekbars //////////////////////////////
+            seekbar01.setProgress((int) Math.round(goals_01*alterfor100Factor));
+            seekbar02.setProgress((int) Math.round(goals_02*alterfor100Factor));
+            seekbar03.setProgress((int) Math.round(goals_03*alterfor100Factor));
+        }
+
 
         // create listener for seekbars
         mlistener = new SeekBar.OnSeekBarChangeListener() {

@@ -1,46 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_edit_theme_page"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.kennethallan.Bloom_TB_002.AddEvent">
+    android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/Fragment_Holder"
-        android:layout_width="383dp"
-        android:layout_height="370dp"
-        android:layout_centerHorizontal="true">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:backgroundTint="@color/Activity_AddActivity_Header">
 
-    </FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ActivityTitle_AddActivity"
+            android:layout_gravity="center"
+            android:id="@+id/toolbar_title"
+            android:textSize="@dimen/TextSize_Title"/>
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:hint="Event Name"
-        android:inputType="text"
-        android:id="@+id/editText"
-        android:layout_below="@+id/Fragment_Holder"/>
+    </android.support.v7.widget.Toolbar>
+    <RelativeLayout
+        android:id="@+id/activity_edit_theme_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.kennethallan.Bloom_TB_002.AddEvent">
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:hint="Description"
-        android:inputType="text"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
-        android:layout_alignParentStart="true" />
+        <FrameLayout
+            android:id="@+id/Fragment_Holder"
+            android:layout_width="383dp"
+            android:layout_height="370dp"
+            android:layout_centerHorizontal="true">
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/editText2"
-        android:text="Save Changes" />
+        </FrameLayout>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:hint="Event Name"
+            android:inputType="text"
+            android:id="@+id/editText"
+            android:layout_below="@+id/Fragment_Holder"/>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:hint="Description"
+            android:inputType="text"
+            android:id="@+id/editText2"
+            android:layout_below="@+id/editText"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/editText2"
+            android:text="Save Changes" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

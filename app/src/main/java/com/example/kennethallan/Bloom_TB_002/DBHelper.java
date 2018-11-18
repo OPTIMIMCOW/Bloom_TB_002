@@ -27,6 +27,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
 
+    public static final int MAX_NUM_THEMES_SUPPORTED = 12;
+
+
     // The Activity Table
 
     public static final String TABLE_ACTIVITIES = "Activities";
@@ -486,7 +489,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return goal_ManualIndicator;
     }
 
-
+    public Integer getMaxNumThemesSupported(){
+        return MAX_NUM_THEMES_SUPPORTED;
+    }
 
 
 }

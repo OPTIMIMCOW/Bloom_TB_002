@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.ListView;
 import android.widget.Button;
 import android.view.View;
@@ -104,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
     TextView tv_ErrorMessage;
     Bundle sis;
+    Bundle currentWeekBundle;
+
     FloatingActionButton fab_AddActivity;
 
 
@@ -126,14 +129,16 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
         Log.d(TAG, "In OnCreate()");
 
+        // initialise the DB helper
         Mydb = new DBHelper(this); // can call because it is a public class in the package
 
         sis = savedInstanceState; // make an object so we can use in loading fragement from a method
+        currentWeekBundle = new Bundle(); // initalise bundle so that we can populate with values for fragment
 
 
         makeSummaryButton = (Button) findViewById(R.id.Summary);
 
-        makeSummary();
+        makeSummary(); // initialising the method but not actually running without button click.
 
         //////////////////////////// FUNCTIONALITY OF TIMER///////////////////////////
 
@@ -180,26 +185,39 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             al_values_ThemeNames = getCurrentThemeNames();
             al_values_ProAttain = getCURRENTSessionProgress();
             i_ScaleFactor = getScaleFactor();
+            Integer maxThemeNum = Mydb.getMaxNumThemesSupported() -1;
 
-            //Create bundle to open fragement using.
-            Bundle testBundle = new Bundle();
+            //Pupulate bundle to open fragement using.
+
             //add names
-            for (int i =0; i<al_values_ThemeNames.size();i++){
-                testBundle.putString(BUNDLE_NAME+i,al_values_ThemeNames.get(i));
+            for (int i =0; i<maxThemeNum;i++){
+                try{
+                    currentWeekBundle.putString(BUNDLE_NAME+i,al_values_ThemeNames.get(i));
+                }catch (Exception e){
+                    currentWeekBundle.putString(BUNDLE_NAME+i,"NoTheme");
+                }
             }
             //add goal values
-            for (int i =0; i<al_values_ProGoals.size();i++){
-                testBundle.putInt(BUNDLE_GOAL+i,al_values_ProGoals.get(i));
+            for (int i =0; i<maxThemeNum;i++){
+                try{
+                    currentWeekBundle.putInt(BUNDLE_GOAL+i,al_values_ProGoals.get(i));
+                }catch (Exception e){
+                    currentWeekBundle.putInt(BUNDLE_GOAL+i,0);
+                }
             }
             //add attain values
-            for (int i =0; i<al_values_ProAttain.size();i++){
-                testBundle.putInt(BUNDLE_ATTAIN+i,al_values_ProAttain.get(i));
+            for (int i =0; i<maxThemeNum;i++){
+                try{
+                    currentWeekBundle.putInt(BUNDLE_ATTAIN+i,al_values_ProAttain.get(i));
+                }catch (Exception e){
+                    currentWeekBundle.putInt(BUNDLE_ATTAIN+i,0);
+                }
             }
             // add scale factor
-            testBundle.putDouble(BUNDLE_SCALEFACTOR,i_ScaleFactor);
+            currentWeekBundle.putDouble(BUNDLE_SCALEFACTOR,i_ScaleFactor);
 
 
-            loadOutputFragment(sis,testBundle,false); // TODO check if this works. Savedinstance state might be the bundle needed here.
+            loadOutputFragment(sis,currentWeekBundle,false); // TODO check if this works. Savedinstance state might be the bundle needed here.
 
 
         }
@@ -209,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,SetGoals.class);
+                intent.putExtras(currentWeekBundle); // adding bundle to the method to set progressbar values
                 startActivity(intent);
             }
         });
@@ -227,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
     }
 
-    public void loadOutputFragment(Bundle savedInstanceState, Bundle testBundle,  boolean replace) {
+    public void loadOutputFragment(Bundle savedInstanceState, Bundle currentWeekBundle,  boolean replace) {
 
         if (fragmentHolder != null) {
 
@@ -240,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
             if (numCurrentThemes == 12) {
                 Fragment_Output_12 myFragment = new Fragment_Output_12();
-                myFragment.setArguments(testBundle);
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -251,7 +270,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             }
             if (numCurrentThemes == 11) {
                 Fragment_Output_11 myFragment = new Fragment_Output_11();
-                myFragment.setArguments(testBundle);
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -261,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             }
             if (numCurrentThemes == 10) {
                 Fragment_Output_10 myFragment = new Fragment_Output_10();
-                myFragment.setArguments(testBundle);
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -271,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             }
             if (numCurrentThemes == 9) {
                 Fragment_Output_09 myFragment = new Fragment_Output_09();
-                myFragment.setArguments(testBundle);
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -281,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             }
             if (numCurrentThemes == 8) {
                 Fragment_Output_08 myFragment = new Fragment_Output_08();
-                myFragment.setArguments(testBundle);
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -291,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             }
             if (numCurrentThemes == 7) {
                 Fragment_Output_07 myFragment = new Fragment_Output_07();
-                myFragment.setArguments(testBundle);
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -301,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             }
             if (numCurrentThemes == 6) {
                 Fragment_Output_06 myFragment = new Fragment_Output_06();
-                myFragment.setArguments(testBundle);
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -311,7 +330,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             }
             if (numCurrentThemes == 5) {
                 Fragment_Output_05 myFragment = new Fragment_Output_05();
-                myFragment.setArguments(testBundle);
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -321,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             }
             if (numCurrentThemes == 4) {
                 Fragment_Output_04 myFragment = new Fragment_Output_04();
-                myFragment.setArguments(testBundle);
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -331,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             }
             if (numCurrentThemes == 3) {
                 Fragment_Output_03 myFragment = new Fragment_Output_03();
-                myFragment.setArguments(testBundle);
+                myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
                     fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
                 }else{
@@ -780,6 +799,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
     public Double getScaleFactor(){
         Integer temp = 0;
+        // find maximm value
         for (int i = 0; i<al_values_ProGoals.size();i++){
             if (temp<al_values_ProGoals.get(i)){
                 temp = al_values_ProGoals.get(i);
