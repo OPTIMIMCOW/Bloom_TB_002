@@ -25,63 +25,62 @@
         app:layout_constraintHorizontal_bias="0.18"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
+        app:layout_constraintVertical_bias="0.31" />
 
     <ProgressBar
         android:id="@+id/pb_Goal_09"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="180dp"
         android:layout_height="12dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:progress="100"
-        android:rotation="180"
+        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
+        android:rotation="198"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.41000003" />
 
     <ProgressBar
         android:id="@+id/pb_Attain_09"
         android:layout_width="180dp"
         android:layout_height="12dp"
-
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_probar_attain_colour_09"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:progress="50"
-
-        android:rotation="180"
+        android:rotation="198"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.41000003" />
 
     <ProgressBar
         android:id="@+id/pb_Goal_10"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="180dp"
         android:layout_height="12dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="100"
-
-        android:rotation="216"
+        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
+        android:rotation="234"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.29000002" />
+        app:layout_constraintVertical_bias="0.25" />
 
     <ProgressBar
         android:id="@+id/pb_Attain_10"
@@ -94,14 +93,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="50"
-
-        android:rotation="216"
+        android:rotation="234"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.29000002" />
+        app:layout_constraintVertical_bias="0.25" />
 
 
     <TextView
@@ -114,33 +112,30 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:rotation="36"
+        android:rotation="0"
         android:text="@string/Default_Time"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.34"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.20999998" />
-
+        app:layout_constraintVertical_bias="0.14999998" />
 
     <ProgressBar
         android:id="@+id/pb_Goal_01"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="180dp"
         android:layout_height="12dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="100"
-
-        android:rotation="252"
+        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
+        android:rotation="270"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.31"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.19" />
@@ -156,11 +151,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="50"
-
-        android:rotation="252"
+        android:rotation="270"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.31"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.19" />
@@ -175,12 +168,12 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:rotation="-18"
+        android:rotation="0"
         android:text="@string/Default_Time"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.43"
+        app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.13" />
@@ -188,23 +181,22 @@
 
     <ProgressBar
         android:id="@+id/pb_Goal_02"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="180dp"
         android:layout_height="12dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="100"
-
-        android:rotation="288"
+        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
+        android:rotation="306"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintHorizontal_bias="0.84"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintVertical_bias="0.26" />
 
     <ProgressBar
         android:id="@+id/pb_Attain_02"
@@ -217,14 +209,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="50"
-
-        android:rotation="288"
+        android:rotation="306"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintHorizontal_bias="0.84"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintVertical_bias="0.26" />
 
     <TextView
         android:id="@+id/tv_num_02"
@@ -236,35 +227,34 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:rotation="18"
+        android:rotation="0"
         android:text="@string/Default_Time"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.65"
+        app:layout_constraintHorizontal_bias="0.76"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13999999" />
+        app:layout_constraintVertical_bias="0.19999999" />
 
 
     <ProgressBar
         android:id="@+id/pb_Goal_03"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="180dp"
         android:layout_height="12dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="100"
-
-        android:rotation="-36"
+        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
+        android:rotation="342"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintHorizontal_bias="0.99"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.42000002" />
 
     <ProgressBar
         android:id="@+id/pb_Attain_03"
@@ -276,14 +266,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="50"
-
-        android:rotation="-36"
+        android:rotation="342"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintHorizontal_bias="0.99"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.42000002" />
 
     <TextView
         android:id="@+id/tv_num_03"
@@ -295,34 +284,34 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:rotation="-36"
+        android:rotation="0"
         android:text="@string/Default_Time"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.83"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32" />
+        app:layout_constraintVertical_bias="0.44" />
 
     <ProgressBar
         android:id="@+id/pb_Goal_04"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="180dp"
         android:layout_height="12dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="100"
-
-        android:rotation="0"
+        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
+        android:rotation="18"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.59000003" />
 
     <ProgressBar
         android:id="@+id/pb_Attain_04"
@@ -335,13 +324,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="50"
-
-        android:rotation="0"
+        android:rotation="18"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.59000003" />
 
     <TextView
         android:id="@+id/tv_num_04"
@@ -358,30 +347,29 @@
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.83"
+        app:layout_constraintHorizontal_bias="0.86"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56" />
+        app:layout_constraintVertical_bias="0.72" />
 
     <ProgressBar
         android:id="@+id/pb_Goal_05"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="180dp"
         android:layout_height="12dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="100"
-
-        android:rotation="36"
+        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
+        android:rotation="54"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.84"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintVertical_bias="0.74" />
 
     <ProgressBar
         android:id="@+id/pb_Attain_05"
@@ -394,14 +382,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="50"
-
-        android:rotation="36"
+        android:rotation="54"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.84"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintVertical_bias="0.74" />
 
     <TextView
         android:id="@+id/tv_num_05"
@@ -413,33 +400,31 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:rotation="36"
+        android:rotation="0"
         android:text="@string/Default_Time"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.74"
+        app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.89" />
 
 
     <ProgressBar
         android:id="@+id/pb_Goal_06"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="180dp"
         android:layout_height="12dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="100"
-
-        android:rotation="72"
+        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
+        android:rotation="90"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.81" />
@@ -455,11 +440,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="50"
-
-        android:rotation="72"
+        android:rotation="90"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.81" />
@@ -474,41 +457,39 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:rotation="-18"
+        android:rotation="0"
         android:text="@string/Default_Time"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.57"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.82" />
+        app:layout_constraintVertical_bias="0.88" />
 
     <ProgressBar
         android:id="@+id/pb_Goal_07"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="180dp"
         android:layout_height="12dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="100"
-
-        android:rotation="108"
+        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
+        android:rotation="126"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+        app:layout_constraintVertical_bias="0.75" />
 
     <ProgressBar
         android:id="@+id/pb_Attain_07"
         android:layout_width="180dp"
         android:layout_height="12dp"
-
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/theme_probar_attain_colour_07"
         android:layout_marginBottom="8dp"
@@ -516,14 +497,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="50"
-
-        android:rotation="108"
+        android:rotation="126"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+        app:layout_constraintVertical_bias="0.75" />
 
     <TextView
         android:id="@+id/tv_num_07"
@@ -535,34 +515,34 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:rotation="18"
+        android:rotation="0"
         android:text="@string/Default_Time"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintHorizontal_bias="0.24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+        app:layout_constraintVertical_bias="0.8" />
 
     <ProgressBar
         android:id="@+id/pb_Goal_08"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="180dp"
         android:layout_height="12dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="100"
-        android:rotation="144"
+        android:progressDrawable="@drawable/theme_probar_goal_colour_base"
+        android:rotation="162"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintVertical_bias="0.6" />
 
     <ProgressBar
         android:id="@+id/pb_Attain_08"
@@ -575,14 +555,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="50"
-
-        android:rotation="144"
+        android:rotation="162"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintVertical_bias="0.6" />
 
     <TextView
         android:id="@+id/tv_num_08"
@@ -594,15 +573,15 @@
         android:layout_marginTop="8dp"
         android:background="@color/colorAccent"
         android:gravity="center"
-        android:rotation="-18"
+        android:rotation="0"
         android:text="@string/Default_Time"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.22"
+        app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65" />
+        app:layout_constraintVertical_bias="0.56" />
 
     <View
         android:id="@+id/timeHolder"
@@ -614,5 +593,166 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <CheckBox
+        android:id="@+id/cb_01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <CheckBox
+        android:id="@+id/cb_02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.88"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13" />
+
+    <CheckBox
+        android:id="@+id/cb_03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.43" />
+
+    <CheckBox
+        android:id="@+id/cb_04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.75" />
+
+    <CheckBox
+        android:id="@+id/cb_05"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <CheckBox
+        android:id="@+id/cb_06"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.42"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <CheckBox
+        android:id="@+id/cb_07"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.89" />
+
+
+    <CheckBox
+        android:id="@+id/cb_08"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.58000004" />
+
+    <CheckBox
+        android:id="@+id/cb_09"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.01"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
+
+    <CheckBox
+        android:id="@+id/cb_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.27"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

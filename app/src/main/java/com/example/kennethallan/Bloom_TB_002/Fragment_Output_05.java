@@ -8,10 +8,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,12 +40,26 @@ public class Fragment_Output_05 extends Fragment {
     private TextView tv_Pro_04;
     private TextView tv_Pro_05;
 
+    private CheckBox cb_01;
+    private CheckBox cb_02;
+    private CheckBox cb_03;
+    private CheckBox cb_04;
+    private CheckBox cb_05;
+
+
+    private ArrayList<Boolean> al_carryOverCheck;
+
+    CheckBox.OnClickListener mlistener;
+
     Fragment_Output_05.interface_Frag05 sendValuesInterface_Frag05;
 
     public String BUNDLE_NAME = "";
     public String BUNDLE_GOAL = "";
     public String BUNDLE_ATTAIN = "";
     public String BUNDLE_SCALEFACTOR = "";
+    public String BUNDLE_SUMMARYTOGGLE = "";
+
+    public Integer numThemes = 5;
 
     public Fragment_Output_05() {
         // Required empty public constructor
@@ -79,6 +95,12 @@ public class Fragment_Output_05 extends Fragment {
         tv_Pro_04 = (TextView) view.findViewById(R.id.tv_num_04);
         tv_Pro_05 = (TextView) view.findViewById(R.id.tv_num_05);
 
+        cb_01 = (CheckBox) view.findViewById(R.id.cb_01);
+        cb_02 = (CheckBox) view.findViewById(R.id.cb_02);
+        cb_03 = (CheckBox) view.findViewById(R.id.cb_03);
+        cb_04 = (CheckBox) view.findViewById(R.id.cb_04);
+        cb_05 = (CheckBox) view.findViewById(R.id.cb_05);
+
 
         // working with bundles
         //getting names of bundles
@@ -86,6 +108,7 @@ public class Fragment_Output_05 extends Fragment {
         BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
         BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
         BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
+        BUNDLE_SUMMARYTOGGLE = getResources().getString(R.string.bundle_summarytoggle);
 
         // get info from bundles
         //names
@@ -112,6 +135,10 @@ public class Fragment_Output_05 extends Fragment {
         //scale factor
         Double scaleFactor = getArguments().getDouble(BUNDLE_SCALEFACTOR);
 
+        //summary toggle - is this a summary or just current week?
+        Boolean summaryToggle = getArguments().getBoolean(BUNDLE_SUMMARYTOGGLE);
+
+
         // get info from bundles
         //names
         //goals
@@ -127,6 +154,93 @@ public class Fragment_Output_05 extends Fragment {
         pb_Attain_03.setProgress((int) Math.round(attain_03*scaleFactor));
         pb_Attain_04.setProgress((int) Math.round(attain_04*scaleFactor));
         pb_Attain_05.setProgress((int) Math.round(attain_05*scaleFactor));
+
+        // /////////////////////SET CHECKBOX VISIBILITY ////////////////////////////////
+
+        if (summaryToggle){
+
+            //for theme 01
+            try { // try in case infinity if attain_01 = 0
+                int temp_01 = goals_01 / attain_01;
+                if (temp_01 < 0.9 || temp_01 > 1.10) {
+                    cb_01.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 02
+            try {
+                int temp_02 = goals_02 / attain_02;
+                if (temp_02 < 0.9 || temp_02 > 1.10) {
+                    cb_02.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 03
+            try {
+                int temp_03 = goals_03 / attain_03;
+                if (temp_03 < 0.9 || temp_03 > 1.1) {
+                    cb_03.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 04
+            try {
+                int temp_04 = goals_04 / attain_04;
+                if (temp_04 < 0.9 || temp_04 > 1.1) {
+                    cb_04.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 05
+            try {
+                int temp_05 = goals_05 / attain_05;
+                if (temp_05 < 0.9 || temp_05 > 1.1) {
+                    cb_05.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+        }
+
+        // //////////////////////CARRY OVER FUNCTIONALITY ////////////////////////////////
+        // set up click listeners for carry over
+        mlistener = new CheckBox.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                getCheckboxClick();
+            }
+        };
+
+
+        // apply listeners to all seekbars
+        cb_01.setOnClickListener(mlistener);
+        cb_02.setOnClickListener(mlistener);
+        cb_03.setOnClickListener(mlistener);
+        cb_04.setOnClickListener(mlistener);
+        cb_05.setOnClickListener(mlistener);
+
+        al_carryOverCheck = new ArrayList<Boolean>();
+
+        for (int i =0;i<numThemes;i++){
+            al_carryOverCheck.add(false);
+        }
+
+        // use tags to identify which checkboxes apply to which values
+        //TODO find out if this is required since i dont think i am sending tags back through the interface
+        cb_01.setTag("Theme 01");
+        cb_02.setTag("Theme 02");
+        cb_03.setTag("Theme 03");
+        cb_04.setTag("Theme 04");
+        cb_05.setTag("Theme 05");
 
         return view;
     }
@@ -148,5 +262,17 @@ public class Fragment_Output_05 extends Fragment {
             throw new ClassCastException((activity.toString()+"Must override onMessageRead...."));
         }
 
+    }
+
+    public void getCheckboxClick(){
+        al_carryOverCheck.set(0,cb_01.isChecked());
+        al_carryOverCheck.set(1,cb_02.isChecked());
+        al_carryOverCheck.set(2,cb_03.isChecked());
+        al_carryOverCheck.set(3,cb_04.isChecked());
+        al_carryOverCheck.set(4,cb_05.isChecked());
+
+
+        // send vales to interface
+        sendValuesInterface_Frag05.onMessageRead(al_carryOverCheck);
     }
 }

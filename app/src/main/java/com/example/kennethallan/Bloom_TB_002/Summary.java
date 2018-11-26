@@ -1,6 +1,7 @@
 package com.example.kennethallan.Bloom_TB_002;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.service.carrier.CarrierService;
 import android.support.v4.app.FragmentContainer;
@@ -45,6 +46,9 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
 
     Integer numCurrentThemes;
 
+    Bundle sis;
+    Bundle currentWeekBundle;
+
     // fragment stuff
     View fragmentHolder;
     List<Boolean> checkBoxValues = new ArrayList<>();
@@ -81,17 +85,16 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
 
         context = Summary.this;
         Mydb = new DBHelper(this);
+        sis = savedInstanceState;
+        currentWeekBundle = getIntent().getExtras(); // get bundle that was attached to the intent that started this activity.
+
+
 
         // find and bind variables to views
         bn_CarryOver = (Button) findViewById(R.id.bn_CarryOver);
         sessionActivitiesListView = (ListView)findViewById(R.id.lv_SessionActivities);
         fragmentHolder = findViewById(R.id.Fragment_Holder);
 
-
-        BUNDLE_NAME = getResources().getString(R.string.bundle_name);
-        BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
-        BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
-        BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
 
 
         // erase arrays in case they hold variables from last time activity used.(not sure if reqquired) TODO test this
@@ -105,95 +108,9 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
         al_values_ProAttain = getCURRENTSessionProgress();
         i_ScaleFactor = getScaleFactor();
 
+        loadOutputFragment(sis,currentWeekBundle,false); // TODO check if this works. Savedinstance state might be the bundle needed here.
 
-        //TestBundle
-        Bundle testBundle = new Bundle();
-        //add names
-        for (int i =0; i<al_values_ThemeNames.size();i++){
-            testBundle.putString(BUNDLE_NAME+i,al_values_ThemeNames.get(i));
-        }
-        //add goal values
-        for (int i =0; i<al_values_ProGoals.size();i++){
-            testBundle.putInt(BUNDLE_GOAL+i,al_values_ProGoals.get(i));
-        }
-        //add attain values
-        for (int i =0; i<al_values_ProAttain.size();i++){
-            testBundle.putInt(BUNDLE_ATTAIN+i,al_values_ProAttain.get(i));
-        }
-        // add scale factor
-        testBundle.putDouble(BUNDLE_SCALEFACTOR,i_ScaleFactor);
-
-
-
-        // load fragment
-        if (fragmentHolder != null) {
-
-            if (savedInstanceState != null) {
-                return;
-            }// this is like an exit if something has gone wrong for this to load????
-            if (numCurrentThemes == 12) {
-                Fragment_Output_12 myFragment = new Fragment_Output_12();
-                myFragment.setArguments(testBundle);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 11) {
-                Fragment_Output_11 myFragment = new Fragment_Output_11();
-                myFragment.setArguments(testBundle);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 10) {
-                Fragment_Output_10 myFragment = new Fragment_Output_10();
-                myFragment.setArguments(testBundle);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 9) {
-                Fragment_Output_09 myFragment = new Fragment_Output_09();
-                myFragment.setArguments(testBundle);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 8) {
-                Fragment_Output_08 myFragment = new Fragment_Output_08();
-                myFragment.setArguments(testBundle);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 7) {
-                Fragment_Output_07 myFragment = new Fragment_Output_07();
-                myFragment.setArguments(testBundle);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 6) {
-                Fragment_Output_06 myFragment = new Fragment_Output_06();
-                myFragment.setArguments(testBundle);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 5) {
-                Fragment_Output_05 myFragment = new Fragment_Output_05();
-                myFragment.setArguments(testBundle);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 4) {
-                Fragment_Output_04 myFragment = new Fragment_Output_04();
-                myFragment.setArguments(testBundle);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-            if (numCurrentThemes == 3) {
-                Fragment_Output_03 myFragment = new Fragment_Output_03();
-                myFragment.setArguments(testBundle);
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.Fragment_Holder, myFragment, null);
-                fragmentTransaction.commit();
-            }
-
-
-        }
+        // create listview
 
         switch (numCurrentThemes){
 
@@ -346,25 +263,7 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
 
         }
 
-
-
-        TEST();
-
-    }
-
-    // used to handle the information transferred from the frament to the activity.
-    @Override
-    public void onMessageRead(List<Boolean> message) {
-        checkBoxValues.clear();
-        checkBoxValues = message;
-
-    }
-
-    public ArrayList<String> getCurrentThemeNames(){
-        return Mydb.getCURRENTThemeNames();
-    }
-
-    public void TEST(){
+        ///////////////////////////// SET ON CLICK LISTENERS //////////////////////////////////////
 
         bn_CarryOver.setOnClickListener(
                 new View.OnClickListener() {
@@ -375,30 +274,132 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
                 }
         );
 
-
-        // TODO implement carryover funcationality
-
-        // 1 get carry over number from DB (just count in DB) but will need to send a way to reset the counter from here
-        // possibly? maybe just send as an extra variable back in the call to re submit the goal targets to trigger a reset of the counter.
-
-        // 2 create a db function the assembles the sum of activities for each current theme. This would need to look at the
-        // current themes values and activites values so it knew what values to sum and what ones to not. Also it would need
-        // to be able to look up the current goal target date and compare the activities against this to ensure only the correct ones were summed.
-        //
-        // 3  get the current goal target targets.
-        //
-        // 4 create a function that scales the progressbars to the values that you want (75% = 100% so that there is space
-        // to be bigger if exceeded?)
-        // 5 set up a textview showing the carryover no of weeks.
-        // 6 set up button to prompt the carryover.
-        // 7 set up lookup in function that automatically reverts back to the original set goals amount.
-
-
-
     }
 
-//1
+    public void loadOutputFragment(Bundle savedInstanceState, Bundle currentWeekBundle,  boolean replace) {
 
+        if (fragmentHolder != null) {
+
+            if (savedInstanceState != null) {
+                return;
+                // this is like an exit if something has gone wrong for this to load????
+            }
+
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+            if (numCurrentThemes == 12) {
+                Fragment_Output_12 myFragment = new Fragment_Output_12();
+                myFragment.setArguments(currentWeekBundle);
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+
+            }
+            if (numCurrentThemes == 11) {
+                Fragment_Output_11 myFragment = new Fragment_Output_11();
+                myFragment.setArguments(currentWeekBundle);
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 10) {
+                Fragment_Output_10 myFragment = new Fragment_Output_10();
+                myFragment.setArguments(currentWeekBundle);
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 9) {
+                Fragment_Output_09 myFragment = new Fragment_Output_09();
+                myFragment.setArguments(currentWeekBundle);
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 8) {
+                Fragment_Output_08 myFragment = new Fragment_Output_08();
+                myFragment.setArguments(currentWeekBundle);
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 7) {
+                Fragment_Output_07 myFragment = new Fragment_Output_07();
+                myFragment.setArguments(currentWeekBundle);
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 6) {
+                Fragment_Output_06 myFragment = new Fragment_Output_06();
+                myFragment.setArguments(currentWeekBundle);
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 5) {
+                Fragment_Output_05 myFragment = new Fragment_Output_05();
+                myFragment.setArguments(currentWeekBundle);
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 4) {
+                Fragment_Output_04 myFragment = new Fragment_Output_04();
+                myFragment.setArguments(currentWeekBundle);
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+            if (numCurrentThemes == 3) {
+                Fragment_Output_03 myFragment = new Fragment_Output_03();
+                myFragment.setArguments(currentWeekBundle);
+                if (replace == false) {
+                    fragmentTransaction.add(R.id.Fragment_Holder, myFragment, null);
+                }else{
+                    fragmentTransaction.replace(R.id.Fragment_Holder, myFragment, null);
+                }
+                fragmentTransaction.commit();
+            }
+        }
+    }
+
+    // used to handle the information transferred from the frament to the activity.
+    @Override
+    public void onMessageRead(List<Boolean> message) {
+        checkBoxValues = message;
+    }
+
+    public ArrayList<String> getCurrentThemeNames(){
+        return Mydb.getCURRENTThemeNames();
+    }
 
 
     public ArrayList<Integer> getCURRENTSessionProgress (){
@@ -850,7 +851,6 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
 
         for (int i=0; i < numCurrentThemes;i++ ){
 
-
             if (checkBoxValues.get(i)==true){
                 try{
                     alteration = al_values_ProGoals.get(i) - al_values_ProAttain.get(i);
@@ -883,99 +883,13 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
 
         }
 
+        // ////////////////// RETURN TO MAIN ACTIVITY //////////////////////////
+        Intent intent = new Intent(Summary.this, MainActivity.class);
+        startActivity(intent);
+
     }
 
 
-
-
-
-
-//    class CustomAdaptor_OutputSliders extends ArrayAdapter<String> {
-//
-//        ArrayList<String> arrayList_Themes = new ArrayList<>();
-//        ArrayList<Integer> arrayList_Attain = new ArrayList<>();
-//        ArrayList<Integer> arrayList_Goals = new ArrayList<>();
-//        ArrayList<String> arrayList_Ratio = new ArrayList<>();
-//        ArrayList<Boolean> al_checkbox_CutomAdapter = new ArrayList<Boolean>();
-//        Integer numCurrentThemes;
-//        int recordFirstCounter = 0;
-//
-//        public CustomAdaptor_OutputSliders( Context context, ArrayList<String>  res_themes, ArrayList<Integer>  res_attain, ArrayList<Integer>  res_goal) {
-//            super(context, R.layout.progress_slider_01, res_themes);
-//
-//            this.arrayList_Themes = res_themes;
-//            this.arrayList_Attain = res_attain;
-//            this.arrayList_Goals = res_goal;
-//
-//            numCurrentThemes = arrayList_Themes.size();
-//
-//            // inital build of arraylist.
-//            al_checkbox_CutomAdapter.clear();
-//            for (int i = 0; i<numCurrentThemes;i++){
-//                al_checkbox_CutomAdapter.add(i,false);
-//            }
-//
-//
-//        }
-//
-//
-//        @Override
-//        public View getView(final int position, View convertView, ViewGroup parent) {
-//
-//            LayoutInflater Inflater = LayoutInflater.from(getContext());
-//            View customView = Inflater.inflate(R.layout.progress_slider_01, parent, false);
-//            // 1) refence to data
-//            // 2) reference to text view
-//            // 3) Reference to seekbar.
-//
-//            String singleViewItem = getItem(position); //Confirm DOES work. Probably works through the one resource that goes through the super.
-//            TextView tv_title = (TextView) customView.findViewById(R.id.tv_theme);
-//            final ProgressBar pb_Goal = (ProgressBar) customView.findViewById(R.id.pb_Goal);
-//            final ProgressBar pb_Attainment = (ProgressBar) customView.findViewById(R.id.pb_Attain);
-//            TextView tv_score = (TextView) customView.findViewById(R.id.tv_score);
-//            CheckBox cb_carryOver = (CheckBox) customView.findViewById(R.id.cb_carryover);
-//
-//
-//            //set values to view
-//            tv_title.setText(arrayList_Themes.get(position));
-//            //title.setText(singleViewItem);
-//            pb_Goal.setProgress(arrayList_Goals.get(position));
-//            pb_Attainment.setProgress(arrayList_Attain.get(position));
-//            tv_score.setText(arrayList_Attain.get(position) + " / " + arrayList_Goals.get(position) + " minutes");
-//
-//            Double temp1 =  Double.parseDouble(arrayList_Attain.get(position).toString());
-//            Double temp2 =  Double.parseDouble(arrayList_Goals.get(position).toString());
-//            Double temp3 = temp1/temp2;
-//
-//            cb_carryOver.setVisibility(View.INVISIBLE);
-//            cb_carryOver.setTag(position);
-//
-//            if (temp3>1.10 || temp3<0.90){
-//                cb_carryOver.setVisibility(View.VISIBLE);
-//            }
-//
-//            cb_carryOver.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    String tag = view.getTag().toString();
-//                    CheckBox checkBox = (CheckBox) view.findViewById(R.id.cb_carryover);
-//                    Boolean value = checkBox.isChecked();
-//                    al_checkbox_CutomAdapter.set(Integer.parseInt(tag), value);
-//
-//                }
-//            });
-//
-//            transferValues();
-//
-//            return customView;
-//        }
-//
-//        public void transferValues(){
-//            checkBoxValues = al_checkbox_CutomAdapter;
-//        }
-//
-//
-//    }
 
 
     // The following ArrayAdapter classes are for displaying the activities in different layouts.

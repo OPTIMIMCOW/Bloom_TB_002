@@ -97,16 +97,16 @@ public class Fragment_Input_03 extends Fragment {
 
         /////////////////// SET SEEKBARS TO PREVIOUS GOAL VALUES /////////////////////////////
         // working with bundles
-        //getting names of bundles
+        //getting names of bundle content
         BUNDLE_NAME = getResources().getString(R.string.bundle_name);
         BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
         BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
         BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
 
-        Bundle currentWeekBundle = this.getArguments();
+        Bundle currentWeekBundle = this.getArguments(); // get bundle
         if (currentWeekBundle != null){
 
-            //goals
+            //goals //  get information from bundle
             Integer goals_01 = currentWeekBundle.getInt(BUNDLE_GOAL + "0");
             Integer goals_02 = currentWeekBundle.getInt(BUNDLE_GOAL + "1");
             Integer goals_03 = currentWeekBundle.getInt(BUNDLE_GOAL + "2");

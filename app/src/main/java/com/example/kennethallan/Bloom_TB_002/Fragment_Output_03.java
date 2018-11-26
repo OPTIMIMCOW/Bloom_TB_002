@@ -41,9 +41,7 @@ public class Fragment_Output_03 extends Fragment {
     private CheckBox cb_02;
     private CheckBox cb_03;
 
-    private ArrayList<String> al_themeNames;
-    private ArrayList<Integer> al_goalValues;
-    private ArrayList<Integer> al_attainValues;
+
     private ArrayList<Boolean> al_carryOverCheck;
 
     CheckBox.OnClickListener mlistener;
@@ -54,6 +52,8 @@ public class Fragment_Output_03 extends Fragment {
     public String BUNDLE_GOAL = "";
     public String BUNDLE_ATTAIN = "";
     public String BUNDLE_SCALEFACTOR = "";
+    public String BUNDLE_SUMMARYTOGGLE = "";
+
 
     public Integer numThemes = 3;
 
@@ -96,8 +96,9 @@ public class Fragment_Output_03 extends Fragment {
         BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
         BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
         BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
+        BUNDLE_SUMMARYTOGGLE = getResources().getString(R.string.bundle_summarytoggle);
 
-
+        // get values from bundle
         //names
         String name_01 = getArguments().getString(BUNDLE_NAME + "0");
         String name_02 = getArguments().getString(BUNDLE_NAME + "1");
@@ -111,7 +112,9 @@ public class Fragment_Output_03 extends Fragment {
         Integer attain_02 = getArguments().getInt(BUNDLE_ATTAIN + "1");
         Integer attain_03 = getArguments().getInt(BUNDLE_ATTAIN + "2");
 
-        Double scaleFactor = getArguments().getDouble(BUNDLE_SCALEFACTOR);
+        Double scaleFactor = getArguments().getDouble(BUNDLE_SCALEFACTOR); // kind of unneccessary step
+
+        Boolean summaryToggle = getArguments().getBoolean(BUNDLE_SUMMARYTOGGLE); // kind of unneccessary step
 
         // //////////////////SET PROGRESS OF PROGRESSBARS //////////////////////////////
         pb_Goal_01.setProgress((int) Math.round(goals_01*scaleFactor));
@@ -133,35 +136,42 @@ public class Fragment_Output_03 extends Fragment {
 
 
         // /////////////////////SET CHECKBOX VISIBILITY ////////////////////////////////
-        //for theme 01
-        try {
-            int temp_01 = goals_01 / attain_01;
-            if (temp_01 < 0.9 || temp_01 > 1.10) {
-                cb_01.setVisibility(View.VISIBLE);
+
+        if (summaryToggle){
+
+            //for theme 01
+            try { // try in case infinity if attain_01 = 0
+                int temp_01 = goals_01 / attain_01;
+                if (temp_01 < 0.9 || temp_01 > 1.10) {
+                    cb_01.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
             }
-        }catch(Exception e){
+
+            //for theme 02
+            try {
+                int temp_02 = goals_02 / attain_02;
+                if (temp_02 < 0.9 || temp_02 > 1.10) {
+                    cb_02.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 03
+            try {
+                int temp_03 = goals_03 / attain_03;
+                if (temp_03 < 0.9 || temp_03 > 1.1) {
+                    cb_03.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
 
         }
 
-        //for theme 02
-        try {
-            int temp_02 = goals_02 / attain_02;
-            if (temp_02 < 0.9 || temp_02 > 1.10) {
-                cb_02.setVisibility(View.VISIBLE);
-            }
-        }catch(Exception e){
 
-        }
-
-        //for theme 03
-        try {
-            int temp_03 = goals_03 / attain_03;
-            if (temp_03 < 0.9 || temp_03 > 1.1) {
-                cb_03.setVisibility(View.VISIBLE);
-            }
-        }catch(Exception e){
-
-        }
 
         // //////////////////////CARRY OVER FUNCTIONALITY ////////////////////////////////
         // set up click listeners for carry over

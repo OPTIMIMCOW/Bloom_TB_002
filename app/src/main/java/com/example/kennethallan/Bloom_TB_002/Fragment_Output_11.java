@@ -8,10 +8,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -56,6 +58,22 @@ public class Fragment_Output_11 extends Fragment {
     private TextView tv_Pro_10;
     private TextView tv_Pro_11;
 
+    private CheckBox cb_01;
+    private CheckBox cb_02;
+    private CheckBox cb_03;
+    private CheckBox cb_04;
+    private CheckBox cb_05;
+    private CheckBox cb_06;
+    private CheckBox cb_07;
+    private CheckBox cb_08;
+    private CheckBox cb_09;
+    private CheckBox cb_10;
+    private CheckBox cb_11;
+
+    private ArrayList<Boolean> al_carryOverCheck;
+
+    CheckBox.OnClickListener mlistener;
+
 
     Fragment_Output_11.interface_Frag11 sendValuesInterface_Frag11;
 
@@ -63,6 +81,9 @@ public class Fragment_Output_11 extends Fragment {
     public String BUNDLE_GOAL = "";
     public String BUNDLE_ATTAIN = "";
     public String BUNDLE_SCALEFACTOR = "";
+    public String BUNDLE_SUMMARYTOGGLE = "";
+
+    public Integer numThemes = 11;
 
     public Fragment_Output_11() {
         // Required empty public constructor
@@ -116,6 +137,18 @@ public class Fragment_Output_11 extends Fragment {
         tv_Pro_10 = (TextView) view.findViewById(R.id.tv_num_10);
         tv_Pro_11 = (TextView) view.findViewById(R.id.tv_num_11);
 
+        cb_01 = (CheckBox) view.findViewById(R.id.cb_01);
+        cb_02 = (CheckBox) view.findViewById(R.id.cb_02);
+        cb_03 = (CheckBox) view.findViewById(R.id.cb_03);
+        cb_04 = (CheckBox) view.findViewById(R.id.cb_04);
+        cb_05 = (CheckBox) view.findViewById(R.id.cb_05);
+        cb_06 = (CheckBox) view.findViewById(R.id.cb_06);
+        cb_07 = (CheckBox) view.findViewById(R.id.cb_07);
+        cb_08 = (CheckBox) view.findViewById(R.id.cb_08);
+        cb_09 = (CheckBox) view.findViewById(R.id.cb_09);
+        cb_10 = (CheckBox) view.findViewById(R.id.cb_10);
+        cb_11 = (CheckBox) view.findViewById(R.id.cb_11);
+
 
         // working with bundles
         //getting names of bundles
@@ -123,6 +156,7 @@ public class Fragment_Output_11 extends Fragment {
         BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
         BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
         BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
+        BUNDLE_SUMMARYTOGGLE = getResources().getString(R.string.bundle_summarytoggle);
 
         // get info from bundles
         //names
@@ -167,6 +201,9 @@ public class Fragment_Output_11 extends Fragment {
         //scale factor
         Double scaleFactor = getArguments().getDouble(BUNDLE_SCALEFACTOR);
 
+        //summary toggle - is this a summary or just current week?
+        Boolean summaryToggle = getArguments().getBoolean(BUNDLE_SUMMARYTOGGLE);
+
         // get info from bundles
         //names
         //goals
@@ -195,6 +232,164 @@ public class Fragment_Output_11 extends Fragment {
         pb_Attain_10.setProgress((int) Math.round(attain_10*scaleFactor));
         pb_Attain_11.setProgress((int) Math.round(attain_11*scaleFactor));
 
+        // /////////////////////SET CHECKBOX VISIBILITY ////////////////////////////////
+
+        if (summaryToggle){
+
+            //for theme 01
+            try { // try in case infinity if attain_01 = 0
+                int temp_01 = goals_01 / attain_01;
+                if (temp_01 < 0.9 || temp_01 > 1.10) {
+                    cb_01.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 02
+            try {
+                int temp_02 = goals_02 / attain_02;
+                if (temp_02 < 0.9 || temp_02 > 1.10) {
+                    cb_02.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 03
+            try {
+                int temp_03 = goals_03 / attain_03;
+                if (temp_03 < 0.9 || temp_03 > 1.1) {
+                    cb_03.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 04
+            try {
+                int temp_04 = goals_04 / attain_04;
+                if (temp_04 < 0.9 || temp_04 > 1.1) {
+                    cb_04.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 05
+            try {
+                int temp_05 = goals_05 / attain_05;
+                if (temp_05 < 0.9 || temp_05 > 1.1) {
+                    cb_05.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 06
+            try {
+                int temp_06 = goals_06 / attain_06;
+                if (temp_06 < 0.9 || temp_06 > 1.1) {
+                    cb_06.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 07
+            try {
+                int temp_07 = goals_07 / attain_07;
+                if (temp_07 < 0.9 || temp_07 > 1.1) {
+                    cb_07.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 08
+            try {
+                int temp_08 = goals_08 / attain_08;
+                if (temp_08 < 0.9 || temp_08 > 1.1) {
+                    cb_08.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 09
+            try {
+                int temp_09 = goals_09 / attain_09;
+                if (temp_09 < 0.9 || temp_09 > 1.1) {
+                    cb_09.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 10
+            try {
+                int temp_10 = goals_10 / attain_10;
+                if (temp_10 < 0.9 || temp_10 > 1.1) {
+                    cb_10.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+            //for theme 11
+            try {
+                int temp_11 = goals_11 / attain_11;
+                if (temp_11 < 0.9 || temp_11 > 1.1) {
+                    cb_11.setVisibility(View.VISIBLE);
+                }
+            }catch(Exception e){
+
+            }
+
+        }
+
+        // //////////////////////CARRY OVER FUNCTIONALITY ////////////////////////////////
+        // set up click listeners for carry over
+        mlistener = new CheckBox.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                getCheckboxClick();
+            }
+        };
+
+        // apply listeners to all seekbars
+        cb_01.setOnClickListener(mlistener);
+        cb_02.setOnClickListener(mlistener);
+        cb_03.setOnClickListener(mlistener);
+        cb_04.setOnClickListener(mlistener);
+        cb_05.setOnClickListener(mlistener);
+        cb_06.setOnClickListener(mlistener);
+        cb_07.setOnClickListener(mlistener);
+        cb_08.setOnClickListener(mlistener);
+        cb_09.setOnClickListener(mlistener);
+        cb_10.setOnClickListener(mlistener);
+        cb_11.setOnClickListener(mlistener);
+
+        al_carryOverCheck = new ArrayList<Boolean>();
+
+        for (int i =0;i<numThemes;i++){
+            al_carryOverCheck.add(false);
+        }
+
+        // use tags to identify which checkboxes apply to which values
+        //TODO find out if this is required since i dont think i am sending tags back through the interface
+        cb_01.setTag("Theme 01");
+        cb_02.setTag("Theme 02");
+        cb_03.setTag("Theme 03");
+        cb_04.setTag("Theme 04");
+        cb_05.setTag("Theme 05");
+        cb_06.setTag("Theme 06");
+        cb_07.setTag("Theme 07");
+        cb_08.setTag("Theme 08");
+        cb_09.setTag("Theme 09");
+        cb_10.setTag("Theme 10");
+        cb_11.setTag("Theme 11");
+
         return view;
     }
 
@@ -215,6 +410,24 @@ public class Fragment_Output_11 extends Fragment {
             throw new ClassCastException((activity.toString()+"Must override onMessageRead...."));
         }
 
+    }
+
+    public void getCheckboxClick(){
+        al_carryOverCheck.set(0,cb_01.isChecked());
+        al_carryOverCheck.set(1,cb_02.isChecked());
+        al_carryOverCheck.set(2,cb_03.isChecked());
+        al_carryOverCheck.set(3,cb_04.isChecked());
+        al_carryOverCheck.set(4,cb_05.isChecked());
+        al_carryOverCheck.set(5,cb_06.isChecked());
+        al_carryOverCheck.set(6,cb_07.isChecked());
+        al_carryOverCheck.set(7,cb_08.isChecked());
+        al_carryOverCheck.set(8,cb_09.isChecked());
+        al_carryOverCheck.set(9,cb_10.isChecked());
+        al_carryOverCheck.set(10,cb_11.isChecked());
+
+
+        // send vales to interface
+        sendValuesInterface_Frag11.onMessageRead(al_carryOverCheck);
     }
 
 }

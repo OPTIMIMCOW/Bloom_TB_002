@@ -3,6 +3,7 @@ package com.example.kennethallan.Bloom_TB_002;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -63,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
     // OUTPUT FRAGMENT
 
-    Button bn_CarryOver;
     ListView sessionActivitiesListView;
 
     Context context;
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
     public String BUNDLE_GOAL = "";
     public String BUNDLE_ATTAIN = "";
     public String BUNDLE_SCALEFACTOR = "";
+    public String BUNDLE_SUMMARYTOGGLE = "";
 
     Integer numCurrentThemes;
 
@@ -110,11 +111,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
     FloatingActionButton fab_AddActivity;
 
 
-
-
-// TODO add timer
-// TODO add progress fragment
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
         makeSummaryButton = (Button) findViewById(R.id.Summary);
 
-        makeSummary(); // initialising the method but not actually running without button click.
 
         //////////////////////////// FUNCTIONALITY OF TIMER///////////////////////////
 
@@ -158,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
         Mydb = new DBHelper(this);
 
         // find and bind variables to views
-        bn_CarryOver = (Button) findViewById(R.id.bn_CarryOver);
         sessionActivitiesListView = (ListView)findViewById(R.id.lv_SessionActivities);
         fragmentHolder = findViewById(R.id.Fragment_Holder);
         tv_ErrorMessage = (TextView) findViewById(R.id.tv_ErrorMessage);
@@ -169,6 +163,8 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
         BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
         BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
         BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
+        BUNDLE_SUMMARYTOGGLE = getResources().getString(R.string.bundle_summarytoggle);
+
 
 
         // erase arrays in case they hold variables from last time activity used.(not sure if reqquired) TODO test this
@@ -216,9 +212,10 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             // add scale factor
             currentWeekBundle.putDouble(BUNDLE_SCALEFACTOR,i_ScaleFactor);
 
+            // add default summary toggle (false)
+            currentWeekBundle.putBoolean(BUNDLE_SUMMARYTOGGLE,false);
 
             loadOutputFragment(sis,currentWeekBundle,false); // TODO check if this works. Savedinstance state might be the bundle needed here.
-
 
         }
 
@@ -233,8 +230,9 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
         });
 
 
-        /////////////////////////// OPEN ADD ACTIVITY ACTIVITY ///////////////////////////
+        ////////////////////////////////BUTTON LISTENERS /////////////////////////////////
 
+        /////////////////////////// OPEN ADD ACTIVITY ACTIVITY ///////////////////////////
         fab_AddActivity = (FloatingActionButton) findViewById(R.id.fab);
         fab_AddActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,6 +241,23 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                 startActivity(intent);
             }
         });
+
+
+        //////////////////////// START SUMMARY PAGE ////////////////////////////////////
+        makeSummaryButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Mydb.close(); // use this to close this database and when this is subsequently greyed out and
+                        //              //the code runs again a new database will be created.**********REMEMBER TO INCREMENT THE DATABASE NAME TO AVOID REPEAT NAME CONFLICK
+                        Intent intent = new Intent(MainActivity.this,Summary.class);
+                        currentWeekBundle.putBoolean(BUNDLE_SUMMARYTOGGLE,true);
+                        intent.putExtras(currentWeekBundle); // adding bundle to the method to set progressbar values
+                        startActivity(intent);
+                    }
+                }
+        );
+
 
     }
 
@@ -825,19 +840,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
     }
 
-    public void makeSummary(){
-        makeSummaryButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Mydb.close(); // use this to close this database and when this is subsequently greyed out and
-                        //              //the code runs again a new database will be created.**********REMEMBER TO INCREMENT THE DATABASE NAME TO AVOID REPEAT NAME CONFLICK
-                        Intent intent = new Intent(MainActivity.this,Summary.class);
-                        startActivity(intent);
-                    }
-                }
-        );
-    }
 
     // /////////////////////ALL TO DO WITH THE COUNTDOWN TEXT //////////////////////////////
     private void loadCountdown(){
@@ -942,4 +944,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
 
     }
+
+
 }

@@ -10,6 +10,7 @@
     <string name="bundle_attain">attain_</string>
     <string name="bundle_goal">goal_</string>
     <string name="bundle_scalefactor">scalefactor</string>
+    <string name="bundle_summarytoggle">summarytoggle</string>
     <string name="Default_GoalAchievement">100m\n/\n120m</string>
     <string name="PreferencesName">CountdownSPref</string>
     <string name="title_activity_temporary_test_button">TemporaryTestButton</string>
