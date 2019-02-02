@@ -18,14 +18,6 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:backgroundTint="@color/Activity_AddActivity_Header">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ActivityTitle_AddActivity"
-            android:layout_gravity="center"
-            android:id="@+id/toolbar_title"
-            android:textSize="@dimen/TextSize_Title"/>
-
     </android.support.v7.widget.Toolbar>
     <RelativeLayout
         android:id="@+id/activity_edit_theme_page"

@@ -1,14 +1,19 @@
 package com.example.kennethallan.Bloom_TB_002;
 
 import android.content.Intent;
+import android.content.RestrictionEntry;
 import android.database.Cursor;
+import android.nfc.Tag;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompatSideChannelService;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Button;
 import android.view.View;
@@ -27,11 +32,16 @@ import okhttp3.OkHttpClient;
 
 import com.example.kennethallan.Bloom_TB_002.R;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.RunnableScheduledFuture;
+
+import javax.annotation.meta.When;
 
 // insert activity has a lot of stuff from the tutorial but also is where activities are set into the database.
 // TODO Transfer adding activities to another activity just for clarity and have a summary of the activities there. Essentially copy the add themes activity.
@@ -45,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
     public static final String EXTRA_MESSAGE = "com.example.kennethallan.testbuildofsqllightdatabase_01.MESSAGE";
 
     DBHelper Mydb;
-    Button addActivityButton;
-    Button makeSummaryButton;
 
     // variables to do with the countdown
     private long START_TIME_IN_MILLIS;
@@ -73,8 +81,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
     public String BUNDLE_ATTAIN = "";
     public String BUNDLE_SCALEFACTOR = "";
     public String BUNDLE_SUMMARYTOGGLE = "";
-
-    Integer numCurrentThemes;
+    public String BUNDLE_COLOURSEQUENCE = "";
 
     // fragment stuff
     View fragmentHolder;
@@ -103,12 +110,16 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
     ArrayList<Integer> al_values_ProGoals = new ArrayList<Integer>();
     ArrayList<Integer> al_values_ProAttain = new ArrayList<Integer>();
     Double i_ScaleFactor;
+    Integer currentThemeNum;
 
     TextView tv_ErrorMessage;
     Bundle sis;
     Bundle currentWeekBundle;
+    ArrayList<Integer> al_ColourSequence;
+    String String_ColourSequence;
 
     FloatingActionButton fab_AddActivity;
+    FloatingActionButton fab_StartSummary;
 
 
     @Override
@@ -131,11 +142,14 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
         sis = savedInstanceState; // make an object so we can use in loading fragement from a method
         currentWeekBundle = new Bundle(); // initalise bundle so that we can populate with values for fragment
 
+        /////////////////////// SET UP TOOLBAR /////////////////////
+        // need this to enable overrides to link the overflow menu to it.
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitle(getResources().getString(R.string.ActivityTitle_CurrentPogress));
+        setSupportActionBar(myToolbar);
 
-        makeSummaryButton = (Button) findViewById(R.id.Summary);
 
-
-        //////////////////////////// FUNCTIONALITY OF TIMER///////////////////////////
+        /////////////////////////////////// TIMER ///////////////////////////////////////////
 
         // implement countdown functionality
         tv_sessionDate = (TextView) findViewById(R.id.tv_date);
@@ -143,12 +157,14 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
         tv_Countdown_Hours = (TextView) findViewById(R.id.tv_countdown_hours);
         tv_Countdown_Minutes = (TextView) findViewById(R.id.tv_countdown_minutes);
         tv_Countdown_Seconds = (TextView) findViewById(R.id.tv_countdown_seconds);
+        ////// TIMER SETTING DONE IN ONSTART
+
+        //////////////////////////////////// COLOUR //////////////////////////////////////////
+        // COLOUR SET IN ONSTART
 
 
-        ////// TIMER DONE IN ONSTART
+        ///////////////////////////////////OUTPUT FRAGMENT ///////////////////////////////////
 
-
-        /////////////////////////// FUNCTIONALITY OF OUTPUT FRAGMENT /////////////////////////
         context = MainActivity.this;
         Mydb = new DBHelper(this);
 
@@ -156,68 +172,10 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
         sessionActivitiesListView = (ListView)findViewById(R.id.lv_SessionActivities);
         fragmentHolder = findViewById(R.id.Fragment_Holder);
         tv_ErrorMessage = (TextView) findViewById(R.id.tv_ErrorMessage);
-        tv_ErrorMessage.setVisibility(View.INVISIBLE);
+        tv_ErrorMessage.setVisibility(View.INVISIBLE); // hide error message to make sure there is no error message if there is no error by default.
 
 
-        BUNDLE_NAME = getResources().getString(R.string.bundle_name);
-        BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
-        BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
-        BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
-        BUNDLE_SUMMARYTOGGLE = getResources().getString(R.string.bundle_summarytoggle);
-
-
-
-        // erase arrays in case they hold variables from last time activity used.(not sure if reqquired) TODO test this
-        al_values_ThemeNames.clear();
-        al_values_ProGoals.clear();
-        al_values_ProAttain.clear();
-        i_ScaleFactor = 0.00;
-
-        al_values_ProGoals = getCURRENTGoals();
-
-        // run rest of code to load the the fragement if no error was recieved from the getCURRENTGoals() method.
-        if (al_values_ProGoals.get(0)!=-1){
-
-            al_values_ThemeNames = getCurrentThemeNames();
-            al_values_ProAttain = getCURRENTSessionProgress();
-            i_ScaleFactor = getScaleFactor();
-            Integer maxThemeNum = Mydb.getMaxNumThemesSupported() -1;
-
-            //Pupulate bundle to open fragement using.
-
-            //add names
-            for (int i =0; i<maxThemeNum;i++){
-                try{
-                    currentWeekBundle.putString(BUNDLE_NAME+i,al_values_ThemeNames.get(i));
-                }catch (Exception e){
-                    currentWeekBundle.putString(BUNDLE_NAME+i,"NoTheme");
-                }
-            }
-            //add goal values
-            for (int i =0; i<maxThemeNum;i++){
-                try{
-                    currentWeekBundle.putInt(BUNDLE_GOAL+i,al_values_ProGoals.get(i));
-                }catch (Exception e){
-                    currentWeekBundle.putInt(BUNDLE_GOAL+i,0);
-                }
-            }
-            //add attain values
-            for (int i =0; i<maxThemeNum;i++){
-                try{
-                    currentWeekBundle.putInt(BUNDLE_ATTAIN+i,al_values_ProAttain.get(i));
-                }catch (Exception e){
-                    currentWeekBundle.putInt(BUNDLE_ATTAIN+i,0);
-                }
-            }
-            // add scale factor
-            currentWeekBundle.putDouble(BUNDLE_SCALEFACTOR,i_ScaleFactor);
-
-            // add default summary toggle (false)
-            currentWeekBundle.putBoolean(BUNDLE_SUMMARYTOGGLE,false);
-
-            loadOutputFragment(sis,currentWeekBundle,false); // TODO check if this works. Savedinstance state might be the bundle needed here.
-
-        }
+        ////////////////////////////////BUTTON LISTENERS /////////////////////////////////
 
         /////////////////////////// OPEN TO SET GOALS ACTIVITY ///////////////////////////////
         fragmentHolder.setOnClickListener(new View.OnClickListener() {
@@ -229,39 +187,289 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             }
         });
 
-
-        ////////////////////////////////BUTTON LISTENERS /////////////////////////////////
-
         /////////////////////////// OPEN ADD ACTIVITY ACTIVITY ///////////////////////////
         fab_AddActivity = (FloatingActionButton) findViewById(R.id.fab);
         fab_AddActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Mydb.close(); // use this to close this database and when this is subsequently greyed out and
+                //              //the code runs again a new database will be created.**********REMEMBER TO INCREMENT THE DATABASE NAME TO AVOID REPEAT NAME CONFLICK
+
                 Intent intent = new Intent(MainActivity.this,AddEvent.class);
                 startActivity(intent);
             }
         });
 
-
-        //////////////////////// START SUMMARY PAGE ////////////////////////////////////
-        makeSummaryButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Mydb.close(); // use this to close this database and when this is subsequently greyed out and
-                        //              //the code runs again a new database will be created.**********REMEMBER TO INCREMENT THE DATABASE NAME TO AVOID REPEAT NAME CONFLICK
-                        Intent intent = new Intent(MainActivity.this,Summary.class);
-                        currentWeekBundle.putBoolean(BUNDLE_SUMMARYTOGGLE,true);
-                        intent.putExtras(currentWeekBundle); // adding bundle to the method to set progressbar values
-                        startActivity(intent);
-                    }
-                }
-        );
-
+        /////////////////////////// START MAKE SUMMARY BUTTON ///////////////////////////
+        fab_StartSummary = (FloatingActionButton) findViewById(R.id.fab2);
+        fab_StartSummary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Mydb.close(); // use this to close this database and when this is subsequently greyed out and
+                //              //the code runs again a new database will be created.**********REMEMBER TO INCREMENT THE DATABASE NAME TO AVOID REPEAT NAME CONFLICK
+                Intent intent = new Intent(MainActivity.this,Summary.class);
+                currentWeekBundle.putBoolean(BUNDLE_SUMMARYTOGGLE,true);
+                intent.putExtras(currentWeekBundle); // adding bundle to the method to set progressbar values
+                startActivity(intent);
+            }
+        });
 
     }
 
-    public void loadOutputFragment(Bundle savedInstanceState, Bundle currentWeekBundle,  boolean replace) {
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        ////////////////////////////////////  PREPARE COUNTDOWN TIMER //////////////////////////////////////////
+
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
+        mTimerRunning = prefs.getBoolean("timerRunning", false); // note this is a default value.it is expected to be overwritten when looking in shared preferences.
+        currentDateString = prefs.getString("dateString", "");
+        tv_sessionDate.setText(currentDateString);
+        updateCountDownText();
+
+        if (mTimerRunning) {
+            mEndTime = prefs.getLong("endTime", 0); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
+            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
+
+            // used to make sure textview doesnt display negative values
+            if (mTimeLeftInMillis < 0) {
+                mTimeLeftInMillis = 0;
+                mTimerRunning = false;
+                updateCountDownText();
+            } else {
+                startTimer();
+            }
+        }
+
+        // set fab visibility
+        fabInvisibilityToggle(mTimerRunning); // turn on the correct fabs given the situation
+
+        ////////////////////////// GET COLOUR SEQUENCE ///////////////////////////////////////
+
+        // look to shared preferences to get colour sequence, if you dont get one make a default mapping, otherwise make a JSON and parse to an arraylist to be used in the app later.
+        Integer maxThemeNum = Mydb.getMaxNumThemesSupported(); // used for colour sequence only
+        al_ColourSequence = new ArrayList<Integer>();
+        String_ColourSequence = prefs.getString(getResources().getString(R.string.SPreferencesColourJSON), "");
+
+        if (String_ColourSequence == ""){
+            // make default array
+            for (int i = 0; i<maxThemeNum; i++){
+                al_ColourSequence.add(i);
+            }
+
+        }else { // else make the colour arraylist from the string in shared prefferences
+
+            try {
+                JSONObject JSON_ColourSequence = new JSONObject(String_ColourSequence); // initialise the json
+                for (int i = 0; i<maxThemeNum; i++){
+                    al_ColourSequence.set(i, JSON_ColourSequence.getInt(Integer.toString(i))); // convert json to arraylist
+                }
+
+            }catch (Exception e){
+                // reset back to defalt if there is an error
+
+                al_ColourSequence.clear(); // in case error on value mid list
+                for (int i = 0; i<maxThemeNum; i++){ // create default
+                    al_ColourSequence.add(i);
+                }
+            }
+
+            ArrayList<Integer> colourCheck = al_ColourSequence;
+
+            // final check that the arraylist is ok
+            if (al_ColourSequence.size()!=maxThemeNum){
+                Log.d("Main Activity","default colour array - had an array that was less than 12 elements so created");
+                al_ColourSequence.clear(); // in case error on value mid list
+                // make default array
+                for (int i = 0; i<maxThemeNum; i++){
+                    al_ColourSequence.add(i);
+                }
+
+            }
+
+        }
+
+
+
+        ///////////////////////////////// CREATE BUNDLES /////////////////////////////////////
+
+
+        // check for errors in the database
+        JSONObject dbErrorCheck = Mydb.CheckDB();
+        Integer error = 0;
+        Integer type = 0;
+        String note = "No Error";
+        try {
+            error = (Integer) dbErrorCheck.get("error");
+            type = (Integer) dbErrorCheck.get("type");
+            note = (String) dbErrorCheck.get("note");
+
+        }catch(Exception e){
+
+        }
+
+
+        BUNDLE_NAME = getResources().getString(R.string.bundle_name);
+        BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
+        BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
+        BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
+        BUNDLE_SUMMARYTOGGLE = getResources().getString(R.string.bundle_summarytoggle);
+        BUNDLE_COLOURSEQUENCE = getResources().getString(R.string.bundle_coloursequence);
+
+        // erase arrays in case they hold variables from last time activity used.(not sure if reqquired) TODO test this
+        al_values_ThemeNames.clear();
+        al_values_ProGoals.clear();
+        al_values_ProAttain.clear();
+        i_ScaleFactor = 0.00;
+
+
+        // run rest of code to decide whether to build bundles and thus load fragments. If no error was recieved from the getCURRENTGoals() method.
+
+        if (error == 1) {
+            // theme error
+
+            if (type <3) {
+                // theme number = 0
+
+
+                al_values_ThemeNames = getCurrentThemeNames();
+                currentThemeNum = type; // manual override so that we dont build a bundle and dont need to call any of the following methods
+//                al_values_ProGoals = getCURRENTGoals();
+//                al_values_ProAttain = getCURRENTSessionProgress();
+//                i_ScaleFactor = getScaleFactor();
+                //TODO check of this works and delete if not required.
+
+            }
+        }else{
+            // no errors or errors which can be handles by the try catches in the bundles
+            al_values_ThemeNames = getCurrentThemeNames();
+            currentThemeNum = al_values_ThemeNames.size(); // used to build arrays of correct size
+            al_values_ProGoals = getCURRENTGoals();
+            al_values_ProAttain = getCURRENTSessionProgress();
+            i_ScaleFactor = getScaleFactor();
+
+        }
+
+
+
+
+        //////////////////////////////////POPULATE BUNDLES //////////////////////////////////
+        //add names
+        ArrayList<String> al_Bundle_Name = new ArrayList<String>(); // initialise arraylist to attach to bundle
+        for (int i =0; i<currentThemeNum;i++){       // build arraylist
+            try{
+                al_Bundle_Name.add(al_values_ThemeNames.get(i));
+            }catch (Exception e){
+                al_Bundle_Name.add("NoTheme");
+            }
+        }
+        currentWeekBundle.putStringArrayList(BUNDLE_NAME,al_Bundle_Name); // attach to bundle
+
+        //add goal values
+        ArrayList<Integer> al_Bundle_GoalVal = new ArrayList<Integer>();
+        for (int i =0; i<currentThemeNum;i++){
+            try{
+                al_Bundle_GoalVal.add(al_values_ProGoals.get(i));
+            }catch (Exception e){
+                al_Bundle_GoalVal.add(0);
+            }
+        }
+        currentWeekBundle.putIntegerArrayList(BUNDLE_GOAL,al_Bundle_GoalVal);
+
+        //add attain values
+        ArrayList<Integer> al_Bundle_AttainVal = new ArrayList<Integer>(); // initialise array
+        for (int i =0; i<currentThemeNum;i++){
+            try{
+                al_Bundle_AttainVal.add(al_values_ProAttain.get(i));
+            }catch (Exception e){
+                al_Bundle_AttainVal.add(0);
+            }
+        }
+        currentWeekBundle.putIntegerArrayList(BUNDLE_ATTAIN,al_Bundle_AttainVal);
+
+        // add scale factor
+        currentWeekBundle.putDouble(BUNDLE_SCALEFACTOR,i_ScaleFactor);
+
+        // add default summary toggle (false)
+        currentWeekBundle.putBoolean(BUNDLE_SUMMARYTOGGLE,false);
+
+        // add colour sequence to bundle
+        currentWeekBundle.putIntegerArrayList(BUNDLE_COLOURSEQUENCE,al_ColourSequence);
+
+
+        //////////////////////////////////////////// LOAD OUTPUT FRAGEMENT /////////////////////////////////////
+        Set check = currentWeekBundle.keySet();
+        ArrayList<String> namecheck2 = currentWeekBundle.getStringArrayList(getResources().getString(R.string.bundle_name));
+        loadOutputFragment(sis,currentWeekBundle,false);
+
+
+        ////////////////////////////////////////////// ADD FRAGEMENT MASK //////////////////////////////////////
+        // check the current session is running and if not grey out area.
+        // Will only change outside of activity so ok to only assess in oncreate.
+        if (mTimerRunning == false){
+            View session_Overlay = findViewById(R.id.overlay);
+            session_Overlay.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    /////////////////////////OVERRIDE TOOLBAR SETUP ////////////////////////////////
+    // overrride toolbar setup to introduce overflow menu
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.summary_toolbar_menu, menu);
+
+        MenuItem item= menu.findItem(R.id.action_EndSession);
+
+        return true;
+    }
+
+    // essentially the on click listener for the overflow menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_EndSession: {
+                Intent intent = new Intent(MainActivity.this,Summary.class);
+                currentWeekBundle.putBoolean(BUNDLE_SUMMARYTOGGLE,true);
+                intent.putExtras(currentWeekBundle); // adding bundle to the method to set progressbar values
+                startActivity(intent);
+                break;
+            }
+            // case blocks for other MenuItems (if any)
+        }
+        return true;
+    }
+
+
+    ///////////////////////// FAB VISIBILITY SWITCH ///////////////////////////////////
+    public void fabInvisibilityToggle(boolean tog){
+
+        // toggle value based on mtimerrunning variable
+
+        if (tog){
+            // timer running
+            fab_AddActivity.setVisibility(View.VISIBLE);
+            fab_StartSummary.setVisibility(View.INVISIBLE);
+        }else{
+            fab_AddActivity.setVisibility(View.INVISIBLE);
+            fab_StartSummary.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+
+
+    //////////////////////////////////LOADING FRAGEMENT //////////////////////////////
+    public void loadOutputFragment(Bundle savedInstanceState, Bundle currentWeekBundle, boolean replace) {
 
         if (fragmentHolder != null) {
 
@@ -272,7 +480,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-            if (numCurrentThemes == 12) {
+            if (currentThemeNum == 12) {
                 Fragment_Output_12 myFragment = new Fragment_Output_12();
                 myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
@@ -283,7 +491,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                 fragmentTransaction.commit();
 
             }
-            if (numCurrentThemes == 11) {
+            if (currentThemeNum == 11) {
                 Fragment_Output_11 myFragment = new Fragment_Output_11();
                 myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
@@ -293,7 +501,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                 }
                 fragmentTransaction.commit();
             }
-            if (numCurrentThemes == 10) {
+            if (currentThemeNum == 10) {
                 Fragment_Output_10 myFragment = new Fragment_Output_10();
                 myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
@@ -303,7 +511,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                 }
                 fragmentTransaction.commit();
             }
-            if (numCurrentThemes == 9) {
+            if (currentThemeNum == 9) {
                 Fragment_Output_09 myFragment = new Fragment_Output_09();
                 myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
@@ -313,7 +521,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                 }
                 fragmentTransaction.commit();
             }
-            if (numCurrentThemes == 8) {
+            if (currentThemeNum == 8) {
                 Fragment_Output_08 myFragment = new Fragment_Output_08();
                 myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
@@ -323,7 +531,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                 }
                 fragmentTransaction.commit();
             }
-            if (numCurrentThemes == 7) {
+            if (currentThemeNum == 7) {
                 Fragment_Output_07 myFragment = new Fragment_Output_07();
                 myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
@@ -333,7 +541,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                 }
                 fragmentTransaction.commit();
             }
-            if (numCurrentThemes == 6) {
+            if (currentThemeNum == 6) {
                 Fragment_Output_06 myFragment = new Fragment_Output_06();
                 myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
@@ -343,7 +551,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                 }
                 fragmentTransaction.commit();
             }
-            if (numCurrentThemes == 5) {
+            if (currentThemeNum == 5) {
                 Fragment_Output_05 myFragment = new Fragment_Output_05();
                 myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
@@ -353,7 +561,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                 }
                 fragmentTransaction.commit();
             }
-            if (numCurrentThemes == 4) {
+            if (currentThemeNum == 4) {
                 Fragment_Output_04 myFragment = new Fragment_Output_04();
                 myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
@@ -363,7 +571,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                 }
                 fragmentTransaction.commit();
             }
-            if (numCurrentThemes == 3) {
+            if (currentThemeNum == 3) {
                 Fragment_Output_03 myFragment = new Fragment_Output_03();
                 myFragment.setArguments(currentWeekBundle);
                 if (replace == false) {
@@ -386,24 +594,20 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
     public ArrayList<Integer> getCURRENTGoals(){
 
+        // this method should only be called knowing there are no errors in the
+
         // this fetches the values as an arraylist of Strings
         ArrayList<String> al_temp = Mydb.getGoals_CURRENT();
-
         ArrayList<Integer> al_returnValues = new ArrayList<Integer>();
 
-    // TODO do an if statement here to catch any errors and prompt a different fragment to be loaded. - or no fragement to be loaded but a textview appear with the error message.
-        // check for errors. if error then return value -1. -1 will indicate in oncreate not to load fragement.
-        if (al_temp.get(0)=="Order 66"){
-            tv_ErrorMessage.setText(al_temp.get(1));
-            tv_ErrorMessage.setVisibility(View.VISIBLE);
-            al_returnValues.add(-1);
-        }else{
-            // continue as normal
-            // this just converts the string arraylist to an integer arraylist
-            for (int i =0; i<al_temp.size();i++){
-                al_returnValues.add(Integer.parseInt(al_temp.get(i)));
-            }
+        // TODO swap out the .size() method below for a if == 0 or null to avoid problems with error database
 
+         for (int i =0; i<al_temp.size();i++){
+             try {
+                 al_returnValues.add(Integer.parseInt(al_temp.get(i)));
+             }catch (Exception e){
+                 al_returnValues.add(0);
+             }// try catch used here for rare case where array.size != to the number of indexes.
         }
 
         return al_returnValues;
@@ -415,15 +619,9 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
     public ArrayList<Integer> getCURRENTSessionProgress (){
 
-        // get date of the last current goal
-        Mydb.getGoals_CURRENT();
-        Long goalDate = Long.parseLong(Mydb.getGoalStartDate());
-
-        ArrayList<String> arrayList_arrayCURRENTthemeIDS = Mydb.getCURRENTThemeIDs();
-        numCurrentThemes = arrayList_arrayCURRENTthemeIDS.size();
 
 
-        if (numCurrentThemes==0){
+        if (currentThemeNum==0){
             Toast.makeText(MainActivity.this, "You have no Current themes to review", Toast.LENGTH_SHORT).show();
             //TODO check if this works
         }
@@ -463,6 +661,11 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
         al_activitiesList_11.clear();
         al_activitiesList_12.clear();
 
+        // get date of the last current goal /// NOTE: required Mydb.getGoals_Current to run before.
+        Long goalDate = Long.parseLong(Mydb.getGoalStartDate());
+
+        ArrayList<String> arrayList_arrayCURRENTthemeIDS = Mydb.getCURRENTThemeIDs(); // get list of current theme ids
+
         while(res.isAfterLast() == false){
 
             Long activityDate = 0L;
@@ -473,11 +676,11 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                 activityDate = 0L;
             }
 
-            if (activityDate<goalDate){
+            if (activityDate < goalDate){
                 res.moveToNext();
             }else{
 
-                switch (numCurrentThemes){
+                switch (currentThemeNum){
 
                     case 3:
                         sum01 = sum01 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
@@ -512,6 +715,8 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                         sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
                         sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
 
+
+                        // TODO change this back.
                         buildArrays(res);
 
                         al_activitiesList_01.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
@@ -528,6 +733,8 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                         sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
                         sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
                         sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
+                        // TODO change this back.
+
 
                         buildArrays(res);
 
@@ -702,7 +909,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
         // create arraylist of summed values so that we can use it in the custom array.
         ArrayList<Integer> al_attainValues = new ArrayList<Integer>();
         al_attainValues.clear();
-        switch (numCurrentThemes){
+        switch (currentThemeNum){
 
             case 3:
                 al_attainValues.add(sum01);
@@ -899,51 +1106,55 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
     }
 
+
+
+
+    // todo why do we go to onpause after onstart? ANSWER: because phone timed out during debug so it went to onpause. if i keep using my phone like on a real run then it wont do this.
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // TODO i think this is unnecessary
+
+//        //////////////////////////////// COLOUR SEQUENCE - SAVE ///////////////////////////////////////////
+//        // now to convert from araylist to JSON to string and save in sharef preferences.
+//        JSONObject JSON_ColourSequence = new JSONObject();
+//        for (int i = 0; i<12; i++){
+//            try{
+//                JSON_ColourSequence.put(""+i, al_ColourSequence.get(i));
+//            }catch (Exception e){
+//                Log.d("main activity", "when saving the colour sequence error in building the json");
+//            }
+//        }
+//        String_ColourSequence = JSON_ColourSequence.toString();
+//        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = prefs.edit();
+//        editor.putString(getResources().getString(R.string.SPreferencesColourJSON), String_ColourSequence);
+//        editor.apply();
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
-        // TODO make shared prefferences name a constant to be used requested in different activities
-//        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-//        SharedPreferences.Editor editor = prefs.edit();
-//
-//        editor.putLong("millisLeft", mTimeLeftInMillis);
-//        editor.putBoolean("timerRunning", mTimerRunning);
-//        editor.putLong("endTime", mEndTime);
-//
-//        editor.apply();
-//
-//        if (mCountDownTimer != null) {
-//            mCountDownTimer.cancel();
-//        }
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        // TODO make shared prefferences name a constant to be used requested in different activities
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-
-        mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
-        mTimerRunning = prefs.getBoolean("timerRunning", false); // note this is a default value.it is expected to be overwritten when looking in shared preferences.
-
-        updateCountDownText();
-
-        if (mTimerRunning) {
-            mEndTime = prefs.getLong("endTime", 0); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
-            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
-
-            // used to make sure textview doesnt display negative values
-            if (mTimeLeftInMillis < 0) {
-                mTimeLeftInMillis = 0;
-                mTimerRunning = false;
-                updateCountDownText();
-            } else {
-                startTimer();
-            }
-        }
+    protected void onDestroy() {
+        super.onDestroy();
 
 
     }
 
+
+
+    // TODO colours. i think i should control the colours from here and sent them to the fragement using the bundle.
+    // i think I ultimately should store the colour mappings to each theme in a table and that this would be easiest to access
+    // from the activity. Additionally when a theme is deleted the activity is notified making scrolling through colours easier
+    // and just sending the updated bundle to the fragment.
+
+    // TODO: as a test I should create a listarray of colour mappings and see if i can change the drawables in the fragments using this.
+    // If this works then move onto creating a table for it in myDB.
 
 }

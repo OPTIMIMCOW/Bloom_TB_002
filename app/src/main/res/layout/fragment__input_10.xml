@@ -35,12 +35,13 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="180"
+        android:rotation="198"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.41000003"
         android:progressDrawable="@drawable/theme_seekbar_path_colour_09"/>
 
     <SeekBar
@@ -52,13 +53,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="216"
+        android:rotation="234"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.29000002"
+        app:layout_constraintVertical_bias="0.25"
         android:progressDrawable="@drawable/theme_seekbar_path_colour_10"/>
 
 
@@ -92,10 +93,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="252"
+        android:rotation="270"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.31"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.19"
@@ -131,13 +131,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="288"
+        android:rotation="306"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintHorizontal_bias="0.84"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19"
+        app:layout_constraintVertical_bias="0.26"
         android:progressDrawable="@drawable/theme_seekbar_path_colour_02"/>
 
     <TextView
@@ -169,13 +169,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="-36"
+        android:rotation="342"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintHorizontal_bias="0.99"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintVertical_bias="0.42000002"
         android:progressDrawable="@drawable/theme_seekbar_path_colour_03"/>
 
     <TextView
@@ -207,12 +207,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="0"
+        android:rotation="18"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.59000003"
         android:progressDrawable="@drawable/theme_seekbar_path_colour_04"/>
 
     <TextView
@@ -244,13 +245,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="36"
+        android:rotation="54"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.84"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7"
+        app:layout_constraintVertical_bias="0.74"
         android:progressDrawable="@drawable/theme_seekbar_path_colour_05"/>
 
     <TextView
@@ -283,10 +284,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="72"
+        android:rotation="90"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.81"
@@ -321,13 +321,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="108"
+        android:rotation="126"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.17"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81"
+        app:layout_constraintVertical_bias="0.75"
         android:progressDrawable="@drawable/theme_seekbar_path_colour_07"/>
 
     <TextView
@@ -359,13 +359,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:progress="0"
-        android:rotation="144"
+        android:rotation="162"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7"
+        app:layout_constraintVertical_bias="0.6"
         android:progressDrawable="@drawable/theme_seekbar_path_colour_08"/>
 
     <TextView

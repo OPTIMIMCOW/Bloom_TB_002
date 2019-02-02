@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,12 @@ public class AddEvent extends AppCompatActivity implements Fragment_Input_12.int
         Mydb = new DBHelper(this);
 
         addEvent ();
+
+        /////////////////////// SET UP TOOLBAR /////////////////////
+        // need this to enable overrides to link the overflow menu to it.
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitle(getResources().getString(R.string.ActivityTitle_AddActivity));
+        setSupportActionBar(myToolbar);
 
         // look though SQLite to fetch number of themes
         Mydb.getCURRENTThemeNames();

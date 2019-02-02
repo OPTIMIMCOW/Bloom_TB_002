@@ -106,10 +106,27 @@ public class Fragment_Input_03 extends Fragment {
         Bundle currentWeekBundle = this.getArguments(); // get bundle
         if (currentWeekBundle != null){
 
-            //goals //  get information from bundle
-            Integer goals_01 = currentWeekBundle.getInt(BUNDLE_GOAL + "0");
-            Integer goals_02 = currentWeekBundle.getInt(BUNDLE_GOAL + "1");
-            Integer goals_03 = currentWeekBundle.getInt(BUNDLE_GOAL + "2");
+            //goals
+            ArrayList<Integer> al_Bundle_GoalVal = new ArrayList<Integer>();
+            al_Bundle_GoalVal = getArguments().getIntegerArrayList(BUNDLE_GOAL);
+            Integer goals_01;
+            Integer goals_02;
+            Integer goals_03;
+
+            try{
+                goals_01 = al_Bundle_GoalVal.get(0);
+                goals_02 = al_Bundle_GoalVal.get(1);
+                goals_03 = al_Bundle_GoalVal.get(2);
+
+
+            }catch(Exception e){
+
+                Log.d("Fragement_Input_03", "Error on accessing bundle goal values, likely not set properly before so error in assigning. Default is to output 0s here instead");
+                goals_01 = 0;
+                goals_02 = 0;
+                goals_03 = 0;
+
+            }
 
             //TODO investigate whether we can do all our database stuff in main activity and load this up by passing bundles.
 
@@ -120,6 +137,12 @@ public class Fragment_Input_03 extends Fragment {
             seekbar01.setProgress((int) Math.round(goals_01*alterfor100Factor));
             seekbar02.setProgress((int) Math.round(goals_02*alterfor100Factor));
             seekbar03.setProgress((int) Math.round(goals_03*alterfor100Factor));
+
+            Integer total = goals_01 + goals_02 + goals_03;
+            Integer hours = total/ 60;
+            Integer minutes = total % 60;
+            et_Hours.setText(hours.toString());
+            et_Minutes.setText(minutes.toString());
         }
 
 

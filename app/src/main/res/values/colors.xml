@@ -37,6 +37,11 @@
     <color name="Activity_AddActivity_Highlight">#ffea2f</color>
     <color name="Activity_AddActivity_Other">#ffea2f</color>
 
+    <color name="Activity_SessionSummary_Header">#ff4444</color>
+    <color name="Activity_SessionSummary_Body">#ffb1b1</color>
+    <color name="Activity_SessionSummary_Highlight">#ff4444</color>
+    <color name="Activity_SessionSummary_Other">#ff4444</color>
+
 
 
 

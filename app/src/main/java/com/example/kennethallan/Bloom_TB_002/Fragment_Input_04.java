@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -111,13 +112,34 @@ public class Fragment_Input_04 extends Fragment {
         BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
 
         Bundle currentWeekBundle = this.getArguments();
+        Set check = currentWeekBundle.keySet();
+        ArrayList<String> namecheck2 = currentWeekBundle.getStringArrayList(getResources().getString(R.string.bundle_name));
+
         if (currentWeekBundle != null){
 
             //goals
-            Integer goals_01 = currentWeekBundle.getInt(BUNDLE_GOAL + "0");
-            Integer goals_02 = currentWeekBundle.getInt(BUNDLE_GOAL + "1");
-            Integer goals_03 = currentWeekBundle.getInt(BUNDLE_GOAL + "2");
-            Integer goals_04 = currentWeekBundle.getInt(BUNDLE_GOAL + "3");
+            ArrayList<Integer> al_Bundle_GoalVal = new ArrayList<Integer>();
+            al_Bundle_GoalVal = getArguments().getIntegerArrayList(BUNDLE_GOAL);
+            Integer goals_01;
+            Integer goals_02;
+            Integer goals_03;
+            Integer goals_04;
+
+            try{
+                goals_01 = al_Bundle_GoalVal.get(0);
+                goals_02 = al_Bundle_GoalVal.get(1);
+                goals_03 = al_Bundle_GoalVal.get(2);
+                goals_04 = al_Bundle_GoalVal.get(3);
+
+            }catch(Exception e){
+
+                Log.d("Fragement_Input_04", "Error on accessing bundle goal values, likely not set properly before so error in assigning. Default is to output 0s here instead");
+                goals_01 = 0;
+                goals_02 = 0;
+                goals_03 = 0;
+                goals_04 = 0;
+            }
+
 
             Double scaleFactor = currentWeekBundle.getDouble(BUNDLE_SCALEFACTOR);
             Double alterfor100Factor = scaleFactor*(100.00/90.00); // used to alter the scale factor so as to not limit it for overachieve goal purposes in output fragements.
@@ -128,6 +150,12 @@ public class Fragment_Input_04 extends Fragment {
             seekbar02.setProgress((int) Math.round(goals_02*alterfor100Factor));
             seekbar03.setProgress((int) Math.round(goals_03*alterfor100Factor));
             seekbar04.setProgress((int) Math.round(goals_04*alterfor100Factor));
+
+            Integer total = goals_01 + goals_02 + goals_03 + goals_04;
+            Integer hours = total/ 60;
+            Integer minutes = total % 60;
+            et_Hours.setText(hours.toString());
+            et_Minutes.setText(minutes.toString());
         }
 
         // create listener for seekbars

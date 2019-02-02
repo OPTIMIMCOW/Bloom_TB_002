@@ -100,20 +100,27 @@ public class Fragment_Output_03 extends Fragment {
 
         // get values from bundle
         //names
-        String name_01 = getArguments().getString(BUNDLE_NAME + "0");
-        String name_02 = getArguments().getString(BUNDLE_NAME + "1");
-        String name_03 = getArguments().getString(BUNDLE_NAME + "2");
-        //goals
-        Integer goals_01 = getArguments().getInt(BUNDLE_GOAL + "0");
-        Integer goals_02 = getArguments().getInt(BUNDLE_GOAL + "1");
-        Integer goals_03 = getArguments().getInt(BUNDLE_GOAL + "2");
-        //attain
-        Integer attain_01 = getArguments().getInt(BUNDLE_ATTAIN + "0");
-        Integer attain_02 = getArguments().getInt(BUNDLE_ATTAIN + "1");
-        Integer attain_03 = getArguments().getInt(BUNDLE_ATTAIN + "2");
+        ArrayList<String> al_Bundle_Name = new ArrayList<String>();
+        al_Bundle_Name = getArguments().getStringArrayList(BUNDLE_NAME);
 
+        //goals
+        ArrayList<Integer> al_Bundle_GoalVal = new ArrayList<Integer>();
+        al_Bundle_GoalVal = getArguments().getIntegerArrayList(BUNDLE_GOAL);
+        Integer goals_01 = al_Bundle_GoalVal.get(0);
+        Integer goals_02 = al_Bundle_GoalVal.get(1);
+        Integer goals_03 = al_Bundle_GoalVal.get(2);
+
+        //attain
+        ArrayList<Integer> al_Bundle_AttainVal = new ArrayList<Integer>();
+        al_Bundle_AttainVal = getArguments().getIntegerArrayList(BUNDLE_ATTAIN);
+        Integer attain_01 = al_Bundle_AttainVal.get(0);
+        Integer attain_02 = al_Bundle_AttainVal.get(1);
+        Integer attain_03 = al_Bundle_AttainVal.get(2);
+
+        // scale factor
         Double scaleFactor = getArguments().getDouble(BUNDLE_SCALEFACTOR); // kind of unneccessary step
 
+        // summary toggle
         Boolean summaryToggle = getArguments().getBoolean(BUNDLE_SUMMARYTOGGLE); // kind of unneccessary step
 
         // //////////////////SET PROGRESS OF PROGRESSBARS //////////////////////////////

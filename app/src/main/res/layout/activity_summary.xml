@@ -1,33 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.kennethallan.Bloom_TB_002.Summary">
 
-    <FrameLayout
-        android:id="@+id/Fragment_Holder"
-        android:layout_width="383dp"
-        android:layout_height="370dp">
-
-    </FrameLayout>
-
-    <ListView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:id="@+id/lv_SessionActivities"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/Fragment_Holder"
-        android:layout_margin="5dp" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:context="com.example.kennethallan.Bloom_TB_002.MainActivity"
+        android:backgroundTint="@color/Activity_SessionSummary_Header">
 
-    <Button
-        android:text="Carry Over?"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:id="@+id/bn_CarryOver"
-        android:layout_below="@+id/lv_SessionActivities"
-        android:layout_centerHorizontal="true"/>
+    </android.support.v7.widget.Toolbar>
+
+
+    <RelativeLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/my_toolbar">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:id="@+id/Fragment_Holder"
+                    android:layout_width="383dp"
+                    android:layout_height="370dp">
+                </FrameLayout>
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:id="@+id/lv_SessionActivities"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/Fragment_Holder"
+                    android:layout_margin="5dp" />
+
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/content_temporary_test_button" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="16dp"
+                android:src="@android:drawable/ic_media_play"
+                app:fabSize="normal" />
+
+
+        </android.support.design.widget.CoordinatorLayout>
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

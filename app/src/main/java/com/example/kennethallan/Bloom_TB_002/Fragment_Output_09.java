@@ -143,39 +143,36 @@ public class Fragment_Output_09 extends Fragment {
 
         // get info from bundles
         //names
-        String name_01 = getArguments().getString(BUNDLE_NAME + "0");
-        String name_02 = getArguments().getString(BUNDLE_NAME + "1");
-        String name_03 = getArguments().getString(BUNDLE_NAME + "2");
-        String name_04 = getArguments().getString(BUNDLE_NAME + "3");
-        String name_05 = getArguments().getString(BUNDLE_NAME + "4");
-        String name_06 = getArguments().getString(BUNDLE_NAME + "5");
-        String name_07 = getArguments().getString(BUNDLE_NAME + "6");
-        String name_08 = getArguments().getString(BUNDLE_NAME + "7");
-        String name_09 = getArguments().getString(BUNDLE_NAME + "8");
+        ArrayList<String> al_Bundle_Name = new ArrayList<String>();
+        al_Bundle_Name = getArguments().getStringArrayList(BUNDLE_NAME);
 
         //goals
-        Integer goals_01 = getArguments().getInt(BUNDLE_GOAL + "0");
-        Integer goals_02 = getArguments().getInt(BUNDLE_GOAL + "1");
-        Integer goals_03 = getArguments().getInt(BUNDLE_GOAL + "2");
-        Integer goals_04 = getArguments().getInt(BUNDLE_GOAL + "3");
-        Integer goals_05 = getArguments().getInt(BUNDLE_GOAL + "4");
-        Integer goals_06 = getArguments().getInt(BUNDLE_GOAL + "5");
-        Integer goals_07 = getArguments().getInt(BUNDLE_GOAL + "6");
-        Integer goals_08 = getArguments().getInt(BUNDLE_GOAL + "7");
-        Integer goals_09 = getArguments().getInt(BUNDLE_GOAL + "8");
+        ArrayList<Integer> al_Bundle_GoalVal = new ArrayList<Integer>();
+        al_Bundle_GoalVal = getArguments().getIntegerArrayList(BUNDLE_GOAL);
+        Integer goals_01 = al_Bundle_GoalVal.get(0);
+        Integer goals_02 = al_Bundle_GoalVal.get(1);
+        Integer goals_03 = al_Bundle_GoalVal.get(2);
+        Integer goals_04 = al_Bundle_GoalVal.get(3);
+        Integer goals_05 = al_Bundle_GoalVal.get(4);
+        Integer goals_06 = al_Bundle_GoalVal.get(5);
+        Integer goals_07 = al_Bundle_GoalVal.get(6);
+        Integer goals_08 = al_Bundle_GoalVal.get(7);
+        Integer goals_09 = al_Bundle_GoalVal.get(8);
 
         //attain
-        Integer attain_01 = getArguments().getInt(BUNDLE_ATTAIN + "0");
-        Integer attain_02 = getArguments().getInt(BUNDLE_ATTAIN + "1");
-        Integer attain_03 = getArguments().getInt(BUNDLE_ATTAIN + "2");
-        Integer attain_04 = getArguments().getInt(BUNDLE_ATTAIN + "3");
-        Integer attain_05 = getArguments().getInt(BUNDLE_ATTAIN + "4");
-        Integer attain_06 = getArguments().getInt(BUNDLE_ATTAIN + "5");
-        Integer attain_07 = getArguments().getInt(BUNDLE_ATTAIN + "6");
-        Integer attain_08 = getArguments().getInt(BUNDLE_ATTAIN + "7");
-        Integer attain_09 = getArguments().getInt(BUNDLE_ATTAIN + "8");
+        ArrayList<Integer> al_Bundle_AttainVal = new ArrayList<Integer>();
+        al_Bundle_AttainVal = getArguments().getIntegerArrayList(BUNDLE_ATTAIN);
+        Integer attain_01 = al_Bundle_AttainVal.get(0);
+        Integer attain_02 = al_Bundle_AttainVal.get(1);
+        Integer attain_03 = al_Bundle_AttainVal.get(2);
+        Integer attain_04 = al_Bundle_AttainVal.get(3);
+        Integer attain_05 = al_Bundle_AttainVal.get(4);
+        Integer attain_06 = al_Bundle_AttainVal.get(5);
+        Integer attain_07 = al_Bundle_AttainVal.get(6);
+        Integer attain_08 = al_Bundle_AttainVal.get(7);
+        Integer attain_09 = al_Bundle_AttainVal.get(8);
 
-        //scale factor
+        // scale factor
         Double scaleFactor = getArguments().getDouble(BUNDLE_SCALEFACTOR);
 
         //summary toggle - is this a summary or just current week?

@@ -128,14 +128,40 @@ public class Fragment_Input_08 extends Fragment {
         if (currentWeekBundle != null){
 
             //goals
-            Integer goals_01 = currentWeekBundle.getInt(BUNDLE_GOAL + "0");
-            Integer goals_02 = currentWeekBundle.getInt(BUNDLE_GOAL + "1");
-            Integer goals_03 = currentWeekBundle.getInt(BUNDLE_GOAL + "2");
-            Integer goals_04 = currentWeekBundle.getInt(BUNDLE_GOAL + "3");
-            Integer goals_05 = currentWeekBundle.getInt(BUNDLE_GOAL + "4");
-            Integer goals_06 = currentWeekBundle.getInt(BUNDLE_GOAL + "5");
-            Integer goals_07 = currentWeekBundle.getInt(BUNDLE_GOAL + "6");
-            Integer goals_08 = currentWeekBundle.getInt(BUNDLE_GOAL + "7");
+            ArrayList<Integer> al_Bundle_GoalVal = new ArrayList<Integer>();
+            al_Bundle_GoalVal = getArguments().getIntegerArrayList(BUNDLE_GOAL);
+            Integer goals_01;
+            Integer goals_02;
+            Integer goals_03;
+            Integer goals_04;
+            Integer goals_05;
+            Integer goals_06;
+            Integer goals_07;
+            Integer goals_08;
+
+            try{
+                goals_01 = al_Bundle_GoalVal.get(0);
+                goals_02 = al_Bundle_GoalVal.get(1);
+                goals_03 = al_Bundle_GoalVal.get(2);
+                goals_04 = al_Bundle_GoalVal.get(3);
+                goals_05 = al_Bundle_GoalVal.get(4);
+                goals_06 = al_Bundle_GoalVal.get(5);
+                goals_07 = al_Bundle_GoalVal.get(6);
+                goals_08 = al_Bundle_GoalVal.get(7);
+
+            }catch(Exception e){
+
+                Log.d("Fragement_Input_08", "Error on accessing bundle goal values, likely not set properly before so error in assigning. Default is to output 0s here instead");
+                goals_01 = 0;
+                goals_02 = 0;
+                goals_03 = 0;
+                goals_04 = 0;
+                goals_05 = 0;
+                goals_06 = 0;
+                goals_07 = 0;
+                goals_08 = 0;
+
+            }
 
             Double scaleFactor = currentWeekBundle.getDouble(BUNDLE_SCALEFACTOR);
             Double alterfor100Factor = scaleFactor*(100.00/90.00); // used to alter the scale factor so as to not limit it for overachieve goal purposes in output fragements.
@@ -150,6 +176,12 @@ public class Fragment_Input_08 extends Fragment {
             seekbar06.setProgress((int) Math.round(goals_06*alterfor100Factor));
             seekbar07.setProgress((int) Math.round(goals_07*alterfor100Factor));
             seekbar08.setProgress((int) Math.round(goals_08*alterfor100Factor));
+
+            Integer total = goals_01 + goals_02 + goals_03 + goals_04 + goals_05 + goals_06 + goals_07 + goals_08;
+            Integer hours = total/ 60;
+            Integer minutes = total % 60;
+            et_Hours.setText(hours.toString());
+            et_Minutes.setText(minutes.toString());
         }
 
 

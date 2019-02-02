@@ -10,8 +10,10 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -33,9 +35,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+
+import org.json.JSONObject;
+
+import okhttp3.internal.Util;
 
 public class SetGoals extends AppCompatActivity implements Fragment_Input_12.interface_Frag12,Fragment_Input_11.interface_Frag11,Fragment_Input_10.interface_Frag10,Fragment_Input_09.interface_Frag09,Fragment_Input_08.interface_Frag08,Fragment_Input_07.interface_Frag07,Fragment_Input_06.interface_Frag06,
         Fragment_Input_05.interface_Frag05,Fragment_Input_04.interface_Frag04, Fragment_Input_03.interface_Frag03,
@@ -45,18 +52,15 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 
     DBHelper Mydb;
     int numCurrentThemes;
-    int  goal_InputTime_Hours;
-    int  goal_InputTime_Minutes;
 
     View fragmentHolder;
     List<Integer> compiledValues = new ArrayList<>();
     Button bn_sessionDate;
     Calendar c_sessionEndDate;
 
-
-    ArrayList<String> arrayList_GlobalValues = new ArrayList<String>(); // arraylist for the values extracted from the sliders
+    ArrayList<String> al_Fragment_SliderValues = new ArrayList<String>(); // arraylist for the values extracted from the sliders    
     int goal_InputTime = 0; // to initalise the values
-    ArrayList<String> arrayList_GoalsValues = new ArrayList<String>(); // arraylist for the factored values  for goal after being combined with the time input. to be saved in the DB database.
+    ArrayList<String> al_Unsaved_GoalValues = new ArrayList<String>(); // arraylist for the factored values  for goal after being combined with the time input. to be saved in the DB database. Used to visualise the time for each theme.
     // TODO ****** make this less clomplex with goalsValues and globalValues
 
 
@@ -83,25 +87,30 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
     Bundle sis;
     Bundle currentWeekBundle;
 
+    ArrayList<String> al_Bundle_ThemeNames;
+    ArrayList<Integer> al_Bundle_GoalValues;
+    ArrayList<Integer> al_Bundle_AttainValues;
+    ArrayList<Integer> al_Bundle_ColourSequence;
+    // TODO extract bundle somewhere and put these in an array and get rid of the references in this and the custom adapter to the database unnecessarily.
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_goals);
 
-        currentWeekBundle = getIntent().getExtras(); // get bundle that was attached to the intent that started this activity.
         // pass this to the load input fragment method.
         sis = savedInstanceState;
 
         Mydb = new DBHelper(this);
         fragmentHolder = findViewById(R.id.Fragment_Holder);
 
-        // look though SQLite to fetch number of themes
-        Mydb.getCURRENTThemeNames();
-        numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs();
+        // TODO change this to a bundle and move it to the bundles bit so i can use the bundle. Base on theme names and program in an option for null.
+// TODO delete if works
+//        // look though SQLite to fetch number of themes
+//        Mydb.getCURRENTThemeNames();
+//        numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs();
 
-        // load fragment
-        loadInputFragment(savedInstanceState,currentWeekBundle, false); // bundle with week values passed into it.
 
         //implement date set functionality
         bn_sessionDate = (Button) findViewById(R.id.bn_date);
@@ -110,7 +119,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             public void onClick(View view) {
                 // date picker fragment
                 pickSessionDate();
-                // TODO should we cancel the timer here?
+
             }
         });
 
@@ -120,19 +129,63 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         tv_Countdown_Minutes = (TextView) findViewById(R.id.tv_countdown_minutes);
         tv_Countdown_Seconds = (TextView) findViewById(R.id.tv_countdown_seconds);
 
+        /////////////////////// SET UP TOOLBAR /////////////////////
+        // need this to enable overrides to link the overflow menu to it.
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitle(getResources().getString(R.string.ActivityTitle_SetGoals));
+        setSupportActionBar(myToolbar);
 
+        /////////////////////// EXTRACT BUNDLE INFORMATION ///////////////////////////////
 
- // //////////////////////////////////INPUT INTO CUSTOM ADAPTER FOR LIST VIEW //////////////////////////
-        // Build arraylists for custom adapter
-        ArrayList<String> al_ThemeNames = new ArrayList<String>();
-        al_ThemeNames = Mydb.getCURRENTThemeNames();
+        currentWeekBundle = getIntent().getExtras(); // get bundle that was attached to the intent that started this activity.
+        Set check = currentWeekBundle.keySet();
+        ArrayList<String> namecheck = currentWeekBundle.getStringArrayList(getResources().getString(R.string.bundle_name));
 
-        // inital build of array with placeholder names
-        for (int i = 0; i<al_ThemeNames.size(); i++){
-            arrayList_GoalsValues.add("No Value");
+        // String Keys
+        String BUNDLE_NAME = getResources().getString(R.string.bundle_name);
+        String BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
+        String BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
+        String BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
+        String BUNDLE_SUMMARYTOGGLE = getResources().getString(R.string.bundle_summarytoggle);
+        String BUNDLE_COLOURSEQUENCE = getResources().getString(R.string.bundle_coloursequence);
+
+        // Name Bundle
+        al_Bundle_ThemeNames = currentWeekBundle.getStringArrayList(BUNDLE_NAME);
+        // Goal Bundle (need for change in theme number)
+        al_Bundle_GoalValues = currentWeekBundle.getIntegerArrayList(BUNDLE_GOAL);
+        // Attain Bundle (need for change in theme number)
+        al_Bundle_AttainValues = currentWeekBundle.getIntegerArrayList(BUNDLE_ATTAIN);
+        // Summary Toggle
+               // unnecessary here
+        // Colour Sequence
+        al_Bundle_ColourSequence = currentWeekBundle.getIntegerArrayList(BUNDLE_COLOURSEQUENCE);
+
+        ///////////////////////////////////// GET CURRENT THEME NUMBER ////////////////////////////////////////
+
+        if(al_Bundle_ThemeNames==null || al_Bundle_ThemeNames.size()==0){
+            numCurrentThemes=0;
+        }else{
+            numCurrentThemes=al_Bundle_ThemeNames.size();
+        }
+
+        // //////////////////////////////////INPUT INTO CUSTOM ADAPTER FOR LIST VIEW //////////////////////////
+
+        // TODO - maybe i should use the bundle here???
+        // TODO DELETE if works
+//        // Build arraylists for custom adapter
+//        ArrayList<String> al_ThemeNames = new ArrayList<String>();
+//        al_ThemeNames = Mydb.getCURRENTThemeNames();
+
+        // initial build of theme goals for display in the listview.
+
+        // TODO introduce toggle to prompt whether to populate certain things or not. Maybe unnecessary if it gets value of 0 here????? I think it will get value of 0 and be ok.
+
+        for (int i = 0; i<numCurrentThemes; i++){
+            al_Unsaved_GoalValues.add(al_Bundle_GoalValues.get(i).toString()); // convert for Integer array to String array
         }
 
         themeListView = (ListView)findViewById(R.id.ListViewSetGoals);
+        // TODO should we move this to onStart?
         populateListView(); // this method is called to repopulate the list when a theme is added thus it is made into a method.
 
 
@@ -153,11 +206,141 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             }
         });
 
+
+        ////////////////////////// LOAD INPUT FRAGMENT ///////////////////////////////////
+        loadInputFragment(savedInstanceState,currentWeekBundle, false); // bundle with week values passed into it.
+
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // TODO make shared prefferences name a constant to be used requested in different activities
+
+        ///////////////////////////////// LOAD TIMER /////////////////////////////////////////////////////////////////
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+
+        mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
+        mTimerRunning = prefs.getBoolean("timerRunning", false); // note this is a default value.it is expected to be overwritten when looking in shared preferences.
+        currentDateString = prefs.getString("dateString", "");
+        bn_sessionDate.setText(currentDateString);
+        updateCountDownText();
+
+        if (mTimerRunning) {
+            mEndTime = prefs.getLong("endTime", 0); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
+            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
+
+            // used to make sure textview doesnt display negative values
+            if (mTimeLeftInMillis < 0) {
+                mTimeLeftInMillis = 0;
+                mTimerRunning = false;
+                updateCountDownText();
+            } else {
+                startTimer();
+            }
+        }
+
+// TODO why does my dialogue call onstart on this activity? inefficient????
+
+        // TODO the colour sequence comes in through the bundle so unnecessary to fetch from shared prefferences here.
+//        ////////////////////////// GET COLOUR SEQUENCE ///////////////////////////////////////
+//
+//        // look to shared preferences to get colour sequence, if you dont get one make a default mapping, otherwise make a JSON and parse to an arraylist to be used in the app later.
+//        al_ColourSequence = new ArrayList<Integer>();
+//        String_ColourSequence = prefs.getString(getResources().getString(R.string.SPreferencesColourJSON), "");
+//// todo something goes wrong here
+//
+//        if (String_ColourSequence == ""){
+//            // make default array
+//            for (int i = 0; i<12; i++){
+//                al_ColourSequence.add(i);
+//            }
+//
+//        }else {
+//            for (int i = 0; i<12; i++){
+//                try {
+//                    JSONObject JSON_ColourSequence = new JSONObject(String_ColourSequence);
+//                    al_ColourSequence.set(i, JSON_ColourSequence.getInt(Integer.toString(i)));
+//                }catch(Exception e){
+//                    for (int j = 0; i<12; i++){
+//                        // reset back to defalt if there is an error
+//                        al_ColourSequence.clear(); // in case error on value mid list
+//                        al_ColourSequence.add(j);
+//                    }
+//                }
+//            }
+//        }
+//
+//        ArrayList<Integer> colourCheck = al_ColourSequence;
+//        Integer temp = 5;
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    // use shared preferences to get timer saved to shared preferences for use when we open and close the app.
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        /////////////////////////////////TIMER /////////////////////////////////////////
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putLong("millisLeft", mTimeLeftInMillis);
+        editor.putBoolean("timerRunning", mTimerRunning);
+        editor.putLong("endTime", mEndTime);
+        editor.putString("dateString", currentDateString);
+
+        editor.apply();
+
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+        }
+
+        //////////////////////////////// COLOUR SEQUENCE - SAVE ///////////////////////////////////////////
+        // now to convert from araylist to JSON to string and save in sharef preferences.
+        JSONObject JSON_ColourSequence = new JSONObject();
+        for (int i = 0; i<12; i++){
+            try{
+                JSON_ColourSequence.put(""+i, al_Bundle_ColourSequence.get(i));
+            }catch (Exception e){
+
+            }
+        }
+        String String_ColourSequence = JSON_ColourSequence.toString();
+        editor.putString(getResources().getString(R.string.SPreferencesColourJSON), String_ColourSequence);
+        editor.apply();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+
+//    // USed to disable the backpress button option.
+//    @Override
+//    public void onBackPressed() {
+//        // super.onBackPressed(); commented this line in order to disable back press
+//        //Write your code here
+//        Toast.makeText(getApplicationContext(), "Back press disabled!", Toast.LENGTH_SHORT).show();
+//    }
+
 
     /////////////////////// THESE METHODS ARE FOR ADDING A NEW THEME ////////////////////////////
 
-    // used for creating the dialogue that adds the
+    // used for creating the dialogue that adds the new theme
     public void openDialogue(){
 
         Dialogue_AddTheme dialogue_addTheme = new Dialogue_AddTheme();
@@ -169,6 +352,8 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
     @Override
     public void applyTexts(String themeName, String themeDescription){
 
+        // This is where the theme is saved
+
         boolean isInserted  = Mydb.insertTheme(themeName,themeDescription);
 
         if (isInserted == true) {
@@ -177,9 +362,12 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             updateCountDownText();
             currentDateString = "Set Deadline"; // update the datestring such that it can be saved
             bn_sessionDate.setText(currentDateString);
-            reinitialiseGoalsValues(); // recreate GoalValues arraylist with correct number of elements so that we can refresh the listview.
+            numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs(); // TODO check if this fixes it ****** needs to be before other things which depend on it.
+            updateBundles_Addition(themeName); // update the bundle now so the name is loaded when we refresh the fragement.
+            int tag2 = 13; // value larger than max number of themes so that it promps an addition to the arraylist.
+            update_Visualise_GoalsValues(tag2); // recreate GoalValues arraylist with correct number of elements so that we can refresh the listview.
             populateListView(); // refresh listview given the number of lists
-            numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs();
+            // TODO do we need to update the bundle for this????? - NO - WHY?????
             loadInputFragment(sis,currentWeekBundle, true); // passed null as my currentweekvalue bundle so that it defaults to zero when created since no goal has been previously set.
             Toast.makeText(SetGoals.this, "Theme Added", Toast.LENGTH_SHORT).show();
 
@@ -190,17 +378,16 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
     }
 
     //////////////////////OTHER THINGS ////////////////////////////////
+    public void update_Visualise_GoalsValues(int tag){ // TODO needs new name
 
-    public void reinitialiseGoalsValues(){
-        // reset arrayList_GlobalValues so we can use repopulate the ListView
-        int curSize = Mydb.getCURRENTThemeNames().size();
-        arrayList_GoalsValues.clear();
-        for (int i = 0;i<curSize;i++ ){
-            arrayList_GoalsValues.add("No Value");
+        if (tag == 13){ // if tag is an actual theme (<12) then cause a delete of that value only
+            al_Unsaved_GoalValues.add("0");
+        }else{
+            al_Unsaved_GoalValues.remove(tag);
         }
-    }
 
-    //loadOutputFragment(sis,currentWeekBundle,false);
+    }
+    
 
     public void loadInputFragment(Bundle savedInstanceState, Bundle currentWeekBundle, boolean replace) {
 
@@ -326,9 +513,9 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 //        compiledValues.clear();   // todo how to clear the arraylist since its definiteyl causing problems
         // attach new values to array
         compiledValues = message;
-        // create goal_InputTime using minutes and hourse values from List from Fragment.
-        goal_InputTime_Hours = compiledValues.get(0);
-        goal_InputTime_Minutes = compiledValues.get(1);
+        // create goal_InputTime using minutes and hours values from List from Fragment.
+        int goal_InputTime_Hours = compiledValues.get(0);
+        int goal_InputTime_Minutes = compiledValues.get(1);
 
         // Remove hours and minutes values from array so only left with seekbar values.
         compiledValues.remove(0);
@@ -340,14 +527,14 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 
             al_temp.add(Integer.toString(compiledValues.get(i)));
         }
-        arrayList_GlobalValues = al_temp; //make global variable for use elsewhere.
+        al_Fragment_SliderValues = al_temp; //make global variable for use elsewhere.
 
         // calculate goals every time the fragement is altered now
-        goal_InputTime = getFreeTime();
+        goal_InputTime = getFreeTime(goal_InputTime_Hours,goal_InputTime_Minutes);
         if (goal_InputTime == 0){
             return;
         } else {
-            calculateGoals(arrayList_GlobalValues, goal_InputTime); // will error if goal_Input time is == 0
+            calculateGoals(al_Fragment_SliderValues, goal_InputTime); // will error if goal_Input time is == 0
             populateListView();
         }
 
@@ -405,7 +592,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             return;
         } else {
             String manualSet = "Y"; // String to distinguish this input as manual input
-            boolean tempresult = Mydb.insertGoal(arrayList_GoalsValues, manualSet);
+            boolean tempresult = Mydb.insertGoal(al_Unsaved_GoalValues, manualSet);
             if (tempresult) {
                 Toast.makeText(SetGoals.this, "Succeeded To Input Goals", Toast.LENGTH_SHORT).show();
             } else {
@@ -437,9 +624,9 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 
     // get the free time from the edit texts and convert them to one figure in minutes
 
-    public int getFreeTime(){
+    public int getFreeTime(int hours,  int minutes){
         double a = 60.0;
-        int temp = goal_InputTime_Hours*60 + goal_InputTime_Minutes;
+        int temp = hours*60 + minutes;
         return temp;
     }
 
@@ -456,11 +643,12 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         double max = (double) freeTime;
 
         double ratio = max / (double) sumOld;
-        arrayList_GoalsValues.clear();
+        // save to the arraylist to visualise the changes
 
+        al_Unsaved_GoalValues.clear(); // clear all values
         for (int i = 0; i < valuesFromSliders.size(); i++) {
             int factoredGoalTime = (int) Math.round(Integer.parseInt(valuesFromSliders.get(i)) * ratio);
-            arrayList_GoalsValues.add(Integer.toString(factoredGoalTime));
+            al_Unsaved_GoalValues.add(Integer.toString(factoredGoalTime));
         }
 
     }
@@ -532,96 +720,74 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
     // used for populating the arrayadapter to show themes
     public void populateListView(){
 
-        ArrayList<String> al_ThemeNames = Mydb.getCURRENTThemeNames();
-        ListAdapter themeListAdapter = new CustomAdaptor_ThemeReview(this,al_ThemeNames,arrayList_GoalsValues);
-        themeListView.setAdapter(themeListAdapter);
-    }
+        // stop population of listview if num current themes = 0
+        if (numCurrentThemes>0) {
 
+            // TODO does this value for goals automatically update?
+            ListAdapter themeListAdapter = new CustomAdaptor_ThemeReview(this, al_Bundle_ThemeNames, al_Unsaved_GoalValues);
+            themeListView.setAdapter(themeListAdapter);
+        }else{
 
-
-
-    // use shared preferences to get timer saved to shared preferences for use when we open and close the app.
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-
-        editor.putLong("millisLeft", mTimeLeftInMillis);
-        editor.putBoolean("timerRunning", mTimerRunning);
-        editor.putLong("endTime", mEndTime);
-        editor.putString("dateString", currentDateString);
-
-        editor.apply();
-
-        if (mCountDownTimer != null) {
-            mCountDownTimer.cancel();
-        }
-    }
-
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // TODO make shared prefferences name a constant to be used requested in different activities
-
-        ///////////////////////////////// LOAD TIMER /////////////////////////////////////////////////////////////////
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-
-        mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
-        mTimerRunning = prefs.getBoolean("timerRunning", false); // note this is a default value.it is expected to be overwritten when looking in shared preferences.
-        currentDateString = prefs.getString("dateString", "");
-        bn_sessionDate.setText(currentDateString);
-        updateCountDownText();
-
-        if (mTimerRunning) {
-            mEndTime = prefs.getLong("endTime", 0); // note this is a default value. it is expected to be overwritten when looking in shared preferences.
-            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
-
-            // used to make sure textview doesnt display negative values
-            if (mTimeLeftInMillis < 0) {
-                mTimeLeftInMillis = 0;
-                mTimerRunning = false;
-                updateCountDownText();
-            } else {
-                startTimer();
-            }
+            // TODO perhaps offer alternative values to display to explain why not loaded?
         }
 
     }
 
 
+    public void updateBundles_Addition(String name){
+
+        // used to update the global arraylist of values and the currentWeekBundle so that the next fragement will load correctly.
+
+        String BUNDLE_NAME = getResources().getString(R.string.bundle_name);
+        String BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
+        String BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
+        String BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
+        String BUNDLE_SUMMARYTOGGLE = getResources().getString(R.string.bundle_summarytoggle);
+        String BUNDLE_COLOURSEQUENCE = getResources().getString(R.string.bundle_coloursequence);
+
+        // NAMES
+        al_Bundle_ThemeNames.add(name); // update arraylist
+        currentWeekBundle.putStringArrayList(BUNDLE_NAME,al_Bundle_ThemeNames); // attach to bundle
+
+        // GOALS
+        al_Bundle_GoalValues.add(0); // update arraylist
+        currentWeekBundle.putIntegerArrayList(BUNDLE_GOAL,al_Bundle_GoalValues); // attach to bundle
+
+        // ATTAIN
+        al_Bundle_AttainValues.add(0); // update arraylist
+        currentWeekBundle.putIntegerArrayList(BUNDLE_ATTAIN,al_Bundle_AttainValues); // attach to bundle
+
+        // SCALE FACTOR
+        // Unchanged
+
+        // SUMMARY TOGGLE
+        // Unchanged
+
+        // COLOUR
+        // Unnecessary since already an array size = 12.
+
+    }
+
+
+/////////////////////////////// INNER CLASS - CUSTOM ADAPTER ////////////////////////////////
 
     class CustomAdaptor_ThemeReview extends ArrayAdapter<String> {
 
         // need to make new arraylist objects inside this class to not have problems recieving from the other class
-        ArrayList<String> al_ThemeName = new ArrayList<>();
-        ArrayList<String> al_GoalValue = new ArrayList<>();
+        ArrayList<String> al_CA_ThemeName = new ArrayList<>();
+        ArrayList<String> al_CA_GoalValue = new ArrayList<>();
         ArrayList<Boolean> al_checkbox_CutomAdapter = new ArrayList<Boolean>(); // TODO find out if we need this
-        int recordFirstCounter = 0; // TODO find out if i need this
 
-        public CustomAdaptor_ThemeReview( Context context, ArrayList<String>  themeName, ArrayList<String>  goalValue) {
+
+        public CustomAdaptor_ThemeReview( Context context, ArrayList<String>  themeName, ArrayList<String>  view_GoalValue) {
             super(context, R.layout.ca_themelist, themeName);
 
-            this.al_ThemeName = themeName;
-            this.al_GoalValue = goalValue;
+            // TODO can we do this with our bundle?????? NO Since we need live values and our bundle is not for that.
 
-            // inital build of arraylist.
+            this.al_CA_ThemeName = themeName;
+            this.al_CA_GoalValue = view_GoalValue;
+
+            // inital build of arraylist. // TODO not sure if this does anything????? I think it doesnt!!!!!!!!!!
             al_checkbox_CutomAdapter.clear();
             for (int i = 0; i<numCurrentThemes;i++){
                 al_checkbox_CutomAdapter.add(i,false);
@@ -644,17 +810,16 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             Button bn_ThemeDelete = (Button) customView.findViewById(R.id.bn_ThemeDelete);
 
             //set values to view
-            tv_title.setText(al_ThemeName.get(position));
-            tv_goal.setText(al_GoalValue.get(position));
-            bn_ThemeDelete.setTag(position);
+            tv_title.setText(al_CA_ThemeName.get(position));
+            tv_goal.setText(al_CA_GoalValue.get(position));
+            bn_ThemeDelete.setTag(position); // set tag so that we can identify the theme when we come to delete it.
             bn_ThemeDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     String tag = view.getTag().toString();
-                    String deleteName = al_ThemeName.get(Integer.parseInt(tag));
+                    String deleteName = al_CA_ThemeName.get(Integer.parseInt(tag));
                     String IDtoDelete = Mydb.getSpecificThemeID(deleteName);
                     int isDeleted = Mydb.deleteTheme(IDtoDelete);
-                    //notifyDataSetChanged();
 
                     if (isDeleted > 0) {
 
@@ -663,12 +828,14 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
                         updateCountDownText();
                         currentDateString = "No Deadline Set"; // update the datestring such that it can be saved
                         bn_sessionDate.setText(currentDateString);
-                        numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs();
-                        loadInputFragment(sis, currentWeekBundle, true); // TODO why not working?
-                        reinitialiseGoalsValues(); // recreate a GoalsArray of the correct size given the change in theme size
+                        numCurrentThemes = Mydb.getNumberOfCURRENTThemeIDs(); //this updates the variable with the current number of themes. the methods after this depend on this variable.
+                        int tag2 = Integer.parseInt(tag);
+                        updateBundles_Delete(tag2);
+                        update_Visualise_GoalsValues(tag2); // recreate a GoalsArray of the correct size given the change in theme size
                         populateListView(); // repopulate the listview now themes have changed
+                        loadInputFragment(sis, currentWeekBundle, true);
                         Toast.makeText(SetGoals.this, "Theme Deleted", Toast.LENGTH_SHORT).show();
-                        fab_Save.setVisibility(View.VISIBLE); // TODO make into a toggle method?
+                        fab_Save.setVisibility(View.VISIBLE);
                     } else {
                         Toast.makeText(SetGoals.this, "No Themes were Deleted", Toast.LENGTH_SHORT).show();
                     }
@@ -676,18 +843,50 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
                 }
             });
 
-            //transferValues();
-
             return customView;
         }
 
-//        public void transferValues(){
-//            al_checkbox_Activity = al_checkbox_CutomAdapter;
-//        }
 
+        public void updateBundles_Delete(int tag){
+
+
+            // this method is in the innerclass because it is only used here.
+            // This method is used to update the global variables and update the bundle to be used in loading a new fragement
+
+            String BUNDLE_NAME = getResources().getString(R.string.bundle_name);
+            String BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
+            String BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
+            String BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
+            String BUNDLE_SUMMARYTOGGLE = getResources().getString(R.string.bundle_summarytoggle);
+            String BUNDLE_COLOURSEQUENCE = getResources().getString(R.string.bundle_coloursequence);
+
+            // NAMES
+            al_Bundle_ThemeNames.remove(tag); // update global arraylist
+            currentWeekBundle.putStringArrayList(BUNDLE_NAME,al_Bundle_ThemeNames); // attach to bundle
+
+            // GOALS
+            al_Bundle_GoalValues.remove(tag); // update global arraylist
+            currentWeekBundle.putIntegerArrayList(BUNDLE_GOAL,al_Bundle_GoalValues); // attach to bundle
+
+            // ATTAIN
+            al_Bundle_AttainValues.remove(tag); // update arraylist
+            currentWeekBundle.putIntegerArrayList(BUNDLE_ATTAIN,al_Bundle_AttainValues); // attach to bundle
+
+            // SCALE FACTOR
+            // Unchanged
+
+            // SUMMARY TOGGLE
+            // Unchanged
+
+            // COLOUR
+            Integer temp = al_Bundle_ColourSequence.get(tag); // identify value to be deleted
+            al_Bundle_ColourSequence.remove(tag);             // delete value
+            al_Bundle_ColourSequence.add(temp);               // add value back on to the end of the array.
+            currentWeekBundle.putIntegerArrayList(BUNDLE_COLOURSEQUENCE,al_Bundle_ColourSequence); // attach to bundle
+
+        }
 
     }
-
 
 
 }

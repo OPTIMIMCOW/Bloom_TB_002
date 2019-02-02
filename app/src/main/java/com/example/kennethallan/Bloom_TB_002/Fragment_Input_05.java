@@ -3,8 +3,10 @@ package com.example.kennethallan.Bloom_TB_002;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,8 +53,13 @@ public class Fragment_Input_05 extends Fragment {
     public String BUNDLE_GOAL = "";
     public String BUNDLE_ATTAIN = "";
     public String BUNDLE_SCALEFACTOR = "";
+    public String BUNDLE_COLOURSEQUENCE = "";
 
     public Integer numThemes = 5;
+
+    public Context testContext;
+    public ArrayList<Drawable> al_ProgressDrawables;
+    public ArrayList<Integer> al_colourSequence;
 
     public Fragment_Input_05() {
         // Required empty public constructor
@@ -82,7 +90,6 @@ public class Fragment_Input_05 extends Fragment {
         seekbar04.setTag(3);
         seekbar05.setTag(4);
 
-
         tv_Pro_01 = (TextView) view.findViewById(R.id.tv_num_01);
         tv_Pro_02 = (TextView) view.findViewById(R.id.tv_num_02);
         tv_Pro_03 = (TextView) view.findViewById(R.id.tv_num_03);
@@ -95,28 +102,56 @@ public class Fragment_Input_05 extends Fragment {
         et_Hours = (EditText) view.findViewById(R.id.et_Input_Time_Hours);
         et_Minutes = (EditText) view.findViewById(R.id.et_Input_Time_Minutes);
 
+        ///////////////////////////////////////////// THIS IS HOW NAMES ARE HANDLED ie NOT BUNDLE
         // pass current theme names to fragment for later use
         al_themeNames = new ArrayList<String>();
         Mydb = new DBHelper(getActivity()); //needed to do this so i could use the DH helper in a fragment. Probably needs the activity not the fragement for the constructer.....dunno
         al_themeNames = Mydb.getCURRENTThemeNames();
+// TODO change theme name arraylist to inherit from the bundle not the DB helper
 
         /////////////////// SET SEEKBARS TO PREVIOUS GOAL VALUES /////////////////////////////
         // working with bundles
-        //getting names of bundles
+        //getting names of info inside bundles
         BUNDLE_NAME = getResources().getString(R.string.bundle_name);
         BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
         BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
         BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
+        BUNDLE_COLOURSEQUENCE = getResources().getString(R.string.bundle_coloursequence);
 
-        Bundle currentWeekBundle = this.getArguments();
+        Bundle currentWeekBundle = this.getArguments(); // get bundle
+        Set check = currentWeekBundle.keySet();
+        ArrayList<String> namecheck2 = currentWeekBundle.getStringArrayList(getResources().getString(R.string.bundle_name));
+
         if (currentWeekBundle != null){
 
+            // TODO having an error because dont have values since goals not set. We either need a default array of try catch here.
             //goals
-            Integer goals_01 = currentWeekBundle.getInt(BUNDLE_GOAL + "0");
-            Integer goals_02 = currentWeekBundle.getInt(BUNDLE_GOAL + "1");
-            Integer goals_03 = currentWeekBundle.getInt(BUNDLE_GOAL + "2");
-            Integer goals_04 = currentWeekBundle.getInt(BUNDLE_GOAL + "3");
-            Integer goals_05 = currentWeekBundle.getInt(BUNDLE_GOAL + "4");
+            ArrayList<Integer> al_Bundle_GoalVal = new ArrayList<Integer>();
+            al_Bundle_GoalVal = getArguments().getIntegerArrayList(BUNDLE_GOAL);
+            Integer goals_01;
+            Integer goals_02;
+            Integer goals_03;
+            Integer goals_04;
+            Integer goals_05;
+
+            try{
+                goals_01 = al_Bundle_GoalVal.get(0);
+                goals_02 = al_Bundle_GoalVal.get(1);
+                goals_03 = al_Bundle_GoalVal.get(2);
+                goals_04 = al_Bundle_GoalVal.get(3);
+                goals_05 = al_Bundle_GoalVal.get(4);
+
+            }catch(Exception e){
+
+                Log.d("Fragement_Input_05", "Error on accessing bundle goal values, likely not set properly before so error in assigning. Default is to output 0s here instead");
+                goals_01 = 0;
+                goals_02 = 0;
+                goals_03 = 0;
+                goals_04 = 0;
+                goals_05 = 0;
+            }
+
+
 
             Double scaleFactor = currentWeekBundle.getDouble(BUNDLE_SCALEFACTOR);
             Double alterfor100Factor = scaleFactor*(100.00/90.00); // used to alter the scale factor so as to not limit it for overachieve goal purposes in output fragements.
@@ -128,6 +163,23 @@ public class Fragment_Input_05 extends Fragment {
             seekbar03.setProgress((int) Math.round(goals_03*alterfor100Factor));
             seekbar04.setProgress((int) Math.round(goals_04*alterfor100Factor));
             seekbar05.setProgress((int) Math.round(goals_05*alterfor100Factor));
+
+            Integer total = goals_01 + goals_02 + goals_03 + goals_04 + goals_05;
+            Integer hours = total/ 60;
+            Integer minutes = total % 60;
+            et_Hours.setText(hours.toString());
+            et_Minutes.setText(minutes.toString());
+
+            // //////////////// SET COLOURS OF SEEKBARS
+
+            // build colour sequence arrays
+            al_colourSequence = build_ColourArrayLists(currentWeekBundle); // placed inside here since they need the bundle
+
+            seekbar01.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(0)));
+            seekbar02.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(1)));
+            seekbar03.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(2)));
+            seekbar04.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(3)));
+            seekbar05.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(4)));
         }
 
 
@@ -150,6 +202,7 @@ public class Fragment_Input_05 extends Fragment {
 
                 compileProgress();
                 hideName();
+                //testMethod();
 
             }
 
@@ -167,6 +220,8 @@ public class Fragment_Input_05 extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        testContext = context;
 
         Activity activity = (Activity) context;
 
@@ -261,6 +316,48 @@ public class Fragment_Input_05 extends Fragment {
 
     private void hideName(){
         tv_ThemeName.setVisibility(View.INVISIBLE);
+    }
+
+    private void testMethod(){
+
+        seekbar01.setProgressDrawable(al_ProgressDrawables.get(10));
+        //conclusion: It iS possible to change the drawable. It is possible to make an arraylist of drawables.
+        // It is not possible to attach drawables directly to a bundle so I will need to send values of colours to be made into
+        // a sequence and look up the drawables.
+
+    }
+
+    private ArrayList<Integer> build_ColourArrayLists(Bundle currentWeekBundle){
+        al_ProgressDrawables = new ArrayList<Drawable>(); // initialise arraylist
+        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_01));
+        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_02));
+        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_03));
+        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_04));
+        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_05));
+        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_06));
+        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_07));
+        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_08));
+        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_09));
+        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_10));
+        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_11));
+        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_12));
+
+        al_colourSequence = new ArrayList<Integer>(); // initalise array // not sure i need this step
+
+        // make an intermediate variable because if the bundle is not made it will be set to null and we cannot work with it so
+        // we use an intermeduate array so that we can judge it and choose how to form the al_colourSequence array to return.
+        ArrayList<Integer> al_intermediate = currentWeekBundle.getIntegerArrayList(BUNDLE_COLOURSEQUENCE);
+        if (al_intermediate == null){
+            for (int i = 0 ; i<12; i++){
+                // if no bundle created so no way to get al_colourSequence
+                al_colourSequence.add(i);
+            }
+        }else{
+            al_colourSequence = al_intermediate;
+        }
+
+        return al_colourSequence;
+
     }
 
 

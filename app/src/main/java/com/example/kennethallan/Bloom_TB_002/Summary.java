@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.service.carrier.CarrierService;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentContainer;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +36,6 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
         Fragment_Output_04.interface_Frag04, Fragment_Output_03.interface_Frag03{
 
     DBHelper Mydb;
-    Button bn_CarryOver;
     ListView sessionActivitiesListView;
 
     Context context;
@@ -77,6 +78,8 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
     ArrayList<Integer> al_values_ProAttain = new ArrayList<Integer>();
     Double i_ScaleFactor;
 
+    FloatingActionButton fab_CarryOver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,10 +94,15 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
 
 
         // find and bind variables to views
-        bn_CarryOver = (Button) findViewById(R.id.bn_CarryOver);
         sessionActivitiesListView = (ListView)findViewById(R.id.lv_SessionActivities);
         fragmentHolder = findViewById(R.id.Fragment_Holder);
+        fab_CarryOver = (FloatingActionButton) findViewById(R.id.fab);
 
+        /////////////////////// SET UP TOOLBAR /////////////////////
+        // need this to enable overrides to link the overflow menu to it.
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitle(getResources().getString(R.string.ActivityTitle_SessionSummary));
+        setSupportActionBar(myToolbar);
 
 
         // erase arrays in case they hold variables from last time activity used.(not sure if reqquired) TODO test this
@@ -265,14 +273,13 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
 
         ///////////////////////////// SET ON CLICK LISTENERS //////////////////////////////////////
 
-        bn_CarryOver.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        carryOver();
-                    }
-                }
-        );
+        /////////////////////////// SET CARRYOVER BUTTON ///////////////////////////
+        fab_CarryOver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                carryOver();
+            }
+        });
 
     }
 

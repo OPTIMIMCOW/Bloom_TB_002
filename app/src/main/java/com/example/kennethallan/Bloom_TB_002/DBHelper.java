@@ -9,10 +9,13 @@ import java.util.Date;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
@@ -23,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //I place this method in the MainActivity activity in the editTheme button press so that it closes the database before
     // it is required to be recreatred because Mydb is initialised at the top of the page.
 
-    public static final String DATABASE_NAME = "MadeAMistake07.db";
+    public static final String DATABASE_NAME = "MadeAMistake08.db";
 
     public static final int DATABASE_VERSION = 1;
 
@@ -31,7 +34,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     // The Activity Table
-
     public static final String TABLE_ACTIVITIES = "Activities";
     public static final String COL1_ACTIVITIES = "ID2";
     public static final String COL2_ACTIVITIES = "NAME";
@@ -73,6 +75,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COL1_HISTORY = "ID2";
     public static final String COL2_HISTORY = "START_DATE";
     public static final String COL3_HISTORY = "END_DATE";
+
 
     //OtherThings
     public static final String COLUMNPREFIX = "ID00";
@@ -340,15 +343,84 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+
+
+    public JSONObject CheckDB() {
+
+        // TEST 1 - This test checks that there are any themes at all.
+
+        SQLiteDatabase Mydb = this.getReadableDatabase();
+        Cursor res =  Mydb.rawQuery( "select * from " +TABLE_GOALS, null );
+        Cursor res_CurrentThemes =  Mydb.rawQuery( "select * from " +TABLE_CURRENTTHEMES, null );
+
+        // trying to move to last row
+        res.moveToLast();
+        res_CurrentThemes.moveToLast();
+        JSONObject errorJSON = new JSONObject();
+
+        // TEST 1 - This test checks that there are any themes at all.
+        Integer count = 0; // initial counter value = 0 themes
+        for (int i = 0; i<3; i++){
+            try{
+                // gets the date value of the last theme to be added
+                String temp = res_CurrentThemes.getString(res_CurrentThemes.getColumnIndex(COL5_CURRENTTHEMES));
+                count = count +1;
+                res_CurrentThemes.moveToPrevious(); // cycle through previous rows until not possible i think will return error
+            }catch(Exception e){
+                Log.d("DBHelper,curTheme_date","Likely no date found maybe no goals set");
+                try{
+                    errorJSON.put("error",1 );
+                    errorJSON.put("type",count );
+                    errorJSON.put("note", "You require a minimum of 3 themes at all times. You need to dd more themes");
+                }catch(Exception f){
+
+                }
+                return errorJSON;
+
+            }
+
+        }
+
+
+        // TEST 2 - This test is to check we have set any goals in the first place
+        try{
+            // gets the date value of the current goal sequence we are looking at. Ignoring the actual date, just want to know if we get an error or not.
+            String temp = res.getString(res.getColumnIndex(COL2_GOALS));
+        }catch(Exception e){
+            Log.d("DBHelper,goal_StartDate","Likely no date found maybe no goals set");
+            try{
+                errorJSON.put("error",2 );
+                errorJSON.put("type",0 );
+                errorJSON.put("note", "You require a minimum of 3 themes at all times. You need to dd more themes");
+            }catch(Exception f){
+
+            }
+            return errorJSON;
+        }
+
+        // create return if no errors
+        try{
+            errorJSON.put("error",0 );
+            errorJSON.put("type",0 );
+            errorJSON.put("note", "No Error");
+
+        }catch(Exception f){
+
+        }
+        return errorJSON;
+
+    }
+
     ArrayList<String> arrayList_CURRENTGoal_Values = new ArrayList<String>();
     ArrayList<String> arrayList_MANUALGoal_Values = new ArrayList<String>();
     String goal_StartDate = null;
     String currentTheme_date = null;
     String goal_ManualIndicator = null;
 
-
     // this method returns the values of the current goal targests we are looking at (inc both manual and carry over sets)
     public ArrayList<String> getGoals_CURRENT() {
+        // this method should only be called if there are values in the database ie if there is no error from the method CheckDB();
+
         goal_StartDate="";
         goal_ManualIndicator="";
         arrayList_CURRENTGoal_Values.clear();
@@ -362,57 +434,8 @@ public class DBHelper extends SQLiteOpenHelper {
         res.moveToLast();
         res_CurrentThemes.moveToLast();
 
-        // TODO: this has been greyed out because when you have no goals/ no themes yet ie on the initial start of the app
-        ///TODO: you get stuck in the while loop. For now it is ok to get rid of this but if it turns out we need this we can
-        // TODO: add some dummy themes and a goal in oncreate of DBHelper so that we are not in this position. The other option we
-        // TODO: could do is have a counter in shared preferences of the number of times we have opened the app and on the first opening
-        // TODO: of the app we have a dialogue before all of this stuff that makes you add 3 themes and a goal etc.
-
-//        // used to make sure we are getting the last row
-//        while(res.isAfterLast() == true){
-//            int pos_CURRENT = res.getPosition();
-//            int pos_NEW = pos_CURRENT - 1;
-//            res.moveToPosition(pos_NEW);
-//        }
-//
-//        while(res_CurrentThemes.isAfterLast() == true){
-//            int pos_CURRENT = res_CurrentThemes.getPosition();
-//            int pos_NEW = pos_CURRENT - 1;
-//            res_CurrentThemes.moveToPosition(pos_NEW);
-//        }
-
-        // checks to ensure that the dates firstly exist and that the goal is set for this set of themes. returns an error value if
-        // this is not satisfied and is handles back in the MainActivity.
-        Long goal_date = 0L;
-        Long curTheme_date = 0L;
-
-        try{
-            // gets the date value of the last theme to be added
-            currentTheme_date = res_CurrentThemes.getString(res_CurrentThemes.getColumnIndex(COL5_CURRENTTHEMES));
-            curTheme_date = Long.parseLong(currentTheme_date); //convert to long value
-        }catch(Exception e){
-            Log.d("DBHelper,curTheme_date","Likely no date found maybe no goals set");
-            arrayList_CURRENTGoal_Values.add("Order 66");
-            arrayList_CURRENTGoal_Values.add("You havent gotten any themes yet");
-            return arrayList_CURRENTGoal_Values; // there are no themes
-        }
-
-        try{
-            // gets the date value of the current goal sequence we are looking at.
-            goal_StartDate = res.getString(res.getColumnIndex(COL2_GOALS));
-            goal_date = Long.parseLong(goal_StartDate);
-        }catch(Exception e){
-            Log.d("DBHelper,goal_StartDate","Likely no date found maybe no goals set");
-            arrayList_CURRENTGoal_Values.add("Order 66");
-            arrayList_CURRENTGoal_Values.add("You havent set a goal yet");
-            return arrayList_CURRENTGoal_Values; // there is no goal set at all
-        }
-
-        if (goal_date < curTheme_date){
-            arrayList_CURRENTGoal_Values.add("Order 66");
-            arrayList_CURRENTGoal_Values.add("You have not set a goal for these themes yet");
-            return arrayList_CURRENTGoal_Values; // there is no goal set for these themes
-        }
+        // sets the date value of the current goal sequence we are looking at.
+        goal_StartDate = res.getString(res.getColumnIndex(COL2_GOALS));
 
         // sets the manual indicator value of the current goal sequence we are looking at.
         goal_ManualIndicator = res.getString(res.getColumnIndex(COL3_GOALS));
@@ -423,14 +446,23 @@ public class DBHelper extends SQLiteOpenHelper {
         // always run this even if a waste of resources so that it updates when we have changed the number of themes but pressed back ie not from OnCreate but from OnStart or OnResume
         getCURRENTThemeIDs();
 
-        for (int i=0; i<arrayList_CURRENTTheme_IDs.size();i++){
+        // catching if there is a theme number = 0 error.
+        Integer count = 0;
+        if (arrayList_CURRENTTheme_IDs == null || arrayList_CURRENTTheme_IDs.size()==0){
+            count = 0;
+        }else{
+            count = arrayList_CURRENTTheme_IDs.size();
+        }
 
+        for (int i=0; i < count;i++){
             String columName = COLUMNPREFIX + arrayList_CURRENTTheme_IDs.get(i);
             arrayList_CURRENTGoal_Values.add(res.getString(res.getColumnIndex(columName)));
         }
 
         return arrayList_CURRENTGoal_Values;
     }
+
+
 
     public ArrayList<String> getGoals_MANUAL() {
         goal_StartDate="";
