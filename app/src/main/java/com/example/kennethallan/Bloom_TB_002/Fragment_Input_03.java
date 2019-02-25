@@ -4,8 +4,10 @@ package com.example.kennethallan.Bloom_TB_002;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,8 +54,14 @@ public class Fragment_Input_03 extends Fragment {
     public String BUNDLE_GOAL = "";
     public String BUNDLE_ATTAIN = "";
     public String BUNDLE_SCALEFACTOR = "";
+    public String BUNDLE_COLOURSEQUENCE = "";
+
 
     public Integer numThemes = 3;
+
+    public Context testContext;
+    public ArrayList<Drawable> al_ProgressDrawables;
+    public ArrayList<Integer> al_colourSequence;
 
 
     public Fragment_Input_03() {
@@ -143,6 +151,15 @@ public class Fragment_Input_03 extends Fragment {
             Integer minutes = total % 60;
             et_Hours.setText(hours.toString());
             et_Minutes.setText(minutes.toString());
+
+            // //////////////// SET COLOURS OF SEEKBARS
+            Fragment_Utilities fragUtils =  new Fragment_Utilities(testContext); // initialise this class so i can use the methods in it.
+            al_ProgressDrawables = fragUtils.AssembleColours(); // get a drawable arraylist
+            al_colourSequence = fragUtils.GetColourSequence(currentWeekBundle); // get the colour sequence to use now.
+
+            seekbar01.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(0)));
+            seekbar02.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(1)));
+            seekbar03.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(2)));
         }
 
 
@@ -190,6 +207,8 @@ public class Fragment_Input_03 extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
+        testContext = context;
+
         Activity activity = (Activity) context;
 
 
@@ -221,7 +240,6 @@ public class Fragment_Input_03 extends Fragment {
             temp_hours = 0;
             temp_minutes = 0;
         }
-
 
 
         // put all values in an object to send from the fragement to the activity.

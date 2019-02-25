@@ -171,9 +171,9 @@ public class Fragment_Input_05 extends Fragment {
             et_Minutes.setText(minutes.toString());
 
             // //////////////// SET COLOURS OF SEEKBARS
-
-            // build colour sequence arrays
-            al_colourSequence = build_ColourArrayLists(currentWeekBundle); // placed inside here since they need the bundle
+            Fragment_Utilities fragUtils =  new Fragment_Utilities(testContext); // initialise this class so i can use the methods in it.
+            al_ProgressDrawables = fragUtils.AssembleColours(); // get a drawable arraylist
+            al_colourSequence = fragUtils.GetColourSequence(currentWeekBundle); // get the colour sequence to use now.
 
             seekbar01.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(0)));
             seekbar02.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(1)));
@@ -318,47 +318,8 @@ public class Fragment_Input_05 extends Fragment {
         tv_ThemeName.setVisibility(View.INVISIBLE);
     }
 
-    private void testMethod(){
 
-        seekbar01.setProgressDrawable(al_ProgressDrawables.get(10));
-        //conclusion: It iS possible to change the drawable. It is possible to make an arraylist of drawables.
-        // It is not possible to attach drawables directly to a bundle so I will need to send values of colours to be made into
-        // a sequence and look up the drawables.
 
-    }
-
-    private ArrayList<Integer> build_ColourArrayLists(Bundle currentWeekBundle){
-        al_ProgressDrawables = new ArrayList<Drawable>(); // initialise arraylist
-        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_01));
-        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_02));
-        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_03));
-        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_04));
-        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_05));
-        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_06));
-        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_07));
-        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_08));
-        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_09));
-        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_10));
-        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_11));
-        al_ProgressDrawables.add(ContextCompat.getDrawable(testContext, R.drawable.theme_seekbar_path_colour_12));
-
-        al_colourSequence = new ArrayList<Integer>(); // initalise array // not sure i need this step
-
-        // make an intermediate variable because if the bundle is not made it will be set to null and we cannot work with it so
-        // we use an intermeduate array so that we can judge it and choose how to form the al_colourSequence array to return.
-        ArrayList<Integer> al_intermediate = currentWeekBundle.getIntegerArrayList(BUNDLE_COLOURSEQUENCE);
-        if (al_intermediate == null){
-            for (int i = 0 ; i<12; i++){
-                // if no bundle created so no way to get al_colourSequence
-                al_colourSequence.add(i);
-            }
-        }else{
-            al_colourSequence = al_intermediate;
-        }
-
-        return al_colourSequence;
-
-    }
 
 
 }

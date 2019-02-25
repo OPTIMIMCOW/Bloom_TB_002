@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
@@ -93,11 +94,14 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
     ArrayList<Integer> al_Bundle_ColourSequence;
     // TODO extract bundle somewhere and put these in an array and get rid of the references in this and the custom adapter to the database unnecessarily.
 
+    Context context;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_goals);
+
+        context = SetGoals.this;
 
         // pass this to the load input fragment method.
         sis = savedInstanceState;
@@ -583,8 +587,6 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 
     /////////////////////////////// TO DO WITH TESTING FUNCTIONALITY /////////////////////////////////////
 
-
-
     public void SaveGoals(){
 
         if (goal_InputTime == 0){
@@ -723,8 +725,15 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         // stop population of listview if num current themes = 0
         if (numCurrentThemes>0) {
 
+            Fragment_Utilities fragUtils =  new Fragment_Utilities(context); // initialise this class so i can use the methods in it.
+            ArrayList<Integer> al_ColourResources = new ArrayList<Integer>();
+            ArrayList<Integer> al_ColourSequence = new ArrayList<Integer>();
+
+            al_ColourResources = fragUtils.GetColourResourceIDs(); // get a drawable arraylist
+            al_ColourSequence = fragUtils.GetColourSequence(currentWeekBundle); // get the colour sequence to use now.
+
             // TODO does this value for goals automatically update?
-            ListAdapter themeListAdapter = new CustomAdaptor_ThemeReview(this, al_Bundle_ThemeNames, al_Unsaved_GoalValues);
+            ListAdapter themeListAdapter = new CustomAdaptor_ThemeReview(this, al_Bundle_ThemeNames, al_Unsaved_GoalValues,al_ColourResources,al_ColourSequence);
             themeListView.setAdapter(themeListAdapter);
         }else{
 
@@ -778,9 +787,12 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         ArrayList<String> al_CA_GoalValue = new ArrayList<>();
         ArrayList<Boolean> al_checkbox_CutomAdapter = new ArrayList<Boolean>(); // TODO find out if we need this
 
+        ArrayList<Integer> al_ColourList = new ArrayList<Integer>();
+        ArrayList<Integer> al_ColourSequence = new ArrayList<Integer>();
 
-        public CustomAdaptor_ThemeReview( Context context, ArrayList<String>  themeName, ArrayList<String>  view_GoalValue) {
-            super(context, R.layout.ca_themelist, themeName);
+
+        public CustomAdaptor_ThemeReview( Context context, ArrayList<String>  themeName, ArrayList<String>  view_GoalValue,ArrayList<Integer> view_GoalColours, ArrayList<Integer> view_ColourSequence) {
+            super(context, R.layout.ca_themelist, themeName); // dont put anything more than one variable into the super so this works. You can use the other variable in getview though so it is fine.
 
             // TODO can we do this with our bundle?????? NO Since we need live values and our bundle is not for that.
 
@@ -793,6 +805,8 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
                 al_checkbox_CutomAdapter.add(i,false);
             }
 
+            this.al_ColourList = view_GoalColours;
+            this.al_ColourSequence = view_ColourSequence;
         }
 
 
@@ -808,6 +822,7 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             TextView tv_title = (TextView) customView.findViewById(R.id.tv_ThemeName);
             TextView tv_goal = (TextView) customView.findViewById(R.id.tv_ThemeGoal);
             Button bn_ThemeDelete = (Button) customView.findViewById(R.id.bn_ThemeDelete);
+            TextView tv_goalColour = (TextView) customView.findViewById(R.id.tv_GoalColour);
 
             //set values to view
             tv_title.setText(al_CA_ThemeName.get(position));
@@ -842,6 +857,16 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
 
                 }
             });
+
+            // Set colours
+            Integer resourceID = al_ColourList.get(al_ColourSequence.get(position));
+            tv_goalColour.setBackgroundResource(resourceID);
+
+//            Drawable test = getResources().getDrawable(resourceID);
+//            tv_title.setCompoundDrawablesWithIntrinsicBounds(test,null,null,null);
+// NOT WORKING VUT THE BETTER WAY TO DO THIS
+
+
 
             return customView;
         }

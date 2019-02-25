@@ -265,19 +265,20 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
             try {
                 JSONObject JSON_ColourSequence = new JSONObject(String_ColourSequence); // initialise the json
                 for (int i = 0; i<maxThemeNum; i++){
-                    al_ColourSequence.set(i, JSON_ColourSequence.getInt(Integer.toString(i))); // convert json to arraylist
+
+                    String temp = JSON_ColourSequence.getString(Integer.toString(i));
+                    al_ColourSequence.add(Integer.parseInt(temp));
+                    //al_ColourSequence.set(i, Integer.parseInt(temp)); // convert json to arraylist
+                    //TODO do i need to use "set" here?!?! if so i need to initialise the variable @ size = 12 to be able to use set.
                 }
 
             }catch (Exception e){
                 // reset back to defalt if there is an error
-
                 al_ColourSequence.clear(); // in case error on value mid list
                 for (int i = 0; i<maxThemeNum; i++){ // create default
                     al_ColourSequence.add(i);
                 }
             }
-
-            ArrayList<Integer> colourCheck = al_ColourSequence;
 
             // final check that the arraylist is ok
             if (al_ColourSequence.size()!=maxThemeNum){
@@ -333,7 +334,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
 
             if (type <3) {
                 // theme number = 0
-
 
                 al_values_ThemeNames = getCurrentThemeNames();
                 currentThemeNum = type; // manual override so that we dont build a bundle and dont need to call any of the following methods
@@ -716,7 +716,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                         sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
 
 
-                        // TODO change this back.
                         buildArrays(res);
 
                         al_activitiesList_01.add(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(0))));
@@ -733,7 +732,6 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
                         sum04 = sum04 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(3))));
                         sum05 = sum05 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(4))));
                         sum06 = sum06 + Integer.parseInt(res.getString(res.getColumnIndex(Mydb.COLUMNPREFIX+ arrayList_arrayCURRENTthemeIDS.get(5))));
-                        // TODO change this back.
 
 
                         buildArrays(res);
@@ -1114,23 +1112,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_Output_1
     @Override
     protected void onPause() {
         super.onPause();
-        // TODO i think this is unnecessary
 
-//        //////////////////////////////// COLOUR SEQUENCE - SAVE ///////////////////////////////////////////
-//        // now to convert from araylist to JSON to string and save in sharef preferences.
-//        JSONObject JSON_ColourSequence = new JSONObject();
-//        for (int i = 0; i<12; i++){
-//            try{
-//                JSON_ColourSequence.put(""+i, al_ColourSequence.get(i));
-//            }catch (Exception e){
-//                Log.d("main activity", "when saving the colour sequence error in building the json");
-//            }
-//        }
-//        String_ColourSequence = JSON_ColourSequence.toString();
-//        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-//        SharedPreferences.Editor editor = prefs.edit();
-//        editor.putString(getResources().getString(R.string.SPreferencesColourJSON), String_ColourSequence);
-//        editor.apply();
     }
 
     @Override

@@ -3,8 +3,10 @@ package com.example.kennethallan.Bloom_TB_002;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,8 +60,13 @@ public class Fragment_Input_08 extends Fragment {
     public String BUNDLE_GOAL = "";
     public String BUNDLE_ATTAIN = "";
     public String BUNDLE_SCALEFACTOR = "";
+    public String BUNDLE_COLOURSEQUENCE = "";
 
     public Integer numThemes = 8;
+
+    public Context testContext;
+    public ArrayList<Drawable> al_ProgressDrawables;
+    public ArrayList<Integer> al_colourSequence;
 
     public Fragment_Input_08() {
         // Required empty public constructor
@@ -123,6 +130,8 @@ public class Fragment_Input_08 extends Fragment {
         BUNDLE_GOAL = getResources().getString(R.string.bundle_goal);
         BUNDLE_ATTAIN = getResources().getString(R.string.bundle_attain);
         BUNDLE_SCALEFACTOR = getResources().getString(R.string.bundle_scalefactor);
+        BUNDLE_COLOURSEQUENCE = getResources().getString(R.string.bundle_coloursequence);
+
 
         Bundle currentWeekBundle = this.getArguments();
         if (currentWeekBundle != null){
@@ -182,6 +191,20 @@ public class Fragment_Input_08 extends Fragment {
             Integer minutes = total % 60;
             et_Hours.setText(hours.toString());
             et_Minutes.setText(minutes.toString());
+
+            // //////////////// SET COLOURS OF SEEKBARS
+            Fragment_Utilities fragUtils =  new Fragment_Utilities(testContext); // initialise this class so i can use the methods in it.
+            al_ProgressDrawables = fragUtils.AssembleColours(); // get a drawable arraylist
+            al_colourSequence = fragUtils.GetColourSequence(currentWeekBundle); // get the colour sequence to use now.
+
+            seekbar01.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(0)));
+            seekbar02.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(1)));
+            seekbar03.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(2)));
+            seekbar04.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(3)));
+            seekbar05.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(4)));
+            seekbar06.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(5)));
+            seekbar07.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(6)));
+            seekbar08.setProgressDrawable(al_ProgressDrawables.get(al_colourSequence.get(7)));
         }
 
 
@@ -224,6 +247,8 @@ public class Fragment_Input_08 extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        testContext = context;
 
         Activity activity = (Activity) context;
 
@@ -331,6 +356,5 @@ public class Fragment_Input_08 extends Fragment {
     private void hideName(){
         tv_ThemeName.setVisibility(View.INVISIBLE);
     }
-
 
 }
