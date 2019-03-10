@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Rational;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
@@ -831,10 +832,14 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             bn_ThemeDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String tag = view.getTag().toString();
-                    String deleteName = al_CA_ThemeName.get(Integer.parseInt(tag));
-                    String IDtoDelete = Mydb.getSpecificThemeID(deleteName);
-                    int isDeleted = Mydb.deleteTheme(IDtoDelete);
+
+                    // we delete the theme by sending its id to the mydb helper to be deleted. We do not use its name and raw querey because
+                    //apostrophes in the theme names will cause problems.
+                    DBHelper Mydb_CA = new DBHelper(getApplicationContext()); // initialise DB helper in custom apator class
+                    ArrayList<String> al_CA_CurrentThemeIDs = Mydb_CA.getCURRENTThemeIDs(); // get all current themse numbers from the database
+                    String tag = view.getTag().toString(); // get the order number of the clicked on theme
+                    String IDtoDelete = al_CA_CurrentThemeIDs.get(Integer.parseInt(tag)); // use the order number to get the corresponding theme id.
+                    int isDeleted = Mydb.deleteTheme(IDtoDelete); // send theme id to mydb to be deleted using a raw query statement.
 
                     if (isDeleted > 0) {
 
@@ -875,6 +880,10 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
         public void updateBundles_Delete(int tag){
 
 
+            //TODO we need to update the goal values here based on the previous total thus also updating the scale factor.
+
+
+
             // this method is in the innerclass because it is only used here.
             // This method is used to update the global variables and update the bundle to be used in loading a new fragement
 
@@ -890,15 +899,45 @@ public class SetGoals extends AppCompatActivity implements Fragment_Input_12.int
             currentWeekBundle.putStringArrayList(BUNDLE_NAME,al_Bundle_ThemeNames); // attach to bundle
 
             // GOALS
-            al_Bundle_GoalValues.remove(tag); // update global arraylist
-            currentWeekBundle.putIntegerArrayList(BUNDLE_GOAL,al_Bundle_GoalValues); // attach to bundle
+            // the difficulty here is that we need to increase the time for each theme by an amount to correct for the
+            // loss of the theme being deleted's goal value to ensure the free time is kept constant so the user doesnt need to update it.
+            // We go about this by calculating the total free time before the deletion, calculationg the ratio required after the deletion that
+            // we need to multiply all values by to keep the total free time constant, then update all the remaining values using the ratio as a multiply factor.
+            // ALso we update the scale factor since we want the fragement to display the values the same after the deletion we just
+            // factor our scale factor by the ration - same as the values.
+
+            Double oldTotal = 0.00; // initialise value for total free time
+            for (int i = 0; i<numCurrentThemes; i++){
+                oldTotal = (double) oldTotal + al_Bundle_GoalValues.get(i); // calculate total free time
+            }
+            Double reduced = (double) oldTotal - al_Bundle_GoalValues.get(tag); // calculate time remaining after deletion
+
+            double ratio = 0.00; // initialise ratio value (redundant)
+            try{
+                ratio = oldTotal/reduced; // calculate value
+            }catch(Exception e){
+                ratio = 1;
+            }
+
+            al_Bundle_GoalValues.remove(tag); // remove the value we need to delete (allows list to shift so we can use a for loop to update the other values now)
+
+
+            for (int i = 0; i< al_Bundle_GoalValues.size(); i++){
+                int temp = (int) Math.round(al_Bundle_GoalValues.get(i)*ratio);// scale values to new size to ensure that the total free time stays the same.
+                al_Bundle_GoalValues.set(i,Integer.valueOf(temp)); // update values
+            }
+            currentWeekBundle.putIntegerArrayList(BUNDLE_GOAL,al_Bundle_GoalValues); // attach updated values to bundle to be passed onto the fragement
 
             // ATTAIN
             al_Bundle_AttainValues.remove(tag); // update arraylist
             currentWeekBundle.putIntegerArrayList(BUNDLE_ATTAIN,al_Bundle_AttainValues); // attach to bundle
 
             // SCALE FACTOR
-            // Unchanged
+            // update scale factor to ensure that the fragement displays look the same although the values have changed to make
+            // sure that the total free time remains the same.
+            double oldScaleFactor = currentWeekBundle.getDouble(BUNDLE_SCALEFACTOR); // get current scale factor value from bundle
+            double newScaleFactor = oldScaleFactor/ratio; // alter scale factor by the ratio we calculated earlier
+            currentWeekBundle.putDouble(BUNDLE_SCALEFACTOR,newScaleFactor); // attach updated values to bundle
 
             // SUMMARY TOGGLE
             // Unchanged

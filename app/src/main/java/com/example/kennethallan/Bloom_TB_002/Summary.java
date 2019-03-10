@@ -52,7 +52,7 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
 
     // fragment stuff
     View fragmentHolder;
-    List<Boolean> checkBoxValues = new ArrayList<>();
+    List<Boolean> checkBoxValues;
 
     // use these to store the activity values for each theme as a list to send to an adapter later.
     ArrayList<String> al_activitiesList_Name = new ArrayList<String>();
@@ -280,6 +280,13 @@ public class Summary extends AppCompatActivity implements Fragment_Output_12.int
                 carryOver();
             }
         });
+
+        /////////////////////// CREATE CHECKBOX ARRAY INITIAL BUILD//////////////////////
+        // required in case no boxes are checked thus there is an array of "false" values.
+        checkBoxValues = new ArrayList<>(); // instantiate object for holding values
+        for (int i=0; i< numCurrentThemes; i++){
+            checkBoxValues.add(false); // set number of placeholder values
+        }
 
     }
 
